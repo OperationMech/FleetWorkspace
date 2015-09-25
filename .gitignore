@@ -1,5 +1,11 @@
-.gradle
+*.gradle
+gradle/
 build/
+.idea
+gradlew
+gradlew.bat
+local.properties
+import-summary.txt
 
 # Ignore Gradle GUI config
 gradle-app.setting
