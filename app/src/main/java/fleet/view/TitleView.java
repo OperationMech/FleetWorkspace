@@ -27,12 +27,11 @@ public class TitleView extends View {
     private boolean optionsButtonPressed;
     private Context myContext;
     private MediaPlayer mp;
-    private final Bitmap titleBackground1;
 
     public TitleView(Context context) {
         super(context);
         myContext = context;
-        titleBackground1 = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
+        titleBackground = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
         titleGraphic = BitmapFactory.decodeResource(getResources(), fleet.R.drawable.title_graphic);
         titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
         playButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_up);
