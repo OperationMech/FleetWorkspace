@@ -1,3 +1,6 @@
+.gradle
+.idea
+local.properties
 
 # Ignore Gradle GUI config
 gradle-app.setting
