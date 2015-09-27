@@ -1,16 +1,16 @@
 package fleet.view;
 
-	public TitleView(Context context) {
-		super(context);import fleet.R;
-		import fleet.activity.GameActivity;
-		import android.content.Context;
-		import android.content.Intent;
-		import android.graphics.Bitmap;
-		import android.graphics.BitmapFactory;
-		import android.graphics.Canvas;
-		import android.media.MediaPlayer;
-		import android.view.MotionEvent;
-		import android.view.View;
+import fleet.R;
+import fleet.activity.GameActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.media.MediaPlayer;
+import android.view.MotionEvent;
+import android.view.View;
+
 
 public class TitleView extends View {
 	private Bitmap titleGraphic;
@@ -26,7 +26,8 @@ public class TitleView extends View {
 	private Context myContext;
 	private MediaPlayer mp;
 
-
+	public TitleView(Context context) {
+		super(context);
 	myContext = context;
 		titleBackground = BitmapFactory.decodeResource(getResources(),R.drawable.title_background);
 	titleGraphic = BitmapFactory.decodeResource(getResources(), fleet.R.drawable.title_graphic);
