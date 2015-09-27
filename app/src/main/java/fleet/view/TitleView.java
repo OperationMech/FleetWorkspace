@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,10 +39,18 @@ public class TitleView extends View {
 		optionsButtonDown = BitmapFactory.decodeResource(getResources(),R.drawable.options_button_down);
 		mp = MediaPlayer.create(context, R.raw.title_bgm);
 		mp.setLooping(true);
-		mp.start();
+        mp.start();
 	}
-	
-	public void onDraw(Canvas canvas) {
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (hasWindowFocus) {
+            mp.start();
+        }
+    }
+
+    public void onDraw(Canvas canvas) {
 		canvas.drawBitmap(titleBackground,0,0,null);
 		canvas.drawBitmap(titleGraphic,0,0,null);
 		if (playButtonPressed) {
@@ -79,6 +88,7 @@ public class TitleView extends View {
 		        		y > (int)(screenH*0.7) &&
 		        		y < (int)(screenH*0.7) + playButtonUp.getHeight()) {
 		        		playButtonPressed = true;
+                        mp.pause();
 					 	break;
 		        	}
 
