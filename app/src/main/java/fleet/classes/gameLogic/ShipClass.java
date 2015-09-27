@@ -7,7 +7,7 @@ public enum ShipClass {
     CARRIER ("Battleship", "CV"),
     BATTLESHIP("Battleship", "BB"),
     CRUISER ("Cruiser", "CA"),
-    DESTORYER("Destroyer", "DD");
+    DESTROYER("Destroyer", "DD");
 
     private final String name;
     private final String abbr;
