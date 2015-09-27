@@ -23,6 +23,7 @@ public class FleetView extends View {
 	private MediaPlayer mp;
 
     public FleetView(Context context) {
+
         super(context);
         redPaint = new Paint();
         redPaint.setAntiAlias(true);
