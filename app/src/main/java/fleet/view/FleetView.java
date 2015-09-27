@@ -17,8 +17,7 @@ public class FleetView extends View {
     private Paint blackPaint;
     private int circleX;
     private int circleY;
-    private int screenW;
-    private int screenH;
+    private int screenW = getWidth();
     private int textX;
     private int textY;
     private float radius;
@@ -36,8 +35,9 @@ public class FleetView extends View {
         blackPaint = new Paint();
         blackPaint.setAntiAlias(true);
         blackPaint.setColor(Color.BLACK);
-        textX = screenW;
-        textY = 10;
+        blackPaint.setTextSize(-100);
+        textX = screenW/2;
+        textY = 50;
         circleX = 100;
         circleY = 100;
         radius = 30;
@@ -66,12 +66,11 @@ public class FleetView extends View {
     public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
         screenW = w;
-        screenH = h;
     }
 
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(circleX, circleY, radius, redPaint);
-        canvas.drawText("Select Fleet", textX/3 , textY, blackPaint);
+        canvas.drawText("Select Fleet", textX , textY, blackPaint);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
