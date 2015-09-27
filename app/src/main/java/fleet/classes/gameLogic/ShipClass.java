@@ -4,7 +4,7 @@ package fleet.classes.gameLogic;
  * Created by Radu on 9/27/2015.
  */
 public enum ShipClass {
-    CARRIER ("Battleship", "CV"),
+    CARRIER ("Carrier", "CV"),
     BATTLESHIP("Battleship", "BB"),
     CRUISER ("Cruiser", "CA"),
     DESTROYER("Destroyer", "DD");
