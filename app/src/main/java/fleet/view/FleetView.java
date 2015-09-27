@@ -5,17 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * This class is the prototype of Crazy Eights.
- * The concept is from James (2013), although I made some small
- * changes mostly in style plus added sounds.
- *
- * @author Ron Coleman
- */
+import fleet.R;
+
 public class FleetView extends View {
     private Paint redPaint;
     private int circleX;
@@ -24,6 +20,7 @@ public class FleetView extends View {
     private Context myContext;
     private static SoundPool sounds;
     private int dropSound;
+	private MediaPlayer mp;
 
     public FleetView(Context context) {
         super(context);
@@ -34,12 +31,25 @@ public class FleetView extends View {
         circleY = 100;
         radius = 30;
         myContext = context;
+		mp = MediaPlayer.create(context, R.raw.fleet_bgm);
+		mp.setLooping(true);
+		mp.start();
 
         sounds = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
 
         dropSound = sounds.load(myContext, fleet.R.raw.blip2, 1);
 
     }
+
+	@Override
+	public void onWindowFocusChanged(boolean hasWindowFocus) {
+		super.onWindowFocusChanged(hasWindowFocus);
+		if (hasWindowFocus) {
+			mp.start();
+		} else {
+			mp.pause();
+		}
+	}
 
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(circleX, circleY, radius, redPaint);
