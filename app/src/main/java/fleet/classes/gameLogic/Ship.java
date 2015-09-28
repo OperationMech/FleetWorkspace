@@ -9,7 +9,8 @@ import java.util.EnumSet;
  */
 public class Ship {
     protected Bitmap faceUp;
-    protected Bitmap faceDown;
     protected boolean isSunk;
+    protected boolean isFaceUp;
+    protected ShipClass shipClass;
 
 }
