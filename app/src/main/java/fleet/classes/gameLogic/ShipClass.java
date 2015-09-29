@@ -14,7 +14,7 @@ public enum ShipClass {
 
     private ShipClass(String name, String abbr){
         this.name = name;
-        this.abbr =abbr;
+        this.abbr = abbr;
     }
 
     public String getName() {

@@ -12,5 +12,9 @@ public class Ship {
     protected boolean isSunk;
     protected boolean isFaceUp;
     protected ShipClass shipClass;
+    protected int cardNum;
 
+    public void reveal(){
+        this.isFaceUp = true;
+    }
 }

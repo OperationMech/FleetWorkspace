@@ -7,8 +7,10 @@ import java.util.ArrayList;
  * Created by Radu on 9/27/2015.
  */
 public class Game {
+    protected ArrayList players;
 
-    public void startGame(ArrayList<Player> players) {
+    public void game(ArrayList<Player> players) {
+        this.players = players;
         return;
     }
 
