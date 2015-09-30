@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -30,12 +31,20 @@ public class FleetView extends View {
     private MediaPlayer mp;
     private final String[] list = null;
     private Fleet burningLove = null;
+    //lab stuff
+    private Point pos;
+    private Point dest;
+    private Boolean arrived;
 
     private Bitmap testimg;
 
     public FleetView(Context context, Bitmap img) {
 
         super(context);
+        //lab stuff
+        pos = new Point(100, 100);
+        dest = new Point(100, 100);
+        arrived = true;
         redPaint = new Paint();
         redPaint.setAntiAlias(true);
         redPaint.setColor(Color.RED);
@@ -72,10 +81,35 @@ public class FleetView extends View {
     }
 
     protected void onDraw(Canvas canvas) {
-        canvas.drawCircle(circleX, circleY, radius, redPaint);
-        String text ="Select Fleet";
+        canvas.drawBitmap(testimg, 500, 500, null);
+        canvas.drawCircle(pos.x, pos.y, radius, redPaint);
+        if (!pos.equals(dest.x,dest.y)){
+            arrived = false;
+            int speed = 10;
+            int sx = (dest.x - pos.x);
+            int sy = (dest.y - pos.y);
+            double s = Math.sqrt(sx * sx + sy * sy);
+            double theta = Math.asin(sx / s);
+            double deltax = speed * Math.sin(theta) ;
+            double gamma = Math.acos(sy / s);
+            double deltay = speed * Math.cos(gamma);
+            pos.x = pos.x + (int)deltax;
+            pos.y = pos.y + (int)deltay;
+
+            if( Math.abs(dest.x - pos.x) <= speed && Math.abs(dest.y - pos.y) <= speed){
+                pos.x = dest.x;
+                pos.y = dest.y;
+
+                arrived = true;
+
+                AudioManager audioManager = (AudioManager) this.myContext.getSystemService(Context.AUDIO_SERVICE);
+                float volume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                sounds.play(dropSound, volume, volume, 1, 0, 1);
+            }
+        }
+        String text = "Select Fleet";
         canvas.drawText(text, 0 , text.length(), textX, textY, blackPaint);
-        canvas.drawBitmap(testimg,0,0,null);
+        invalidate();
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -88,15 +122,11 @@ public class FleetView extends View {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
-                circleX = x;
-                circleY = y;
                 break;
             case MotionEvent.ACTION_UP:
-                circleX = x;
-                circleY = y;
-                AudioManager audioManager = (AudioManager) this.myContext.getSystemService(Context.AUDIO_SERVICE);
-                float volume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                sounds.play(dropSound, volume, volume, 1, 0, 1);
+                if (arrived == true){
+                    dest.set(x, y);
+                }
                 break;
         }
 
