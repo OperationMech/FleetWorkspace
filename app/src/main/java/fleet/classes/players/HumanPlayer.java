@@ -7,18 +7,11 @@ import fleet.classes.gameLogic.Ship;
 /**
  * Created by Radu on 9/27/2015.
  */
-public class HumanPlayer implements Player {
-
-    protected Fleet playerFleet;
-    protected PlayerGameBoard playerGameBoard;
+public class HumanPlayer extends AbstractPlayer{
 
     public HumanPlayer() {
-    }
 
-    @Override
-    public void startTurn() {
     }
-
 
     @Override
     public void selectFleet() {
@@ -31,17 +24,13 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public boolean attack() {
-        return false;
+    public Ship[] attack() {
+        return null;
     }
 
     @Override
     public boolean arrangeFleet() {
         return false;
-    }
-
-    @Override
-    public void endTurn() {
     }
 
     @Override

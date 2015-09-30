@@ -1,27 +1,24 @@
 package fleet.activity;
 
+import fleet.classes.gameLogic.Fleet;
 import fleet.view.TitleView;
 
 import fleet.R;
 
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class FleetActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		AssetManager assetManager = getAssets();
-
-		try {
-			System.out.println(assetManager.list("fleets")[0]);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		super.onCreate(savedInstanceState);
 		TitleView titleView = new TitleView(this);

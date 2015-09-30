@@ -13,6 +13,8 @@ import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
 
 public class TitleView extends View {
     private Bitmap titleGraphic;

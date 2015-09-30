@@ -3,6 +3,7 @@ package fleet.view;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -30,7 +31,9 @@ public class FleetView extends View {
     private final String[] list = null;
     private Fleet burningLove = null;
 
-    public FleetView(Context context) {
+    private Bitmap testimg;
+
+    public FleetView(Context context, Bitmap img) {
 
         super(context);
         redPaint = new Paint();
@@ -49,6 +52,8 @@ public class FleetView extends View {
         mp = MediaPlayer.create(context, R.raw.fleet_bgm);
         mp.setLooping(true);
         mp.start();
+
+        testimg = img;
 
         sounds = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
 
@@ -70,7 +75,7 @@ public class FleetView extends View {
         canvas.drawCircle(circleX, circleY, radius, redPaint);
         String text ="Select Fleet";
         canvas.drawText(text, 0 , text.length(), textX, textY, blackPaint);
-        canvas.drawBitmap(burningLove.getKing(),0,0,null);
+        canvas.drawBitmap(testimg,0,0,null);
     }
 
     public boolean onTouchEvent(MotionEvent event) {

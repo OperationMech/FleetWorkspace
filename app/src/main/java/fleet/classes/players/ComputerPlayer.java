@@ -6,14 +6,9 @@ import fleet.classes.gameLogic.Fleet;
 /**
  * Created by Radu on 9/27/2015.
  */
-public class ComputerPlayer implements Player {
+public class ComputerPlayer extends AbstractPlayer {
     public ComputerPlayer() {
         super();
-    }
-
-    @Override
-    public void startTurn() {
-
     }
 
     @Override
@@ -27,8 +22,8 @@ public class ComputerPlayer implements Player {
     }
 
     @Override
-    public boolean attack() {
-        return false;
+    public Ship[] attack() {
+        return null;
     }
 
     @Override
@@ -36,10 +31,6 @@ public class ComputerPlayer implements Player {
         return false;
     }
 
-    @Override
-    public void endTurn() {
-
-    }
 
     @Override
     public Fleet getFleet() {
