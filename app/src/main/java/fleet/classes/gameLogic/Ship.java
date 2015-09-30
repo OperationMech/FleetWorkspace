@@ -14,6 +14,9 @@ public class Ship {
     protected ShipClass shipClass;
     protected int cardNum;
 
+    public Ship(Bitmap faceUp){
+        this.faceUp = faceUp;
+    }
     public void reveal(){
         this.isFaceUp = true;
     }

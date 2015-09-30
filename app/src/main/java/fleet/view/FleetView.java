@@ -1,6 +1,8 @@
 package fleet.view;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import fleet.R;
+import fleet.classes.gameLogic.Fleet;
 
 public class FleetView extends View {
     private Paint redPaint;
@@ -24,6 +27,8 @@ public class FleetView extends View {
     private static SoundPool sounds;
     private int dropSound;
     private MediaPlayer mp;
+    private final String[] list = null;
+    private Fleet burningLove = null;
 
     public FleetView(Context context) {
 
@@ -65,6 +70,7 @@ public class FleetView extends View {
         canvas.drawCircle(circleX, circleY, radius, redPaint);
         String text ="Select Fleet";
         canvas.drawText(text, 0 , text.length(), textX, textY, blackPaint);
+        canvas.drawBitmap(burningLove.getKing(),0,0,null);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
