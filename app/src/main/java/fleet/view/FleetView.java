@@ -83,7 +83,7 @@ public class FleetView extends View {
     }
 
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(testimg, 500, 500, null);
+        //canvas.drawBitmap(testimg, 500, 500, null);
         canvas.drawCircle(pos.x, pos.y, radius, redPaint);
         if (!pos.equals(dest.x,dest.y)){
             arrived = false;
@@ -91,17 +91,14 @@ public class FleetView extends View {
             int sx = (dest.x - pos.x);
             int sy = (dest.y - pos.y);
             double s = Math.sqrt(sx * sx + sy * sy);
-            double theta = Math.asin(sx / s);
-            double deltax = speed * Math.sin(theta) ;
-            double gamma = Math.acos(sy / s);
-            double deltay = speed * Math.cos(gamma);
+            double deltax = speed * (sx / s) ;
+            double deltay = speed * (sy / s);
             pos.x = pos.x + (int)deltax;
             pos.y = pos.y + (int)deltay;
 
             if( Math.abs(dest.x - pos.x) <= speed && Math.abs(dest.y - pos.y) <= speed){
                 pos.x = dest.x;
                 pos.y = dest.y;
-
                 arrived = true;
 
                 AudioManager audioManager = (AudioManager) this.myContext.getSystemService(Context.AUDIO_SERVICE);
