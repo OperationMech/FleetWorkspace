@@ -20,9 +20,8 @@ public class Fleet {
     protected Ship[] cruisers = new Ship[4];
     protected Ship[] destroyers = new Ship[4];
 
-    public Fleet(String fleetPath){
-     Bitmap king = new BitmapFactory().decodeFile(fleetPath);
-        battleships[0] = new Ship(king);
+    public Fleet(Bitmap kingImg){
+        battleships[0] = new Ship(kingImg);
     }
 
     public Bitmap getKing() {

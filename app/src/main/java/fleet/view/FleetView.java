@@ -14,6 +14,8 @@ import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import fleet.R;
 import fleet.classes.gameLogic.Fleet;
 
@@ -31,6 +33,7 @@ public class FleetView extends View {
     private MediaPlayer mp;
     private final String[] list = null;
     private Fleet burningLove = null;
+    private ArrayList<Fleet> fleets;
     //lab stuff
     private Point pos;
     private Point dest;
@@ -38,7 +41,7 @@ public class FleetView extends View {
 
     private Bitmap testimg;
 
-    public FleetView(Context context, Bitmap img) {
+    public FleetView(Context context, ArrayList<Fleet> fleets) {
 
         super(context);
         //lab stuff
@@ -61,8 +64,7 @@ public class FleetView extends View {
         mp = MediaPlayer.create(context, R.raw.fleet_bgm);
         mp.setLooping(true);
         mp.start();
-
-        testimg = img;
+        this.fleets = fleets;
 
         sounds = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
 

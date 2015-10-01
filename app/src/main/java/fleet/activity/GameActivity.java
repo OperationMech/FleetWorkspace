@@ -13,6 +13,7 @@ import android.view.Menu;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class GameActivity extends Activity {
 
@@ -21,19 +22,21 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		AssetManager assetManager = getAssets();
 		Bitmap img = null;
+		ArrayList<Fleet> fleets = new ArrayList<Fleet>();
 
 		try {
-			Fleet burningLove;
-			String love = (assetManager.list("fleets")[0]);
-			String kingpath = "fleets/" + love + "/King.png";
-			System.out.println(kingpath);
-			InputStream burning = assetManager.open(kingpath);
-			img = BitmapFactory.decodeStream(burning);
-
+			String[] fleetList = (assetManager.list("fleets"));
+			for (int i = 0; i<=fleetList.length; i++){
+				String kingPath = "fleets/" + fleetList[i] + "/King.png";
+				InputStream kingStream = assetManager.open(kingPath);
+				Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
+				Fleet newFleet = new Fleet(kingImg);
+				fleets.add(newFleet);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		FleetView myView = new FleetView(this,img);
+		FleetView myView = new FleetView(this,fleets);
 		setContentView(myView);	
 	}
 
