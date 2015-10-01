@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class GameActivity extends Activity {
+    private final String FLEET_DIR = "fleets";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +26,10 @@ public class GameActivity extends Activity {
 		ArrayList<Fleet> fleets = new ArrayList<Fleet>();
 
 		try {
-			String[] fleetList = (assetManager.list("fleets"));
-			for (int i = 0; i<=fleetList.length; i++){
-				String kingPath = "fleets/" + fleetList[i] + "/King.png";
-				InputStream kingStream = assetManager.open(kingPath);
+			String[] fleetList = (assetManager.list(FLEET_DIR));
+			for (String fleet : fleetList ){
+				InputStream kingStream = assetManager.open( FLEET_DIR + "/" +
+                                                                fleet + "/King.png");
 				Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
 				Fleet newFleet = new Fleet(kingImg);
 				fleets.add(newFleet);
