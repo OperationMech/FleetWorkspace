@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class GameActivity extends Activity {
     private final String FLEET_DIR = "fleets";
+    private String[] fleetList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class GameActivity extends Activity {
         ArrayList<Fleet> fleets = new ArrayList<Fleet>();
 
         try {
-            String[] fleetList = (assetManager.list(FLEET_DIR));
+            fleetList = (assetManager.list(FLEET_DIR));
             for (String fleet : fleetList) {
                 InputStream kingStream = assetManager.open(FLEET_DIR + "/" +
                         fleet + "/King.png");
