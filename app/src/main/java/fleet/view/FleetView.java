@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import fleet.R;
 import fleet.classes.gameLogic.Fleet;
@@ -22,18 +24,24 @@ import fleet.classes.gameLogic.Fleet;
 public class FleetView extends View {
     private Paint redPaint;
     private Paint blackPaint;
-    private int circleX;
-    private int circleY;
     private float textX;
     private float textY = 20;
+    private int screenW;
+    private int screenH;
     private float radius;
     private Context myContext;
     private static SoundPool sounds;
     private int dropSound;
     private MediaPlayer mp;
     private final String[] list = null;
-    private Fleet burningLove = null;
     private ArrayList<Fleet> fleets;
+    private Integer fleetnum = 0;
+    private Bitmap leftArrow = BitmapFactory.decodeResource(getResources(), R.drawable.left_arrow);
+    private int leftArrowX;
+    private int leftArrowY;
+    private Bitmap rightArrow = BitmapFactory.decodeResource(getResources(), R.drawable.right_arrow);
+    private int rightArrowX;
+    private int rightArrowY;
     //lab stuff
     private Point pos;
     private Point dest;
@@ -57,8 +65,6 @@ public class FleetView extends View {
         blackPaint.setTextScaleX((float) 2.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
         textX = (float)(800/2.0);
-        circleX = 100;
-        circleY = 100;
         radius = 30;
         myContext = context;
         mp = MediaPlayer.create(context, R.raw.fleet_bgm);
@@ -70,6 +76,13 @@ public class FleetView extends View {
 
         dropSound = sounds.load(myContext, fleet.R.raw.blip2, 1);
 
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        screenW = w;
+        screenH = h;
+        super.onSizeChanged(w, h, oldw, oldh);
     }
 
     @Override
@@ -85,6 +98,15 @@ public class FleetView extends View {
     protected void onDraw(Canvas canvas) {
         //canvas.drawBitmap(testimg, 500, 500, null);
         canvas.drawCircle(pos.x, pos.y, radius, redPaint);
+        leftArrowX = (int)(screenW * 0.20) - leftArrow.getWidth()/2;
+        leftArrowY = (int)(screenH * 0.50) - leftArrow.getHeight()/2;
+        canvas.drawBitmap(leftArrow, leftArrowX, leftArrowY , null);
+        rightArrowX = (int)(screenW * 0.80) - rightArrow.getWidth()/2;
+        rightArrowY =  screenH/2 - rightArrow.getHeight()/2;
+        canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY,null);
+        Bitmap fleetKing = fleets.get(fleetnum).getKing();
+
+        canvas.drawBitmap(fleetKing,(screenW/2 - fleetKing.getWidth()/2), (screenH/2 - fleetKing.getHeight()/2),null);
         if (!pos.equals(dest.x,dest.y)){
             arrived = false;
             int speed = 10;
@@ -119,6 +141,31 @@ public class FleetView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                if (x < rightArrowX + rightArrow.getWidth()/2 &&
+                        x > rightArrowX - rightArrow.getWidth()/2 &&
+                        y < rightArrowY + rightArrow.getHeight()/2 &&
+                        y > rightArrowY - rightArrow.getHeight()/2) {
+                    if (fleetnum + 1  < fleets.size()){
+                        fleetnum++;
+                    }else {
+                        fleetnum = 0;
+                    }
+                    break;
+                }
+                System.out.println("X = " + x + "Y:" + y);
+                System.out.println(leftArrowX);
+                System.out.println(leftArrowX + leftArrow.getWidth()/2 );
+                if (x > leftArrowX - leftArrow.getWidth()/2 &&
+                        x < leftArrowX + leftArrow.getWidth()/2 &&
+                        y > leftArrowY - leftArrow.getHeight()/2 &&
+                        y < leftArrowY + leftArrow.getHeight()/2) {
+                    if (fleetnum - 1  > 0){
+                        fleetnum--;
+                    }else {
+                        fleetnum = fleets.size() - 1;
+                    }
+                    break;
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;

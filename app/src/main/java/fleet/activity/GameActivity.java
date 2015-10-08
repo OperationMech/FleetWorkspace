@@ -28,9 +28,11 @@ public class GameActivity extends Activity {
 
         try {
             fleetList = (assetManager.list(FLEET_DIR));
+            System.out.println(fleetList);
             for (String fleet : fleetList) {
+                System.out.println(fleet);
                 InputStream kingStream = assetManager.open(FLEET_DIR + "/" +
-                        fleet + "/King.png");
+                        fleet + "/King.jpg");
                 Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
                 Fleet newFleet = new Fleet(kingImg);
                 fleets.add(newFleet);
