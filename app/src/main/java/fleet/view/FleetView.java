@@ -1,8 +1,6 @@
 package fleet.view;
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -16,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import fleet.R;
 import fleet.classes.gameLogic.Fleet;
@@ -64,7 +61,7 @@ public class FleetView extends View {
         blackPaint.setColor(Color.BLACK);
         blackPaint.setTextScaleX((float) 2.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
-        textX = (float)(800/2.0);
+        textX = (float) (800 / 2.0);
         radius = 30;
         myContext = context;
         mp = MediaPlayer.create(context, R.raw.fleet_bgm);
@@ -98,27 +95,27 @@ public class FleetView extends View {
     protected void onDraw(Canvas canvas) {
         //canvas.drawBitmap(testimg, 500, 500, null);
         canvas.drawCircle(pos.x, pos.y, radius, redPaint);
-        leftArrowX = (int)(screenW * 0.20) - leftArrow.getWidth()/2;
-        leftArrowY = (int)(screenH * 0.50) - leftArrow.getHeight()/2;
-        canvas.drawBitmap(leftArrow, leftArrowX, leftArrowY , null);
-        rightArrowX = (int)(screenW * 0.80) - rightArrow.getWidth()/2;
-        rightArrowY =  screenH/2 - rightArrow.getHeight()/2;
-        canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY,null);
+        leftArrowX = (int) (screenW * 0.20) - leftArrow.getWidth() / 2;
+        leftArrowY = (int) (screenH * 0.50) - leftArrow.getHeight() / 2;
+        canvas.drawBitmap(leftArrow, leftArrowX, leftArrowY, null);
+        rightArrowX = (int) (screenW * 0.80) - rightArrow.getWidth() / 2;
+        rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
+        canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY, null);
         Bitmap fleetKing = fleets.get(fleetnum).getKing();
 
-        canvas.drawBitmap(fleetKing,(screenW/2 - fleetKing.getWidth()/2), (screenH/2 - fleetKing.getHeight()/2),null);
-        if (!pos.equals(dest.x,dest.y)){
+        canvas.drawBitmap(fleetKing, (screenW / 2 - fleetKing.getWidth() / 2), (screenH / 2 - fleetKing.getHeight() / 2), null);
+        if (!pos.equals(dest.x, dest.y)) {
             arrived = false;
             int speed = 10;
             int sx = (dest.x - pos.x);
             int sy = (dest.y - pos.y);
             double s = Math.sqrt(sx * sx + sy * sy);
-            double deltax = speed * (sx / s) ;
+            double deltax = speed * (sx / s);
             double deltay = speed * (sy / s);
-            pos.x = pos.x + (int)deltax;
-            pos.y = pos.y + (int)deltay;
+            pos.x = pos.x + (int) deltax;
+            pos.y = pos.y + (int) deltay;
 
-            if( Math.abs(dest.x - pos.x) <= speed && Math.abs(dest.y - pos.y) <= speed){
+            if (Math.abs(dest.x - pos.x) <= speed && Math.abs(dest.y - pos.y) <= speed) {
                 pos.x = dest.x;
                 pos.y = dest.y;
                 arrived = true;
@@ -129,7 +126,7 @@ public class FleetView extends View {
             }
         }
         String text = "Select Fleet";
-        canvas.drawText(text, 0 , text.length(), textX, textY, blackPaint);
+        canvas.drawText(text, 0, text.length(), textX, textY, blackPaint);
         invalidate();
     }
 
@@ -141,27 +138,27 @@ public class FleetView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                if (x < rightArrowX + rightArrow.getWidth()/2 &&
-                        x > rightArrowX - rightArrow.getWidth()/2 &&
-                        y < rightArrowY + rightArrow.getHeight()/2 &&
-                        y > rightArrowY - rightArrow.getHeight()/2) {
-                    if (fleetnum + 1  < fleets.size()){
+                if (x > rightArrowX &&
+                        x < rightArrowX + rightArrow.getWidth() &&
+                        y > rightArrowY &&
+                        y < rightArrowY + rightArrow.getHeight()) {
+                    if (fleetnum + 1 < fleets.size()) {
                         fleetnum++;
-                    }else {
+                    } else {
                         fleetnum = 0;
                     }
                     break;
                 }
                 System.out.println("X = " + x + "Y:" + y);
                 System.out.println(leftArrowX);
-                System.out.println(leftArrowX + leftArrow.getWidth()/2 );
-                if (x > leftArrowX - leftArrow.getWidth()/2 &&
-                        x < leftArrowX + leftArrow.getWidth()/2 &&
-                        y > leftArrowY - leftArrow.getHeight()/2 &&
-                        y < leftArrowY + leftArrow.getHeight()/2) {
-                    if (fleetnum - 1  > 0){
+                System.out.println(leftArrowX + leftArrow.getWidth() / 2);
+                if (x > leftArrowX &&
+                        x < leftArrowX + leftArrow.getWidth() &&
+                        y > leftArrowY &&
+                        y < leftArrowY + leftArrow.getHeight()) {
+                    if (fleetnum - 1 > 0) {
                         fleetnum--;
-                    }else {
+                    } else {
                         fleetnum = fleets.size() - 1;
                     }
                     break;
@@ -170,7 +167,7 @@ public class FleetView extends View {
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
-                if (arrived == true){
+                if (arrived == true) {
                     dest.set(x, y);
                 }
                 break;
