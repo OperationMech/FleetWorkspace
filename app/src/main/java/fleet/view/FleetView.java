@@ -29,12 +29,10 @@ public class FleetView extends View {
     private int screenH;
     private float radius;
     private Context myContext;
-    private static SoundPool sounds;
-    private int dropSound;
     private MediaPlayer mp;
     private final String[] list = null;
     private ArrayList<Fleet> fleets;
-    private ArrayList<Bitmap> kings;
+    private ArrayList<Bitmap> kings = new ArrayList<Bitmap>();
     private Integer fleetnum = 0;
     private Bitmap leftArrow = BitmapFactory.decodeResource(getResources(), R.drawable.left_arrow);
     private int leftArrowX;
@@ -69,6 +67,7 @@ public class FleetView extends View {
         this.fleets = fleets;
 
         options.inMutable = true;
+
         fleetKing = fleets.get(fleetnum).getKing();
         selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet, options);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
@@ -80,10 +79,15 @@ public class FleetView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         screenW = w;
         screenH = h;
+        Bitmap king;
         //scale Images
         for (int i = 0; i < fleets.size(); i++) {
-            fleets.get(i).setKing( Bitmap.createScaledBitmap(fleets.get(i).getKing(), screenH / 4, screenH / 3, false));
+            king = Bitmap.createScaledBitmap(fleets.get(i).getKing(), screenH / 4, screenH / 3, false);
+            kings.add(king);
         }
+        fleetKing = kings.get(fleetnum);
+        selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
+        selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -105,11 +109,11 @@ public class FleetView extends View {
         rightArrowX = (int) (screenW * 0.80) - rightArrow.getWidth() / 2;
         rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
         canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY, null);
-        fleetKing = fleets.get(fleetnum).getKing();
+        fleetKing = kings.get(fleetnum);
         fleetKingX = screenW / 2 - fleetKing.getWidth() / 2;
         fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
         canvas.drawBitmap(fleetKing, fleetKingX, fleetKingY, null);
-        selectFleetX = (int) (fleetKingX);
+        selectFleetX = fleetKingX;
         selectFleetY = (int) (fleetKingY + fleetKing.getHeight() + screenH * 0.1);
         if (selectFleetPressed){
             canvas.drawBitmap(selectFleetDown,selectFleetX,selectFleetY,null);
