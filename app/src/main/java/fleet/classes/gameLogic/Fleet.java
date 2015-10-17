@@ -28,6 +28,8 @@ public class Fleet {
         return battleships[0].faceUp;
     }
 
+    public void setKing(Bitmap newKing ) {   battleships[0].faceUp = newKing;   }
+
     public void populateFleet(){
         return;
     }

@@ -55,12 +55,13 @@ public class TitleView extends View {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus && mute == false) {
+        if (hasWindowFocus && mute == false ) {
             mp.start();
         } else {
             mp.pause();
         }
     }
+
 
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(titleBackground, 0, 0, null);

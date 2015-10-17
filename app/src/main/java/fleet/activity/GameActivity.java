@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class GameActivity extends Activity {
     private final String FLEET_DIR = "fleets";
     private String[] fleetList;
+    protected int playerFleet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class GameActivity extends Activity {
             for (String fleet : fleetList) {
                 System.out.println(fleet);
                 InputStream kingStream = assetManager.open(FLEET_DIR + "/" +
-                        fleet + "/King.jpg");
+                        fleet + "/King.png");
                 Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
                 Fleet newFleet = new Fleet(kingImg);
                 fleets.add(newFleet);
