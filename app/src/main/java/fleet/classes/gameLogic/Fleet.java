@@ -2,6 +2,9 @@ package fleet.classes.gameLogic;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;
 
 import java.lang.reflect.Array;
 import java.util.EnumSet;
@@ -11,7 +14,7 @@ import fleet.R;
 /**
  * Created by Radu on 9/27/2015.
  */
-public class Fleet {
+public class Fleet implements Parcelable {
     protected String fleetPath;
     protected String fleetName;
     protected Ship carrier;
@@ -19,6 +22,7 @@ public class Fleet {
     protected Ship[] battleships = new Ship[4];
     protected Ship[] cruisers = new Ship[4];
     protected Ship[] destroyers = new Ship[4];
+    public Creator<View> CREATOR;
 
     public Fleet(Bitmap kingImg){
         battleships[0] = new Ship(kingImg);
@@ -73,5 +77,15 @@ public class Fleet {
         } else if (name.equals("FaceDown.png")) {
             facedown = ship;
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

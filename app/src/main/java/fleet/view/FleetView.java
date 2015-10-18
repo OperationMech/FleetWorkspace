@@ -189,7 +189,7 @@ public class FleetView extends View {
             case MotionEvent.ACTION_UP:
                 if(selectFleetPressed){
                     playIntent = new Intent(myContext, PlayActivity.class);
-                    playIntent.putExtra("fleets", fleets);
+                    playIntent.putParcelableArrayListExtra("fleets", fleets);
                     playIntent.putExtra("playerFleet", fleetNum);
                     myContext.startActivity(playIntent);
                 }
