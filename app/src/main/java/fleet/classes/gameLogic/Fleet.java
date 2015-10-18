@@ -44,6 +44,10 @@ public class Fleet implements Parcelable {
         return fleetPath;
     }
 
+    public SoundPool getFleetSounds() {
+        return fleetSounds;
+    }
+
     public void populateFleet(String name, Bitmap ship) {
         if(name.equals("Two.png")) {
             destroyers[3] = new Ship(ship);

@@ -52,8 +52,6 @@ public class FleetView extends View {
     private boolean resumeGamePressed =false;
     protected Intent playIntent;
     private BitmapFactory.Options options = new BitmapFactory.Options();
-    private static SoundPool sounds;
-    private int selectSound;
 
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
@@ -203,7 +201,7 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 if(selectFleetPressed){
-                  //  fleets.get(fleetNum).getMainAttack();
+                    fleets.get(fleetNum).getFleetSounds().play(1,1,1,1,1,1);
                     playIntent = new Intent(myContext, PlayActivity.class);
                     playIntent.putExtra("fleets", fleets);
                     playIntent.putExtra("playerFleet", fleetNum);
