@@ -92,7 +92,7 @@ public class FleetView extends View {
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
         resumeGame = Bitmap.createScaledBitmap(resumeGame, fleetKing.getWidth(), resumeGame.getHeight(), false);
-        resumeGameDown = Bitmap.createScaledBitmap(resumeGame, fleetKing.getWidth(),resumeGameDown.getHeight(),false);
+        resumeGameDown = Bitmap.createScaledBitmap(resumeGameDown, fleetKing.getWidth(),resumeGameDown.getHeight(),false);
     }
 
     @Override
@@ -182,11 +182,23 @@ public class FleetView extends View {
                         y > selectFleetY &&
                         y < selectFleetY + selectFleet.getHeight()) {
                     selectFleetPressed = true;
+                    break;
+                }
+                //Detection on Resume Game button
+                if (x > fleetKingX &&
+                        x < fleetKingX + resumeGame.getWidth() &&
+                        y > resumeGameY &&
+                        y < resumeGameY + resumeGame.getHeight()) {
+                    resumeGamePressed = true;
+                    break;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
+                if(resumeGamePressed){
+                    myContext.startActivity(playIntent);
+                }
                 if(selectFleetPressed){
                     playIntent = new Intent(myContext, PlayActivity.class);
                     playIntent.putParcelableArrayListExtra("fleets", fleets);
@@ -194,6 +206,7 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;
+                resumeGamePressed = false;
                 break;
         }
 
