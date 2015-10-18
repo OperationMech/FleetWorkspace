@@ -32,10 +32,10 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assetManager = getAssets();
-        SoundPool fleetSounds = new SoundPool(1,1,1);
         try {
             fleetList = (assetManager.list(FLEET_DIR));
             for (String fleet : fleetList) {
+                SoundPool fleetSounds = new SoundPool(1,1,1);
                 String fleetPath = (FLEET_DIR + "/" + fleet);
                 InputStream kingStream = assetManager.open(fleetPath + "/" + "King.png");
                 AssetFileDescriptor mainAttack = assetManager.openFd(fleetPath + "/" + "MainAttack.ogg");
