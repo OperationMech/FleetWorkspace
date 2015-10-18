@@ -1,34 +1,45 @@
 package fleet.activity;
 
 import android.app.Activity;
+import android.content.res.AssetManager;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import fleet.R;
 import fleet.view.PlayView;
-import fleet.view.TitleView;
+import fleet.classes.gameLogic.Fleet;
 
 /**
  * Created by Radu on 10/18/2015.
  */
 public class PlayActivity extends Activity {
 
+    private AssetManager assetManager;
+    private String[] shipList;
+    private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-            /* populate fleets code
-                    try {
-                        shipList = (assetManager.list(FLEET_DIR + "/" + fleet));
-                        for (String ship : shipList) {
-                            InputStream shipStream = assetManager.open(FLEET_DIR + "/" +
-                                    fleet + "/" + ship);
-                            newFleet.populateFleet(ship, BitmapFactory.decodeStream(shipStream));
-                        }
+        Fleets  = savedInstanceState.getParcelableArrayList("fleets");
+        Integer playerSelected = savedInstanceState.getInt("playerFleet");
+        assetManager = getAssets();
+        try {
+            shipList = (assetManager.list(Fleets.get(playerSelected).getFleetPath()));
+            for (String ship : shipList) {
+                InputStream shipStream = assetManager.open(Fleets.get(playerSelected).getFleetPath() + ship);
+                Fleets.get(playerSelected).populateFleet(ship, BitmapFactory.decodeStream(shipStream));
+            }
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         PlayView playView = new PlayView(this);
         setContentView(playView);
     }
