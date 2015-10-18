@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.ViewSwitcher;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +22,8 @@ public class GameActivity extends Activity {
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
     protected int playerFleet;
+    private ViewSwitcher switcher;
+    private static final int REFRESH_SCREEN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
