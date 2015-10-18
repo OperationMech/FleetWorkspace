@@ -12,7 +12,7 @@ import fleet.R;
  * Created by Radu on 9/27/2015.
  */
 public class Fleet {
-    protected String fleetPath;
+    //protected String fleetPath;
     protected String FleetName;
     protected Ship carrier;
     protected Bitmap facedown;
@@ -55,6 +55,8 @@ public class Fleet {
             battleships[1] = new Ship(ship);
         } else if (name.equals("Ace.png")) {
             carrier = new Ship(ship);
+        } else if (name.equals("FaceDown.png")) {
+            facedown = ship;
         }
     }
 }
