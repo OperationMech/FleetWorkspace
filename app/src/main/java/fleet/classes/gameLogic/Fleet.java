@@ -23,8 +23,9 @@ public class Fleet implements Parcelable {
 
     public Fleet(Bitmap kingImg, SoundPool fleetSounds, String fleetPath){
         battleships[0] = new Ship(kingImg);
+        fleetName = fleetPath.split("/")[1];
         this.fleetSounds = fleetSounds;
-        this.fleetPath =fleetPath;
+        this.fleetPath = fleetPath;
     }
 
     public Bitmap getKing() {
@@ -33,11 +34,6 @@ public class Fleet implements Parcelable {
 
     public void setKing(Bitmap newKing ) {
         battleships[0].faceUp = newKing;
-    }
-
-    public void setFleetPath(String newFleetPath) {
-        fleetPath = newFleetPath;
-        fleetName = fleetPath.split("/")[1];
     }
 
     public String getFleetName() {
