@@ -145,7 +145,7 @@ public class FleetView extends View {
                         x < leftArrowX + leftArrow.getWidth() &&
                         y > leftArrowY &&
                         y < leftArrowY + leftArrow.getHeight()) {
-                    if (fleetnum - 1 > 0) {
+                    if (fleetnum - 1 >= 0) {
                         fleetnum--;
                     } else {
                         fleetnum = fleets.size() - 1;
