@@ -31,6 +31,7 @@ public class PlayActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         int playerSelected = bundle.getInt("playerFleet", 0);
+        Fleets = bundle.getParcelableArrayList("fleets");
         assetManager = getAssets();
         try {
             shipList = (assetManager.list(Fleets.get(playerSelected).getFleetPath()));

@@ -1,10 +1,12 @@
 package fleet.classes.gameLogic;
 
+import android.os.Parcelable;
+
 /**
  * Created by Radu on 9/27/2015.
  */
 public enum ShipClass {
-    CARRIER ("Ca", "CV"),
+    CARRIER ("Carrier", "CV"),
     BATTLESHIP("Battleship", "BB"),
     CRUISER ("Cruiser", "CA"),
     DESTROYER("Destroyer", "DD");

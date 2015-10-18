@@ -35,13 +35,11 @@ public class GameActivity extends Activity {
         try {
             fleetList = (assetManager.list(FLEET_DIR));
             for (String fleet : fleetList) {
-                SoundPool fleetSounds = new SoundPool(1,1,1);
                 String fleetPath = (FLEET_DIR + "/" + fleet);
-                InputStream kingStream = assetManager.open(fleetPath + "/" + "King.png");
-                AssetFileDescriptor mainAttack = assetManager.openFd(fleetPath + "/" + "MainAttack.ogg");
+                InputStream kingStream = assetManager.open(fleetPath + "/King.png");
+                AssetFileDescriptor fleetSoundFile = assetManager.openFd(fleetPath + "/MainAttack.ogg");
                 Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
-                fleetSounds.load(mainAttack, 0);
-                Fleet newFleet = new Fleet(kingImg, fleetSounds,fleetPath);
+                Fleet newFleet = new Fleet(kingImg, fleetSoundFile ,fleetPath);
                 fleets.add(newFleet);
             }
         } catch (IOException e) {

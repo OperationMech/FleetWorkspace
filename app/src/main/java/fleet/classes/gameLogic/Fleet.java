@@ -1,10 +1,14 @@
 package fleet.classes.gameLogic;
 
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.media.SoundPool;
+import android.os.Bundle;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.view.View;
+import java.util.Map;
 
 
 /**
@@ -14,18 +18,31 @@ public class Fleet implements Parcelable {
     protected String fleetPath;
     protected String fleetName;
     protected Ship carrier;
+    protected AssetFileDescriptor fleetSoundFile;
     protected Bitmap facedown;
-    protected SoundPool fleetSounds;
     protected Ship[] battleships = new Ship[4];
     protected Ship[] cruisers = new Ship[4];
     protected Ship[] destroyers = new Ship[4];
-    public Creator<View> CREATOR;
 
-    public Fleet(Bitmap kingImg, SoundPool fleetSounds, String fleetPath){
+    public Fleet(Parcel in) {
+        this.fleetPath = in.readString();
+        this.fleetName = in.readString();
+        this.carrier = in.readParcelable(Ship.class.getClassLoader());
+        this.facedown = in.readParcelable(Bitmap.class.getClassLoader());
+        this.battleships = new Ship[4];
+        in.readTypedArray(battleships, Ship.CREATOR);
+        this.cruisers = new Ship[4];
+        in.readTypedArray(cruisers, Ship.CREATOR);
+        this.destroyers = new Ship[4];
+        in.readTypedArray(destroyers, Ship.CREATOR);
+    }
+
+
+    public Fleet(Bitmap kingImg, AssetFileDescriptor fleetSoundFile, String fleetPath){
         battleships[0] = new Ship(kingImg);
         fleetName = fleetPath.split("/")[1];
-        this.fleetSounds = fleetSounds;
         this.fleetPath = fleetPath;
+        this.fleetSoundFile = fleetSoundFile;
     }
 
     public Bitmap getKing() {
@@ -45,7 +62,9 @@ public class Fleet implements Parcelable {
     }
 
     public SoundPool getFleetSounds() {
-        return fleetSounds;
+        SoundPool local = new SoundPool(1,1,1);
+        local.load(fleetSoundFile,1);
+        return local;
     }
 
     public void populateFleet(String name, Bitmap ship) {
@@ -78,6 +97,18 @@ public class Fleet implements Parcelable {
         }
     }
 
+    static final Parcelable.Creator<Fleet> CREATOR =
+            new Parcelable.Creator<Fleet>() {
+
+        public Fleet createFromParcel(Parcel in) {
+            return new Fleet(in);
+        }
+
+        public Fleet[] newArray(int size) {
+            return new Fleet[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
@@ -86,5 +117,12 @@ public class Fleet implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+        dest.writeString(fleetPath);
+        dest.writeString(fleetName);
+        dest.writeParcelable(carrier, flags);
+        dest.writeParcelable(facedown, flags);
+        dest.writeTypedArray(battleships, flags);
+        dest.writeTypedArray(cruisers, flags);
+        dest.writeTypedArray(destroyers, flags);
     }
 }
