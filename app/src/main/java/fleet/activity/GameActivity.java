@@ -40,7 +40,6 @@ public class GameActivity extends Activity {
                     for (String ship : shipList) {
                         InputStream shipStream = assetManager.open(FLEET_DIR + "/" +
                                 fleet + "/" + ship);
-                        System.out.println(ship);
                         newFleet.populateFleet(ship, BitmapFactory.decodeStream(shipStream));
                     }
 
