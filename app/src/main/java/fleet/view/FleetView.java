@@ -33,6 +33,7 @@ public class FleetView extends View {
     private ArrayList<Fleet> fleets;
     private ArrayList<Bitmap> kings = new ArrayList<Bitmap>();
     private Integer fleetNum = 0;
+    private Bitmap background;
     private Bitmap leftArrow = BitmapFactory.decodeResource(getResources(), R.drawable.left_arrow);
     private int leftArrowX;
     private int leftArrowY;
@@ -58,6 +59,7 @@ public class FleetView extends View {
         super(context);
         myContext = context;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        background = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -107,6 +109,7 @@ public class FleetView extends View {
         fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
         rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
         resumeGameY = (int) (fleetKingY - screenH * 0.2);
+        background = Bitmap.createScaledBitmap(background,screenW,screenH,false);
 
         super.onSizeChanged(w, h, oldw, oldh);
     }
@@ -114,7 +117,7 @@ public class FleetView extends View {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus && !mp.isPlaying()) {
+        if (hasWindowFocus) {
             mp.start();
         } else {
             mp.pause();
@@ -123,6 +126,7 @@ public class FleetView extends View {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void onDraw(Canvas canvas) {
+        canvas.drawBitmap(background, 0, 0, null);
         canvas.drawBitmap(leftArrow, leftArrowX, leftArrowY, null);
         canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY, null);
         fleetKing = kings.get(fleetNum);

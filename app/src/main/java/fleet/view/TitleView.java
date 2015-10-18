@@ -103,8 +103,7 @@ public class TitleView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         screenW = w;
         screenH = h;
-        System.out.println("SCREEN W: " + screenW);
-        System.out.println("SCREEN H: " + screenH);
+        titleBackground = Bitmap.createScaledBitmap(titleBackground,screenW,screenH,false);
     }
 
     @Override
