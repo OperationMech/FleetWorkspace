@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Build;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -51,6 +52,8 @@ public class FleetView extends View {
     private boolean resumeGamePressed =false;
     protected Intent playIntent;
     private BitmapFactory.Options options = new BitmapFactory.Options();
+    private static SoundPool sounds;
+    private int selectSound;
 
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
@@ -200,6 +203,7 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 if(selectFleetPressed){
+                  //  fleets.get(fleetNum).getMainAttack();
                     playIntent = new Intent(myContext, PlayActivity.class);
                     playIntent.putParcelableArrayListExtra("fleets", fleets);
                     playIntent.putExtra("playerFleet", fleetNum);

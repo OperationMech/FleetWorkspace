@@ -4,12 +4,15 @@ import fleet.R;
 import fleet.classes.gameLogic.Fleet;
 import fleet.view.FleetView;
 
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.SoundEffectConstants;
 import android.widget.ViewSwitcher;
 
 import java.io.IOException;
@@ -29,14 +32,16 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assetManager = getAssets();
+        SoundPool fleetSounds = new SoundPool(1,1,1);
         try {
             fleetList = (assetManager.list(FLEET_DIR));
             for (String fleet : fleetList) {
-                InputStream kingStream = assetManager.open(FLEET_DIR + "/" +
-                        fleet + "/" + "King.png");
+                String fleetPath = (FLEET_DIR + "/" + fleet);
+                InputStream kingStream = assetManager.open(fleetPath + "/" + "King.png");
+                AssetFileDescriptor mainAttack = assetManager.openFd(fleetPath + "/" + "MainAttack.ogg");
                 Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
-                Fleet newFleet = new Fleet(kingImg);
-                newFleet.setFleetPath(FLEET_DIR + "/" + fleet);
+                fleetSounds.load(mainAttack,0);
+                Fleet newFleet = new Fleet(kingImg, fleetSounds,fleetPath);
                 fleets.add(newFleet);
             }
         } catch (IOException e) {

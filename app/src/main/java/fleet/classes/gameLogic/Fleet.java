@@ -1,6 +1,7 @@
 package fleet.classes.gameLogic;
 
 import android.graphics.Bitmap;
+import android.media.SoundPool;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
@@ -14,13 +15,16 @@ public class Fleet implements Parcelable {
     protected String fleetName;
     protected Ship carrier;
     protected Bitmap facedown;
+    protected  SoundPool fleetSounds;
     protected Ship[] battleships = new Ship[4];
     protected Ship[] cruisers = new Ship[4];
     protected Ship[] destroyers = new Ship[4];
     public Creator<View> CREATOR;
 
-    public Fleet(Bitmap kingImg){
+    public Fleet(Bitmap kingImg, SoundPool fleetSounds, String fleetPath){
         battleships[0] = new Ship(kingImg);
+        this.fleetSounds = fleetSounds;
+        this.fleetPath =fleetPath;
     }
 
     public Bitmap getKing() {
