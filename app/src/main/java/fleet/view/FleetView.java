@@ -205,11 +205,11 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 if(selectFleetPressed){
-                    SoundPool local = fleets.get(fleetNum).getFleetSounds();
+                    mp.stop();
+                    fleets.get(fleetNum).playFleetAttack();
                     playIntent = new Intent(myContext, PlayActivity.class);
                     playIntent.putExtra("playerFleet", fleetNum.intValue());
                     playIntent.putParcelableArrayListExtra("fleets", fleets);
-                    local.play(1,1,1,1,1,1);
                     myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;
