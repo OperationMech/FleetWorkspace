@@ -30,7 +30,8 @@ public class PlayActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        int playerSelected = bundle.getInt("playerFleet", 0);
+        System.out.println(bundle.getInt("playerFleet"));
+        int playerSelected = bundle.getInt("playerFleet");
         Fleets = bundle.getParcelableArrayList("fleets");
         assetManager = getAssets();
         try {

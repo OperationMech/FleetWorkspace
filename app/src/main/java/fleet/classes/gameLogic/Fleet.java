@@ -24,18 +24,7 @@ public class Fleet implements Parcelable {
     protected Ship[] cruisers = new Ship[4];
     protected Ship[] destroyers = new Ship[4];
 
-    public Fleet(Parcel in) {
-        this.fleetPath = in.readString();
-        this.fleetName = in.readString();
-        this.carrier = in.readParcelable(Ship.class.getClassLoader());
-        this.facedown = in.readParcelable(Bitmap.class.getClassLoader());
-        this.battleships = new Ship[4];
-        in.readTypedArray(battleships, Ship.CREATOR);
-        this.cruisers = new Ship[4];
-        in.readTypedArray(cruisers, Ship.CREATOR);
-        this.destroyers = new Ship[4];
-        in.readTypedArray(destroyers, Ship.CREATOR);
-    }
+
 
 
     public Fleet(Bitmap kingImg, AssetFileDescriptor fleetSoundFile, String fleetPath){
@@ -102,7 +91,7 @@ public class Fleet implements Parcelable {
         }
     }
 
-    static final Parcelable.Creator<Fleet> CREATOR =
+    public static final Parcelable.Creator<Fleet> CREATOR =
             new Parcelable.Creator<Fleet>() {
 
         public Fleet createFromParcel(Parcel in) {
@@ -114,6 +103,18 @@ public class Fleet implements Parcelable {
         }
     };
 
+    public Fleet(Parcel in) {
+        this.fleetPath = in.readString();
+        this.fleetName = in.readString();
+        this.carrier = in.readParcelable(Ship.class.getClassLoader());
+        this.facedown = in.readParcelable(Bitmap.class.getClassLoader());
+    //    this.battleships = new Ship[4];
+    //    in.readTypedArray(battleships, Ship.CREATOR);
+    //    this.cruisers = new Ship[4];
+     //   in.readTypedArray(cruisers, Ship.CREATOR);
+    //    this.destroyers = new Ship[4];
+     //   in.readTypedArray(destroyers, Ship.CREATOR);
+    }
     @Override
     public int describeContents() {
         return 0;
@@ -126,8 +127,8 @@ public class Fleet implements Parcelable {
         dest.writeString(fleetName);
         dest.writeParcelable(carrier, flags);
         dest.writeParcelable(facedown, flags);
-        dest.writeTypedArray(battleships, flags);
-        dest.writeTypedArray(cruisers, flags);
-        dest.writeTypedArray(destroyers, flags);
+        //dest.writeTypedArray(battleships, flags);
+       // dest.writeTypedArray(cruisers, flags);
+       // dest.writeTypedArray(destroyers, flags);
     }
 }
