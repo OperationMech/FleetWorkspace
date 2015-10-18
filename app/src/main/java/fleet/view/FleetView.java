@@ -23,8 +23,6 @@ import fleet.classes.gameLogic.Fleet;
 
 public class FleetView extends View {
     private Paint blackPaint;
-    private float textX;
-    private float textY = 20;
     private int screenW;
     private int screenH;
     private Context myContext;
@@ -62,7 +60,6 @@ public class FleetView extends View {
         blackPaint.setColor(Color.BLACK);
         blackPaint.setTextScaleX((float) 2.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
-        textX = (float) (800 / 2.0);
         myContext = context;
         mp = MediaPlayer.create(context, R.raw.fleet_bgm);
         mp.setLooping(true);
@@ -127,7 +124,7 @@ public class FleetView extends View {
         }
 
         String text = fleets.get(fleetnum).getFleetName();
-        canvas.drawText(text, 0, text.length(), textX, textY, blackPaint);
+        canvas.drawText(text, 0, text.length(), screenW / 2, (int)(screenH * 0.05) , blackPaint);
         invalidate();
     }
 
