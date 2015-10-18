@@ -29,7 +29,7 @@ public class FleetView extends View {
     private MediaPlayer mp;
     private ArrayList<Fleet> fleets;
     private ArrayList<Bitmap> kings = new ArrayList<Bitmap>();
-    private Integer fleetnum = 0;
+    private Integer fleetNum = 0;
     private Bitmap leftArrow = BitmapFactory.decodeResource(getResources(), R.drawable.left_arrow);
     private int leftArrowX;
     private int leftArrowY;
@@ -68,7 +68,7 @@ public class FleetView extends View {
 
         options.inMutable = true;
 
-        fleetKing = fleets.get(fleetnum).getKing();
+        fleetKing = fleets.get(fleetNum).getKing();
         selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet, options);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down, options);
@@ -81,7 +81,7 @@ public class FleetView extends View {
             kings.add(king);
         }
 
-        fleetKing = kings.get(fleetnum);
+        fleetKing = kings.get(fleetNum);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
     }
@@ -111,7 +111,7 @@ public class FleetView extends View {
         rightArrowX = (int) (screenW * 0.85) - rightArrow.getWidth() / 2;
         rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
         canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY, null);
-        fleetKing = kings.get(fleetnum);
+        fleetKing = kings.get(fleetNum);
         fleetKingX = screenW / 2 - fleetKing.getWidth() / 2;
         fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
         canvas.drawBitmap(fleetKing, fleetKingX, fleetKingY, null);
@@ -123,7 +123,7 @@ public class FleetView extends View {
             canvas.drawBitmap(selectFleet, selectFleetX, selectFleetY, null);
         }
 
-        String text = fleets.get(fleetnum).getFleetName();
+        String text = fleets.get(fleetNum).getFleetName();
         canvas.drawText(text, 0, text.length(), screenW / 2, fleetKingY - (int)(screenH * 0.05) , blackPaint);
         invalidate();
     }
@@ -140,10 +140,10 @@ public class FleetView extends View {
                         x < rightArrowX + rightArrow.getWidth() &&
                         y > rightArrowY &&
                         y < rightArrowY + rightArrow.getHeight()) {
-                    if (fleetnum + 1 < fleets.size()) {
-                        fleetnum++;
+                    if (fleetNum + 1 < fleets.size()) {
+                        fleetNum++;
                     } else {
-                        fleetnum = 0;
+                        fleetNum = 0;
                     }
                     break;
                 }
@@ -151,10 +151,10 @@ public class FleetView extends View {
                         x < leftArrowX + leftArrow.getWidth() &&
                         y > leftArrowY &&
                         y < leftArrowY + leftArrow.getHeight()) {
-                    if (fleetnum - 1 >= 0) {
-                        fleetnum--;
+                    if (fleetNum - 1 >= 0) {
+                        fleetNum--;
                     } else {
-                        fleetnum = fleets.size() - 1;
+                        fleetNum = fleets.size() - 1;
                     }
                     break;
                 }
