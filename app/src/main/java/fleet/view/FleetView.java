@@ -2,18 +2,19 @@ package fleet.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Build;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,12 @@ public class FleetView extends View {
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
         super(context);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screenH = size.y;
+        screenW = size.x;
         blackPaint = new Paint();
         blackPaint.setAntiAlias(true);
         blackPaint.setColor(Color.BLACK);
@@ -69,21 +76,23 @@ public class FleetView extends View {
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down, options);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
-    }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        screenW = w;
-        screenH = h;
         Bitmap king;
         //scale Images
         for (int i = 0; i < fleets.size(); i++) {
             king = Bitmap.createScaledBitmap(fleets.get(i).getKing(), screenH / 4, screenH / 3, false);
             kings.add(king);
         }
+
         fleetKing = kings.get(fleetnum);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        screenW = w;
+        screenH = h;
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -162,6 +171,9 @@ public class FleetView extends View {
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
+                if(selectFleetPressed){
+
+                }
                 selectFleetPressed = false;
                 break;
         }
