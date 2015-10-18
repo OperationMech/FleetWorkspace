@@ -38,16 +38,19 @@ public class FleetView extends View {
     private Bitmap rightArrow = BitmapFactory.decodeResource(getResources(), R.drawable.right_arrow);
     private int rightArrowX;
     private int rightArrowY;
-    private Bitmap selectFleet;
     private Bitmap fleetKing;
     private int fleetKingX;
     private int fleetKingY;
-    private int selectFleetX;
     private int selectFleetY;
-    private BitmapFactory.Options options = new BitmapFactory.Options();
+    private Bitmap selectFleet;
     private Bitmap selectFleetDown;
     private boolean selectFleetPressed = false;
+    private Bitmap resumeGame;
+    private int resumeGameY;
+    private Bitmap resumeGameDown;
+    private boolean resumeGamePressed =false;
     protected Intent playIntent;
+    private BitmapFactory.Options options = new BitmapFactory.Options();
 
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
@@ -74,9 +77,9 @@ public class FleetView extends View {
 
         fleetKing = fleets.get(fleetNum).getKing();
         selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet, options);
-        selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down, options);
-        selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
+        resumeGame = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game, options);
+        resumeGameDown = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game_down, options);
 
         Bitmap king;
         //scale Images
@@ -88,12 +91,22 @@ public class FleetView extends View {
         fleetKing = kings.get(fleetNum);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
+        resumeGame = Bitmap.createScaledBitmap(resumeGame, fleetKing.getWidth(), resumeGame.getHeight(), false);
+        resumeGameDown = Bitmap.createScaledBitmap(resumeGame, fleetKing.getWidth(),resumeGameDown.getHeight(),false);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         screenW = w;
         screenH = h;
+        leftArrowX = (int) (screenW * 0.15) - leftArrow.getWidth() / 2;
+        leftArrowY = (int) (screenH * 0.50) - leftArrow.getHeight() / 2;
+        rightArrowX = (int) (screenW * 0.85) - rightArrow.getWidth() / 2;
+        fleetKingX = screenW / 2 - fleetKing.getWidth() / 2;
+        fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
+        rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
+        resumeGameY = (int) (fleetKingY - screenH * 0.2);
+
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -109,27 +122,26 @@ public class FleetView extends View {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void onDraw(Canvas canvas) {
-        leftArrowX = (int) (screenW * 0.15) - leftArrow.getWidth() / 2;
-        leftArrowY = (int) (screenH * 0.50) - leftArrow.getHeight() / 2;
         canvas.drawBitmap(leftArrow, leftArrowX, leftArrowY, null);
-        rightArrowX = (int) (screenW * 0.85) - rightArrow.getWidth() / 2;
-        rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
         canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY, null);
         fleetKing = kings.get(fleetNum);
-        fleetKingX = screenW / 2 - fleetKing.getWidth() / 2;
-        fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
         canvas.drawBitmap(fleetKing, fleetKingX, fleetKingY, null);
-        selectFleetX = fleetKingX;
         selectFleetY = (int) (fleetKingY + fleetKing.getHeight() + screenH * 0.1);
         if (selectFleetPressed){
-            canvas.drawBitmap(selectFleetDown,selectFleetX,selectFleetY,null);
+            canvas.drawBitmap(selectFleetDown,fleetKingX, selectFleetY,null);
         }else {
-            canvas.drawBitmap(selectFleet, selectFleetX, selectFleetY, null);
+            canvas.drawBitmap(selectFleet, fleetKingX, selectFleetY, null);
         }
-
         String text = fleets.get(fleetNum).getFleetName();
         canvas.drawText(text, 0, text.length(), screenW / 2, fleetKingY - (int)(screenH * 0.05) , blackPaint);
         invalidate();
+        if( playIntent != null){
+            if(resumeGamePressed){
+                canvas.drawBitmap(resumeGameDown, fleetKingX, resumeGameY, null);
+            }else {
+                canvas.drawBitmap(resumeGame, fleetKingX, resumeGameY, null);
+            }
+        }
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -140,6 +152,7 @@ public class FleetView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                //Detection on right arrow
                 if (x > rightArrowX &&
                         x < rightArrowX + rightArrow.getWidth() &&
                         y > rightArrowY &&
@@ -151,6 +164,7 @@ public class FleetView extends View {
                     }
                     break;
                 }
+                //Detection on left arrow
                 if (x > leftArrowX &&
                         x < leftArrowX + leftArrow.getWidth() &&
                         y > leftArrowY &&
@@ -162,8 +176,9 @@ public class FleetView extends View {
                     }
                     break;
                 }
-                if (x > selectFleetX &&
-                        x < selectFleetX + selectFleet.getWidth() &&
+                //Detection on select Fleet button
+                if (x > fleetKingX &&
+                        x < fleetKingX + selectFleet.getWidth() &&
                         y > selectFleetY &&
                         y < selectFleetY + selectFleet.getHeight()) {
                     selectFleetPressed = true;
