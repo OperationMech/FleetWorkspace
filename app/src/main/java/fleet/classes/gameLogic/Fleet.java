@@ -15,7 +15,7 @@ public class Fleet implements Parcelable {
     protected String fleetName;
     protected Ship carrier;
     protected Bitmap facedown;
-    protected  SoundPool fleetSounds;
+    protected SoundPool fleetSounds;
     protected Ship[] battleships = new Ship[4];
     protected Ship[] cruisers = new Ship[4];
     protected Ship[] destroyers = new Ship[4];
