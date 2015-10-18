@@ -207,8 +207,7 @@ public class FleetView extends View {
                 if(selectFleetPressed){
                     fleets.get(fleetNum).getFleetSounds().play(1,1,1,1,1,1);
                     playIntent = new Intent(myContext, PlayActivity.class);
-                    playIntent.putExtra("fleets", fleets);
-                    playIntent.putExtra("playerFleet", fleetNum);
+                    playIntent.putExtra("playerFleet", fleetNum.intValue());
                     myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;

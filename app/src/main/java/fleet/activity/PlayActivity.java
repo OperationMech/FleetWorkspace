@@ -1,6 +1,7 @@
 package fleet.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -27,8 +28,9 @@ public class PlayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Fleets  = (ArrayList<Fleet>) savedInstanceState.get("fleets");
-        Integer playerSelected = savedInstanceState.getInt("playerFleet");
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        int playerSelected = bundle.getInt("playerFleet", 0);
         assetManager = getAssets();
         try {
             shipList = (assetManager.list(Fleets.get(playerSelected).getFleetPath()));
