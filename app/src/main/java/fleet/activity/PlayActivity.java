@@ -17,6 +17,18 @@ public class PlayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+            /* populate fleets code
+                    try {
+                        shipList = (assetManager.list(FLEET_DIR + "/" + fleet));
+                        for (String ship : shipList) {
+                            InputStream shipStream = assetManager.open(FLEET_DIR + "/" +
+                                    fleet + "/" + ship);
+                            newFleet.populateFleet(ship, BitmapFactory.decodeStream(shipStream));
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
         PlayView playView = new PlayView(this);
         setContentView(playView);
     }

@@ -38,18 +38,6 @@ public class GameActivity extends Activity {
                 Fleet newFleet = new Fleet(kingImg);
                 newFleet.setFleetPath(FLEET_DIR + "/" + fleet);
                 fleets.add(newFleet);
-                    /* populate fleets code
-                    try {
-                        shipList = (assetManager.list(FLEET_DIR + "/" + fleet));
-                        for (String ship : shipList) {
-                            InputStream shipStream = assetManager.open(FLEET_DIR + "/" +
-                                    fleet + "/" + ship);
-                            newFleet.populateFleet(ship, BitmapFactory.decodeStream(shipStream));
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
             }
         } catch (IOException e) {
             e.printStackTrace();
