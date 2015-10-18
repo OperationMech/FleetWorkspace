@@ -21,16 +21,13 @@ import fleet.R;
 import fleet.classes.gameLogic.Fleet;
 
 public class FleetView extends View {
-    private Paint redPaint;
     private Paint blackPaint;
     private float textX;
     private float textY = 20;
     private int screenW;
     private int screenH;
-    private float radius;
     private Context myContext;
     private MediaPlayer mp;
-    private final String[] list = null;
     private ArrayList<Fleet> fleets;
     private ArrayList<Bitmap> kings = new ArrayList<Bitmap>();
     private Integer fleetnum = 0;
@@ -59,7 +56,6 @@ public class FleetView extends View {
         blackPaint.setTextScaleX((float) 2.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
         textX = (float) (800 / 2.0);
-        radius = 30;
         myContext = context;
         mp = MediaPlayer.create(context, R.raw.fleet_bgm);
         mp.setLooping(true);
