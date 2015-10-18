@@ -52,7 +52,7 @@ public class GameActivity extends Activity {
         mp.setLooping(true);
         mp.start();
         FleetView myView = new FleetView(this, fleets);
-        
+
         setContentView(myView);
     }
 
@@ -64,7 +64,7 @@ public class GameActivity extends Activity {
     }
     @Override
     public void onDestroy(){
-        mp.stop();
+        mp.release();
         super.onDestroy();
     }
 

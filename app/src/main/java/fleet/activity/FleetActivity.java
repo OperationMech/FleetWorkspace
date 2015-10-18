@@ -39,7 +39,7 @@ public class FleetActivity extends Activity {
 
     @Override
     public void onDestroy(){
-        mp.stop();
+        mp.release();
         super.onDestroy();
     }
 
