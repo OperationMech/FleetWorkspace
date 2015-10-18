@@ -34,9 +34,10 @@ public class TitleView extends View {
     private Context myContext;
     private MediaPlayer mp;
 
-    public TitleView(Context context) {
+    public TitleView(Context context,MediaPlayer mp) {
         super(context);
         myContext = context;
+        this.mp = mp;
         titleBackground = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
         titleGraphic = BitmapFactory.decodeResource(getResources(), fleet.R.drawable.title_graphic);
         titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
@@ -46,9 +47,6 @@ public class TitleView extends View {
         optionsButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.options_button_down);
         muteButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_up);
         muteButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_down);
-        mp = MediaPlayer.create(context, fleet.R.raw.title_bgm);
-        mp.setLooping(true);
-        mp.start();
         mute = false;
     }
 

@@ -8,6 +8,7 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.app.Activity;
@@ -27,6 +28,8 @@ public class GameActivity extends Activity {
     protected int playerFleet;
     private ViewSwitcher switcher;
     private static final int REFRESH_SCREEN = 1;
+    protected MediaPlayer mp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,11 @@ public class GameActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mp = MediaPlayer.create(this, R.raw.fleet_bgm);
+        mp.setLooping(true);
+        mp.start();
         FleetView myView = new FleetView(this, fleets);
+        
         setContentView(myView);
     }
 
@@ -54,6 +61,11 @@ public class GameActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.fleet, menu);
         return true;
+    }
+    @Override
+    public void onDestroy(){
+        mp.stop();
+        super.onDestroy();
     }
 
 }

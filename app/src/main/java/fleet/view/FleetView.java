@@ -29,7 +29,6 @@ public class FleetView extends View {
     private int screenW;
     private int screenH;
     private Context myContext;
-    private MediaPlayer mp;
     private ArrayList<Fleet> fleets;
     private ArrayList<Bitmap> kings = new ArrayList<Bitmap>();
     private Integer fleetNum = 0;
@@ -71,9 +70,6 @@ public class FleetView extends View {
         blackPaint.setTextSize((float) 24.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
         myContext = context;
-        mp = MediaPlayer.create(context, R.raw.fleet_bgm);
-        mp.setLooping(true);
-        mp.start();
         this.fleets = fleets;
 
         options.inMutable = true;
@@ -117,11 +113,6 @@ public class FleetView extends View {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus) {
-            mp.start();
-        } else {
-            mp.pause();
-        }
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -205,7 +196,6 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 if(selectFleetPressed){
-                    mp.stop();
                     fleets.get(fleetNum).playFleetAttack();
                     playIntent = new Intent(myContext, PlayActivity.class);
                     playIntent.putExtra("playerFleet", fleetNum.intValue());
