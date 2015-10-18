@@ -58,7 +58,7 @@ public class FleetView extends View {
         blackPaint = new Paint();
         blackPaint.setAntiAlias(true);
         blackPaint.setColor(Color.BLACK);
-        blackPaint.setTextScaleX((float) 2.0);
+        blackPaint.setTextSize((float) 24.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
         myContext = context;
         mp = MediaPlayer.create(context, R.raw.fleet_bgm);

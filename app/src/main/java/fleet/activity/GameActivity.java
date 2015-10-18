@@ -20,8 +20,6 @@ public class GameActivity extends Activity {
     private AssetManager assetManager;
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
-    private static int runOnce = 0;
-    private String[] shipList;
     protected int playerFleet;
 
     @Override
