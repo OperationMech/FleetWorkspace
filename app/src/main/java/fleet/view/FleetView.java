@@ -19,6 +19,8 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 
 import fleet.R;
+import fleet.activity.GameActivity;
+import fleet.activity.PlayActivity;
 import fleet.classes.gameLogic.Fleet;
 
 public class FleetView extends View {
@@ -45,10 +47,12 @@ public class FleetView extends View {
     private BitmapFactory.Options options = new BitmapFactory.Options();
     private Bitmap selectFleetDown;
     private boolean selectFleetPressed = false;
+    protected Intent playIntent;
 
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
         super(context);
+        myContext = context;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
@@ -169,7 +173,8 @@ public class FleetView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 if(selectFleetPressed){
-
+                    playIntent = new Intent(myContext, PlayActivity.class);
+                    myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;
                 break;
