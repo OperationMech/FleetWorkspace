@@ -12,8 +12,8 @@ import fleet.R;
  * Created by Radu on 9/27/2015.
  */
 public class Fleet {
-    //protected String fleetPath;
-    protected String FleetName;
+    protected String fleetPath;
+    protected String fleetName;
     protected Ship carrier;
     protected Bitmap facedown;
     protected Ship[] battleships = new Ship[4];
@@ -28,7 +28,22 @@ public class Fleet {
         return battleships[0].faceUp;
     }
 
-    public void setKing(Bitmap newKing ) {   battleships[0].faceUp = newKing;   }
+    public void setKing(Bitmap newKing ) {
+        battleships[0].faceUp = newKing;
+    }
+
+    public void setFleetPath(String newFleetPath) {
+        fleetPath = newFleetPath;
+        fleetName = fleetPath.split("/")[1];
+    }
+
+    public String getFleetName() {
+        return fleetName;
+    }
+
+    public String getFleetPath() {
+        return fleetPath;
+    }
 
     public void populateFleet(String name, Bitmap ship) {
         if(name.equals("Two.png")) {

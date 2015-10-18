@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "Fleet.fleet"
-        minSdkVersion 8
-        targetSdkVersion 18
+        minSdkVersion 19
+        targetSdkVersion 19
     }
 
     buildTypes {

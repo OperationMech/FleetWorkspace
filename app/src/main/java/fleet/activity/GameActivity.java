@@ -17,16 +17,17 @@ import java.util.ArrayList;
 
 public class GameActivity extends Activity {
     private final String FLEET_DIR = "fleets";
+    private AssetManager assetManager;
+    private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
+    private static int runOnce = 0;
     private String[] shipList;
     protected int playerFleet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AssetManager assetManager = getAssets();
-        ArrayList<Fleet> fleets = new ArrayList<Fleet>();
-
+        assetManager = getAssets();
         try {
             fleetList = (assetManager.list(FLEET_DIR));
             for (String fleet : fleetList) {
@@ -34,18 +35,20 @@ public class GameActivity extends Activity {
                         fleet + "/" + "King.png");
                 Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
                 Fleet newFleet = new Fleet(kingImg);
+                newFleet.setFleetPath(FLEET_DIR + "/" + fleet);
                 fleets.add(newFleet);
-                try {
-                    shipList = (assetManager.list(FLEET_DIR + "/" + fleet));
-                    for (String ship : shipList) {
-                        InputStream shipStream = assetManager.open(FLEET_DIR + "/" +
-                                fleet + "/" + ship);
-                        newFleet.populateFleet(ship, BitmapFactory.decodeStream(shipStream));
-                    }
+                    /* populate fleets code
+                    try {
+                        shipList = (assetManager.list(FLEET_DIR + "/" + fleet));
+                        for (String ship : shipList) {
+                            InputStream shipStream = assetManager.open(FLEET_DIR + "/" +
+                                    fleet + "/" + ship);
+                            newFleet.populateFleet(ship, BitmapFactory.decodeStream(shipStream));
+                        }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
             }
         } catch (IOException e) {
             e.printStackTrace();
