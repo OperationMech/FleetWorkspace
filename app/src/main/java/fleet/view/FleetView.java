@@ -105,10 +105,10 @@ public class FleetView extends View {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void onDraw(Canvas canvas) {
-        leftArrowX = (int) (screenW * 0.20) - leftArrow.getWidth() / 2;
+        leftArrowX = (int) (screenW * 0.15) - leftArrow.getWidth() / 2;
         leftArrowY = (int) (screenH * 0.50) - leftArrow.getHeight() / 2;
         canvas.drawBitmap(leftArrow, leftArrowX, leftArrowY, null);
-        rightArrowX = (int) (screenW * 0.80) - rightArrow.getWidth() / 2;
+        rightArrowX = (int) (screenW * 0.85) - rightArrow.getWidth() / 2;
         rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
         canvas.drawBitmap(rightArrow, rightArrowX, rightArrowY, null);
         fleetKing = kings.get(fleetnum);
@@ -124,7 +124,7 @@ public class FleetView extends View {
         }
 
         String text = fleets.get(fleetnum).getFleetName();
-        canvas.drawText(text, 0, text.length(), screenW / 2, (int)(screenH * 0.05) , blackPaint);
+        canvas.drawText(text, 0, text.length(), screenW / 2, fleetKingY - (int)(screenH * 0.05) , blackPaint);
         invalidate();
     }
 
