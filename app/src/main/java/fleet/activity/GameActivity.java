@@ -18,25 +18,35 @@ import java.util.ArrayList;
 public class GameActivity extends Activity {
     private final String FLEET_DIR = "fleets";
     private String[] fleetList;
+    private String[] shipList;
     protected int playerFleet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AssetManager assetManager = getAssets();
-        Bitmap img = null;
         ArrayList<Fleet> fleets = new ArrayList<Fleet>();
 
         try {
             fleetList = (assetManager.list(FLEET_DIR));
-            System.out.println(fleetList);
             for (String fleet : fleetList) {
-                System.out.println(fleet);
                 InputStream kingStream = assetManager.open(FLEET_DIR + "/" +
-                        fleet + "/King.png");
+                        fleet + "/" + "King.png");
                 Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
                 Fleet newFleet = new Fleet(kingImg);
                 fleets.add(newFleet);
+                try {
+                    shipList = (assetManager.list(FLEET_DIR + "/" + fleet));
+                    for (String ship : shipList) {
+                        InputStream shipStream = assetManager.open(FLEET_DIR + "/" +
+                                fleet + "/" + ship);
+                        System.out.println(ship);
+                        newFleet.populateFleet(ship, BitmapFactory.decodeStream(shipStream));
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

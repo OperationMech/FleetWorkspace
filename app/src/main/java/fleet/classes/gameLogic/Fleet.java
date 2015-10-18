@@ -30,7 +30,31 @@ public class Fleet {
 
     public void setKing(Bitmap newKing ) {   battleships[0].faceUp = newKing;   }
 
-    public void populateFleet(){
-        return;
+    public void populateFleet(String name, Bitmap ship) {
+        if(name.equals("Two.png")) {
+            destroyers[3] = new Ship(ship);
+        } else if (name.equals("Three.png")) {
+            destroyers[2] = new Ship(ship);
+        } else if (name.equals("Four.png")) {
+            destroyers[1] = new Ship(ship);
+        } else if (name.equals("Five.png")) {
+            destroyers[0] = new Ship(ship);
+        } else if (name.equals("Six.png")) {
+            cruisers[3] = new Ship(ship);
+        } else if (name.equals("Seven.png")) {
+            cruisers[2] = new Ship(ship);
+        } else if (name.equals("Eight.png")) {
+            cruisers[1] = new Ship(ship);
+        } else if (name.equals("Nine.png")) {
+            cruisers[0] = new Ship(ship);
+        } else if (name.equals("Ten.png")) {
+            battleships[3] = new Ship(ship);
+        } else if (name.equals("Jack.png")) {
+            battleships[2] = new Ship(ship);
+        } else if (name.equals("Queen.png")) {
+            battleships[1] = new Ship(ship);
+        } else if (name.equals("Ace.png")) {
+            carrier = new Ship(ship);
+        }
     }
 }
