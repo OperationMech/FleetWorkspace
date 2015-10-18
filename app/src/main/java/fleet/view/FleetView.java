@@ -126,7 +126,7 @@ public class FleetView extends View {
             canvas.drawBitmap(selectFleet, selectFleetX, selectFleetY, null);
         }
 
-        String text = "Select Fleet";
+        String text = fleets.get(fleetnum).getFleetName();
         canvas.drawText(text, 0, text.length(), textX, textY, blackPaint);
         invalidate();
     }

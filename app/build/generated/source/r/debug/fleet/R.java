@@ -48,6 +48,7 @@ public final class R {
         public static final int app_name=0x7f070001;
         public static final int hello_world=0x7f070002;
         public static final int title_activity_game=0x7f070003;
+        public static final int title_activity_play=0x7f070004;
     }
     public static final class style {
         /**  API 11 theme customizations can go here. 
