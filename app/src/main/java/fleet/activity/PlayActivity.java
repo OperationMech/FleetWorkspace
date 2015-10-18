@@ -27,7 +27,7 @@ public class PlayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Fleets  = savedInstanceState.getParcelableArrayList("fleets");
+        Fleets  = (ArrayList<Fleet>) savedInstanceState.get("fleets");
         Integer playerSelected = savedInstanceState.getInt("playerFleet");
         assetManager = getAssets();
         try {

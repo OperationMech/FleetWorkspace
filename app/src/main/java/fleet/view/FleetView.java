@@ -205,7 +205,7 @@ public class FleetView extends View {
                 if(selectFleetPressed){
                   //  fleets.get(fleetNum).getMainAttack();
                     playIntent = new Intent(myContext, PlayActivity.class);
-                    playIntent.putParcelableArrayListExtra("fleets", fleets);
+                    playIntent.putExtra("fleets", fleets);
                     playIntent.putExtra("playerFleet", fleetNum);
                     myContext.startActivity(playIntent);
                 }
