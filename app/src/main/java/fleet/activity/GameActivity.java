@@ -25,6 +25,7 @@ public class GameActivity extends Activity {
     private AssetManager assetManager;
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
+    private static int runOnce = 0;
     protected int playerFleet;
     private ViewSwitcher switcher;
     private static final int REFRESH_SCREEN = 1;
@@ -35,18 +36,21 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assetManager = getAssets();
-        try {
-            fleetList = (assetManager.list(FLEET_DIR));
-            for (String fleet : fleetList) {
-                String fleetPath = (FLEET_DIR + "/" + fleet);
-                InputStream kingStream = assetManager.open(fleetPath + "/King.png");
-                AssetFileDescriptor fleetSoundFile = assetManager.openFd(fleetPath + "/MainAttack.ogg");
-                Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
-                Fleet newFleet = new Fleet(kingImg, fleetSoundFile ,fleetPath);
-                fleets.add(newFleet);
+        if(runOnce == 0) {
+            try {
+                fleetList = (assetManager.list(FLEET_DIR));
+                for (String fleet : fleetList) {
+                    String fleetPath = (FLEET_DIR + "/" + fleet);
+                    InputStream kingStream = assetManager.open(fleetPath + "/King.png");
+                    AssetFileDescriptor fleetSoundFile = assetManager.openFd(fleetPath + "/MainAttack.ogg");
+                    Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
+                    Fleet newFleet = new Fleet(kingImg, fleetSoundFile, fleetPath);
+                    fleets.add(newFleet);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            runOnce = 1;
         }
         mp = MediaPlayer.create(this, R.raw.fleet_bgm);
         mp.setLooping(true);
