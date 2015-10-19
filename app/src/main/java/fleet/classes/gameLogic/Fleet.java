@@ -84,6 +84,8 @@ public class Fleet implements Parcelable {
             battleships[2] = new Ship(ship);
         } else if (name.equals("Queen.png")) {
             battleships[1] = new Ship(ship);
+        }else if (name.equals("King.png")) {
+            battleships[0] = new Ship(ship);
         } else if (name.equals("Ace.png")) {
             carrier = new Ship(ship);
         } else if (name.equals("FaceDown.png")) {
@@ -108,12 +110,6 @@ public class Fleet implements Parcelable {
         this.fleetName = in.readString();
         this.carrier = in.readParcelable(Ship.class.getClassLoader());
         this.facedown = in.readParcelable(Bitmap.class.getClassLoader());
-    //    this.battleships = new Ship[4];
-    //    in.readTypedArray(battleships, Ship.CREATOR);
-    //    this.cruisers = new Ship[4];
-     //   in.readTypedArray(cruisers, Ship.CREATOR);
-    //    this.destroyers = new Ship[4];
-     //   in.readTypedArray(destroyers, Ship.CREATOR);
     }
     @Override
     public int describeContents() {
@@ -127,8 +123,5 @@ public class Fleet implements Parcelable {
         dest.writeString(fleetName);
         dest.writeParcelable(carrier, flags);
         dest.writeParcelable(facedown, flags);
-        //dest.writeTypedArray(battleships, flags);
-       // dest.writeTypedArray(cruisers, flags);
-       // dest.writeTypedArray(destroyers, flags);
     }
 }

@@ -37,7 +37,7 @@ public class PlayActivity extends Activity {
         try {
             shipList = (assetManager.list(Fleets.get(playerSelected).getFleetPath()));
             for (String ship : shipList) {
-                InputStream shipStream = assetManager.open(Fleets.get(playerSelected).getFleetPath() + ship);
+                InputStream shipStream = assetManager.open(Fleets.get(playerSelected).getFleetPath() +"/"+ ship);
                 Fleets.get(playerSelected).populateFleet(ship, BitmapFactory.decodeStream(shipStream));
             }
 
