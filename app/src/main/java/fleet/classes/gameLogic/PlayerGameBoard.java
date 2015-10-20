@@ -6,11 +6,19 @@ import fleet.classes.players.Player;
  * Created by Radu on 9/27/2015.
  */
 public class PlayerGameBoard {
-    protected Fleet fleet;
-    protected Ship[] fleetPositions;
+    protected Ship[] fleetPositions = new Ship[9];
+    private String fleetpath;
 
-    public PlayerGameBoard(Player player) {
-        this.fleet = fleet;
-
+    public PlayerGameBoard(String[] positions,String fleetpath) {
+        this.fleetpath = fleetpath;
+        this.fleetPositions = buildBoard(positions);
     }
+
+    protected Ship[] buildBoard(String[] positions){
+        for (String shipName : positions){
+
+        }
+        return null;
+    }
+
 }

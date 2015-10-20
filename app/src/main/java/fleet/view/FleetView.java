@@ -28,7 +28,7 @@ public class FleetView extends View {
     private Paint blackPaint;
     private int screenW;
     private int screenH;
-    private Context myContext;
+    private GameActivity myContext;
     private ArrayList<Fleet> fleets;
     private ArrayList<Bitmap> kings = new ArrayList<Bitmap>();
     private Integer fleetNum = 0;
@@ -56,7 +56,7 @@ public class FleetView extends View {
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
         super(context);
-        myContext = context;
+        myContext = (GameActivity)context;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         background = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
         Display display = wm.getDefaultDisplay();
@@ -69,7 +69,6 @@ public class FleetView extends View {
         blackPaint.setColor(Color.BLACK);
         blackPaint.setTextSize((float) 24.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
-        myContext = context;
         this.fleets = fleets;
 
         options.inMutable = true;
@@ -196,11 +195,12 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 if(selectFleetPressed){
+                    myContext.buildFleet();
                     fleets.get(fleetNum).playFleetAttack();
                     playIntent = new Intent(myContext, PlayActivity.class);
                     playIntent.putExtra("playerFleet", fleetNum.intValue());
                     playIntent.putParcelableArrayListExtra("fleets", fleets);
-                    myContext.startActivity(playIntent);
+                 //   myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;
                 resumeGamePressed = false;

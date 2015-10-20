@@ -2,6 +2,7 @@ package fleet.activity;
 
 import fleet.R;
 import fleet.classes.gameLogic.Fleet;
+import fleet.view.BuildView;
 import fleet.view.FleetView;
 
 import android.content.res.AssetFileDescriptor;
@@ -58,6 +59,11 @@ public class GameActivity extends Activity {
         FleetView myView = new FleetView(this, fleets);
 
         setContentView(myView);
+    }
+
+    public void buildFleet(){
+        BuildView buildView = new BuildView(this);
+        setContentView(buildView);
     }
 
     @Override
