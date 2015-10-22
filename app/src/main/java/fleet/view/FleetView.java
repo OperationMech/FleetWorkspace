@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
@@ -51,12 +52,24 @@ public class FleetView extends View {
     private Bitmap resumeGameDown;
     private boolean resumeGamePressed =false;
     protected Intent playIntent;
-    private BitmapFactory.Options options = new BitmapFactory.Options();
+    private AudioManager audioManager;
+    SoundPool selectionSound;
 
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
         super(context);
         myContext = (GameActivity)context;
+        audioManager = (AudioManager)
+                this.myContext.getSystemService(Context.AUDIO_SERVICE);
+        selectionSound = new SoundPool(1,1,1);
+        selectionSound.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                float volume = (float)
+                        audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                soundPool.play(sampleId, volume, volume, 1, 0, 1);
+            }
+        });
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         background = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
         Display display = wm.getDefaultDisplay();
@@ -71,13 +84,11 @@ public class FleetView extends View {
         blackPaint.setTextAlign(Paint.Align.CENTER);
         this.fleets = fleets;
 
-        options.inMutable = true;
-
         fleetKing = fleets.get(fleetNum).getKing();
-        selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet, options);
-        selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down, options);
-        resumeGame = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game, options);
-        resumeGameDown = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game_down, options);
+        selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet);
+        selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down);
+        resumeGame = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game);
+        resumeGameDown = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game_down);
 
         Bitmap king;
         //scale Images
@@ -196,11 +207,11 @@ public class FleetView extends View {
                 }
                 if(selectFleetPressed){
                     myContext.buildFleet();
-                    fleets.get(fleetNum).playFleetAttack();
+                    selectionSound.load(fleets.get(fleetNum).getFleetAttack(), 1);
                     playIntent = new Intent(myContext, PlayActivity.class);
                     playIntent.putExtra("playerFleet", fleetNum.intValue());
                     playIntent.putParcelableArrayListExtra("fleets", fleets);
-                 //   myContext.startActivity(playIntent);
+                    //   myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;
                 resumeGamePressed = false;

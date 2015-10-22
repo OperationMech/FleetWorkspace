@@ -50,15 +50,8 @@ public class Fleet implements Parcelable {
         return fleetPath;
     }
 
-    public void playFleetAttack() {
-        SoundPool local = new SoundPool(1,1,1);
-        local.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                soundPool.play(sampleId,1,1,1,1,1);
-            }
-        });
-        local.load(fleetSoundFile,1);
+    public AssetFileDescriptor getFleetAttack() {
+        return fleetSoundFile;
     }
 
     public void populateFleet(String name, Bitmap ship) {
@@ -96,14 +89,14 @@ public class Fleet implements Parcelable {
     public static final Parcelable.Creator<Fleet> CREATOR =
             new Parcelable.Creator<Fleet>() {
 
-        public Fleet createFromParcel(Parcel in) {
-            return new Fleet(in);
-        }
+                public Fleet createFromParcel(Parcel in) {
+                    return new Fleet(in);
+                }
 
-        public Fleet[] newArray(int size) {
-            return new Fleet[size];
-        }
-    };
+                public Fleet[] newArray(int size) {
+                    return new Fleet[size];
+                }
+            };
 
     public Fleet(Parcel in) {
         this.fleetPath = in.readString();
