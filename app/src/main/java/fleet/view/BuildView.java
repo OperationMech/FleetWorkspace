@@ -3,6 +3,7 @@ package fleet.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.View;
 
@@ -24,15 +25,28 @@ public class BuildView extends View {
         screenW = w;
         screenH = h;
         Point origin;
-        for (int i = 0; i < 12; i++){
-            origin  =  new Point(screenW,screenH);
-            slotsOrigin[i] = origin;
+        int x;
+        int y;
+        int pointNum = 0;
+        for (int column = 0; column < 3; column++){
+            x = (int)((screenW * .025) + (column * (screenW * .33)));
+            for (int row = 0; row < 4;row++){
+                y = (int)((screenH * .025) + (row * (screenH * .25)));
+                origin = new Point(x,y);
+                slotsOrigin[pointNum] = origin;
+                pointNum++;
+            }
+
         }
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
     @Override
     protected void onDraw(Canvas canvas){
+        for (Point point : slotsOrigin) {
+            System.out.println(point.x + " " + point.y);
+            canvas.drawCircle(point.x, point.y,5,new Paint());
+        }
 
 
     }
