@@ -207,9 +207,8 @@ public class FleetView extends View {
                 }
                 if(selectFleetPressed){
                     Fleet playerFleet = fleets.get(fleetNum);
-                    myContext.setPlayerFleetPath(playerFleet.getFleetPath());
                     selectionSound.load(playerFleet.getFleetAttack(), 1);
-                    myContext.buildFleet();
+                    myContext.buildFleet(playerFleet.getFleetPath());
                   //  playIntent = new Intent(myContext, PlayActivity.class);
                   //  playIntent.putExtra("playerFleet", fleetNum.intValue());
                   //  playIntent.putParcelableArrayListExtra("fleets", fleets);

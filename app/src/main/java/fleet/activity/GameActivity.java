@@ -61,11 +61,8 @@ public class GameActivity extends Activity {
         setContentView(myView);
     }
 
-    public void setPlayerFleetPath(String path){
+    public void buildFleet(String path){
         this.playerFleetPath = path;
-    }
-
-    public void buildFleet(){
         BuildView buildView = new BuildView(this);
         setContentView(buildView);
     }
