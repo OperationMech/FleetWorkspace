@@ -206,11 +206,13 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 if(selectFleetPressed){
+                    Fleet playerFleet = fleets.get(fleetNum);
+                    myContext.setPlayerFleetPath(playerFleet.getFleetPath());
+                    selectionSound.load(playerFleet.getFleetAttack(), 1);
                     myContext.buildFleet();
-                    selectionSound.load(fleets.get(fleetNum).getFleetAttack(), 1);
-                    playIntent = new Intent(myContext, PlayActivity.class);
-                    playIntent.putExtra("playerFleet", fleetNum.intValue());
-                    playIntent.putParcelableArrayListExtra("fleets", fleets);
+                  //  playIntent = new Intent(myContext, PlayActivity.class);
+                  //  playIntent.putExtra("playerFleet", fleetNum.intValue());
+                  //  playIntent.putParcelableArrayListExtra("fleets", fleets);
                     //   myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;

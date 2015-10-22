@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fleet.iml" filepath="$PROJECT_DIR$/Fleet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FleetWorkspace.iml" filepath="$PROJECT_DIR$/FleetWorkspace.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

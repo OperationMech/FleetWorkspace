@@ -27,7 +27,7 @@ public class GameActivity extends Activity {
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
     private static int runOnce = 0;
-    protected int playerFleet;
+    protected String playerFleetPath;
     private ViewSwitcher switcher;
     private static final int REFRESH_SCREEN = 1;
     protected MediaPlayer mp;
@@ -59,6 +59,10 @@ public class GameActivity extends Activity {
         FleetView myView = new FleetView(this, fleets);
 
         setContentView(myView);
+    }
+
+    public void setPlayerFleetPath(String path){
+        this.playerFleetPath = path;
     }
 
     public void buildFleet(){
