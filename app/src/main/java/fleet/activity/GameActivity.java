@@ -64,6 +64,12 @@ public class GameActivity extends Activity {
     public void buildFleet(String path){
         this.playerFleetPath = path;
         BuildView buildView = new BuildView(this);
+        try {
+            String[] fleetFiles = (assetManager.list(playerFleetPath));
+            assetManager.open(playerFleetPath + "/" + "One.png");
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
         setContentView(buildView);
     }
 
