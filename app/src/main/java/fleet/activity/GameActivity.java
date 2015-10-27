@@ -61,13 +61,25 @@ public class GameActivity extends Activity {
 
     public void buildFleet(String path){
         this.playerFleetPath = path;
-        BuildView buildView = new BuildView(this);
+        ArrayList<Bitmap> cards = new ArrayList<Bitmap>();
         try {
             String[] fleetFiles = (assetManager.list(playerFleetPath));
-            assetManager.open(playerFleetPath + "/" + "One.png");
+           // System.out.println(fleetFiles[0]);
+            int i = 0;
+            for (String cardPath : fleetFiles) {
+                if (!cardPath.equals("King.png") && !cardPath.equals("MainAttack.ogg") && !cardPath.equals("FaceDown.jpg")) {
+                    InputStream cardStream = assetManager.open(playerFleetPath + "/" + cardPath);
+                    Bitmap cardImg = BitmapFactory.decodeStream(cardStream);
+                    System.out.println(i);
+                    System.out.println(cardPath);
+                    i++;
+                    cards.add(cardImg);
+                }
+            }
         }catch(IOException e) {
             e.printStackTrace();
         }
+        BuildView buildView = new BuildView(this,cards);
         setContentView(buildView);
     }
 

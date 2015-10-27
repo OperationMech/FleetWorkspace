@@ -7,17 +7,25 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.View;
 
+import java.util.ArrayList;
+
+import fleet.activity.GameActivity;
+
 /**
  * Created by Radu on 10/20/2015.
  */
 public class BuildView extends View {
     int screenW;
     int screenH;
+    ArrayList<Bitmap> fleetImgs;
+    GameActivity myContext;
     Point[] slotsOrigin = new Point[12];
     Bitmap[] shipImages = new Bitmap[12];
 
-    public BuildView( Context myContext){
+    public BuildView( Context myContext, ArrayList<Bitmap> fleetImgs){
         super(myContext);
+        this.fleetImgs = fleetImgs;
+        this.myContext = (GameActivity)myContext;
     }
 
     @Override
@@ -43,9 +51,13 @@ public class BuildView extends View {
 
     @Override
     protected void onDraw(Canvas canvas){
+        int i = 0;
         for (Point point : slotsOrigin) {
             System.out.println(point.x + " " + point.y);
-            canvas.drawCircle(point.x, point.y,5,new Paint());
+            canvas.drawBitmap(fleetImgs.get(i), point.x, point.y, null);
+            canvas.drawCircle(point.x, point.y, 5, new Paint());
+            System.out.println(i);
+            i++;
         }
 
 
