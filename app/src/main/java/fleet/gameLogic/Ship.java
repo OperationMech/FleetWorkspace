@@ -1,10 +1,8 @@
-package fleet.classes.gameLogic;
+package fleet.gameLogic;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.EnumSet;
 
 /**
  * Created by Radu on 9/27/2015.

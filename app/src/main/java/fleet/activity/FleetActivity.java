@@ -1,20 +1,13 @@
 package fleet.activity;
 
-import fleet.classes.gameLogic.Fleet;
 import fleet.view.TitleView;
 
 import fleet.R;
 
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class FleetActivity extends Activity {
     protected MediaPlayer mp;

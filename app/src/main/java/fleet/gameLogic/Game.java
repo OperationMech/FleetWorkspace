@@ -1,6 +1,6 @@
-package fleet.classes.gameLogic;
+package fleet.gameLogic;
 
-import fleet.classes.players.Player;
+import fleet.gameLogic.players.Player;
 import java.util.ArrayList;
 
 /**

@@ -1,6 +1,4 @@
-package fleet.classes.gameLogic;
-
-import android.os.Parcelable;
+package fleet.gameLogic;
 
 /**
  * Created by Radu on 9/27/2015.

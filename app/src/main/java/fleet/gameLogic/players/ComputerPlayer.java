@@ -1,16 +1,14 @@
-package fleet.classes.players;
+package fleet.gameLogic.players;
 
-import fleet.classes.gameLogic.Fleet;
-import fleet.classes.gameLogic.PlayerGameBoard;
-import fleet.classes.gameLogic.Ship;
+import fleet.gameLogic.Ship;
+import fleet.gameLogic.Fleet;
 
 /**
  * Created by Radu on 9/27/2015.
  */
-public class HumanPlayer extends AbstractPlayer{
-
-    public HumanPlayer() {
-
+public class ComputerPlayer extends AbstractPlayer {
+    public ComputerPlayer() {
+        super();
     }
 
     @Override
@@ -33,8 +31,9 @@ public class HumanPlayer extends AbstractPlayer{
         return false;
     }
 
+
     @Override
     public Fleet getFleet() {
-        return this.playerFleet;
+        return null;
     }
 }

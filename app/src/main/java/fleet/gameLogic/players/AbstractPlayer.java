@@ -1,7 +1,7 @@
-package fleet.classes.players;
+package fleet.gameLogic.players;
 
-import fleet.classes.gameLogic.Fleet;
-import fleet.classes.gameLogic.PlayerGameBoard;
+import fleet.gameLogic.Fleet;
+import fleet.gameLogic.PlayerGameBoard;
 
 /**
  * Created by Radu on 9/30/2015.

@@ -1,6 +1,4 @@
-package fleet.classes.gameLogic;
-
-import fleet.classes.players.Player;
+package fleet.gameLogic;
 
 /**
  * Created by Radu on 9/27/2015.

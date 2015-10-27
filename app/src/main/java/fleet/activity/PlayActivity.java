@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import fleet.R;
 import fleet.view.PlayView;
-import fleet.classes.gameLogic.Fleet;
+import fleet.gameLogic.Fleet;
 
 /**
  * Created by Radu on 10/18/2015.

@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.view.Display;
@@ -22,8 +21,7 @@ import java.util.ArrayList;
 
 import fleet.R;
 import fleet.activity.GameActivity;
-import fleet.activity.PlayActivity;
-import fleet.classes.gameLogic.Fleet;
+import fleet.gameLogic.Fleet;
 
 public class FleetView extends View {
     private Paint blackPaint;

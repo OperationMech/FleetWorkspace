@@ -1,7 +1,7 @@
 package fleet.activity;
 
 import fleet.R;
-import fleet.classes.gameLogic.Fleet;
+import fleet.gameLogic.Fleet;
 import fleet.view.BuildView;
 import fleet.view.FleetView;
 
@@ -10,11 +10,9 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-import android.view.SoundEffectConstants;
 import android.widget.ViewSwitcher;
 
 import java.io.IOException;

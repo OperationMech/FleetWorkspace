@@ -1,14 +1,9 @@
-package fleet.classes.gameLogic;
+package fleet.gameLogic;
 
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
-import android.media.SoundPool;
-import android.os.Bundle;
 import android.os.Parcel;
-import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
-import android.view.View;
-import java.util.Map;
 
 
 /**
