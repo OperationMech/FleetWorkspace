@@ -29,6 +29,15 @@ public class BuildView extends View {
     }
 
     @Override
+    /**
+     * Called when the screen orientation is changed
+     *
+     * @param w Width of the screen
+     * @param h Hight of the screen
+     * @param oldw Previous width of the screen
+     * @param oldh Previous height of the screen
+     **/
+
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         screenW = w;
         screenH = h;
@@ -36,6 +45,7 @@ public class BuildView extends View {
         int x;
         int y;
         int pointNum = 0;
+        //Creating a 3x4 grid for card placement
         for (int column = 0; column < 3; column++){
             x = (int)((screenW * .025) + (column * (screenW * .33)));
             for (int row = 0; row < 4;row++){
