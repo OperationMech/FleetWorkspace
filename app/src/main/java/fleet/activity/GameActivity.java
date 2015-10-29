@@ -26,7 +26,6 @@ public class GameActivity extends Activity {
     private String[] fleetList;
     private static int runOnce = 0;
     protected String playerFleetPath;
-    private ViewSwitcher switcher;
     private static final int REFRESH_SCREEN = 1;
     protected MediaPlayer mp;
 
@@ -37,6 +36,7 @@ public class GameActivity extends Activity {
         assetManager = getAssets();
         if(runOnce == 0) {
             try {
+                //Scans the /assets/fleet/ directory for fleets
                 fleetList = (assetManager.list(FLEET_DIR));
                 for (String fleet : fleetList) {
                     String fleetPath = (FLEET_DIR + "/" + fleet);
@@ -59,6 +59,12 @@ public class GameActivity extends Activity {
         setContentView(myView);
     }
 
+    /**
+     * Sets the current view to a build view, where the player can organize their fleet before
+     * the game starts.
+     *
+     * @param path The file path of the players selected fleet
+     **/
     public void buildFleet(String path){
         this.playerFleetPath = path;
         ArrayList<Bitmap> cards = new ArrayList<Bitmap>();
@@ -67,6 +73,7 @@ public class GameActivity extends Activity {
            // System.out.println(fleetFiles[0]);
             int i = 0;
             for (String cardPath : fleetFiles) {
+                //getting all fleet bitmaps
                 if (!cardPath.equals("King.png") && !cardPath.equals("MainAttack.ogg") && !cardPath.equals("FaceDown.jpg")) {
                     InputStream cardStream = assetManager.open(playerFleetPath + "/" + cardPath);
                     Bitmap cardImg = BitmapFactory.decodeStream(cardStream);
@@ -90,6 +97,9 @@ public class GameActivity extends Activity {
         return true;
     }
     @Override
+    /**
+     *  Stops the media player before onDestroy is called
+     **/
     public void onDestroy(){
         mp.release();
         super.onDestroy();

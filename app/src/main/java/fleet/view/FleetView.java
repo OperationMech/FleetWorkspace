@@ -53,6 +53,11 @@ public class FleetView extends View {
     private AudioManager audioManager;
     SoundPool selectionSound;
 
+    /**
+     * Constructor
+     * @param context The activity that has built this view
+     * @param fleets An array list of fleets that where found in assets/fleets by an assetmanager
+     **/
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
         super(context);
@@ -89,7 +94,7 @@ public class FleetView extends View {
         resumeGameDown = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game_down);
 
         Bitmap king;
-        //scale Images
+        //scaling Images
         for (int i = 0; i < fleets.size(); i++) {
             king = Bitmap.createScaledBitmap(fleets.get(i).getKing(), screenH / 4, screenH / 3, false);
             kings.add(king);
@@ -103,6 +108,14 @@ public class FleetView extends View {
     }
 
     @Override
+    /**
+     * Called when the screen orientation is changed
+     *
+     * @param w Width of the screen
+     * @param h Hight of the screen
+     * @param oldw Previous width of the screen
+     * @param oldh Previous height of the screen
+     **/
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         screenW = w;
         screenH = h;
@@ -118,11 +131,9 @@ public class FleetView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-    }
-
+    /** @param canvas the canvas we will be drawing on
+     *
+     */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(background, 0, 0, null);
@@ -131,6 +142,7 @@ public class FleetView extends View {
         fleetKing = kings.get(fleetNum);
         canvas.drawBitmap(fleetKing, fleetKingX, fleetKingY, null);
         selectFleetY = (int) (fleetKingY + fleetKing.getHeight() + screenH * 0.1);
+        //Change button image if the button has been pressed.
         if (selectFleetPressed){
             canvas.drawBitmap(selectFleetDown,fleetKingX, selectFleetY,null);
         }else {
@@ -139,6 +151,7 @@ public class FleetView extends View {
         String text = fleets.get(fleetNum).getFleetName();
         canvas.drawText(text, 0, text.length(), screenW / 2, fleetKingY - (int)(screenH * 0.05) , blackPaint);
         invalidate();
+        //Check if there is a game currently going on, drawing a button to get back to it if there is one.
         if( playIntent != null){
             if(resumeGamePressed){
                 canvas.drawBitmap(resumeGameDown, fleetKingX, resumeGameY, null);
@@ -148,6 +161,9 @@ public class FleetView extends View {
         }
     }
 
+    /** @param event The user's action
+     * @return  True when event has been processed
+     */
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
@@ -204,6 +220,7 @@ public class FleetView extends View {
                     myContext.startActivity(playIntent);
                 }
                 if(selectFleetPressed){
+                    // Moving to the buildFleet view
                     Fleet playerFleet = fleets.get(fleetNum);
                     selectionSound.load(playerFleet.getFleetAttack(), 1);
                     myContext.buildFleet(playerFleet.getFleetPath());

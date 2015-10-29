@@ -17,6 +17,11 @@ import fleet.gameLogic.Fleet;
 
 /**
  * Created by Radu on 10/18/2015.
+ *
+ *      //                         \\
+ *     ||   !!UNDER CONSTRUCTION!!  ||
+ *      \\                         //
+ *
  */
 public class PlayActivity extends Activity {
 
@@ -25,6 +30,7 @@ public class PlayActivity extends Activity {
     private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);

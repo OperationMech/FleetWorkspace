@@ -60,7 +60,9 @@ public class TitleView extends View {
         }
     }
 
-
+    /** @param canvas the canvas we will be drawing on
+     *
+     */
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(titleBackground, 0, 0, null);
         canvas.drawBitmap(titleGraphic, 0, 0, null);

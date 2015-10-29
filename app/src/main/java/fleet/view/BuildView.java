@@ -60,6 +60,9 @@ public class BuildView extends View {
     }
 
     @Override
+    /** @param canvas the canvas we will be drawing on
+     *
+     */
     protected void onDraw(Canvas canvas){
         int i = 0;
         for (Point point : slotsOrigin) {

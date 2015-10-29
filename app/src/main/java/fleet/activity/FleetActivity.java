@@ -30,6 +30,9 @@ public class FleetActivity extends Activity {
         return true;
     }
 
+    /**
+     *  Stops the media player before onDestroy is called
+     **/
     @Override
     public void onDestroy(){
         mp.release();
