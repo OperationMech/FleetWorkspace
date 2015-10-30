@@ -4,7 +4,7 @@ import fleet.gameLogic.Fleet;
 import fleet.gameLogic.PlayerGameBoard;
 
 /**
- * Player Abstract implementation
+ * Abstract Player subclass
  * Created by Radu on 9/30/2015.
  */
 abstract class AbstractPlayer implements Player {
