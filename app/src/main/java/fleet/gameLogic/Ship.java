@@ -9,7 +9,7 @@ import android.os.Parcelable;
  * Created by Radu on 9/27/2015.
  */
 public class Ship implements Parcelable {
-    protected Bitmap faceUp;
+    public Bitmap faceUp;
     protected Boolean isSunk;
     protected Boolean isFaceUp;
     public ShipClass shipClass;

@@ -1,19 +1,16 @@
 package fleet.view;
 
 import fleet.R;
-import fleet.activity.GameActivity;
+import fleet.activity.SelectionActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.util.ArrayList;
 
 
 public class TitleView extends View {
@@ -144,7 +141,7 @@ public class TitleView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 if (playButtonPressed) {
-                    Intent gameIntent = new Intent(myContext, GameActivity.class);
+                    Intent gameIntent = new Intent(myContext, SelectionActivity.class);
 
                     myContext.startActivity(gameIntent);
                 }

@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class FleetActivity extends Activity {
+public class TitleActivity extends Activity {
     protected MediaPlayer mp;
 
     @Override

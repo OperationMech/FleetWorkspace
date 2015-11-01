@@ -47,7 +47,7 @@ ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManif
 		ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:16:9-33
 	android:theme
 		ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:20:9-40
-activity#fleet.activity.FleetActivity
+activity#fleet.activity.TitleActivity
 ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:21:9-29:20
 	android:label
 		ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:23:13-45
@@ -63,12 +63,12 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:27:17-77
 	android:name
 		ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:27:27-74
-activity#fleet.activity.GameActivity
+activity#fleet.activity.SelectionActivity
 ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:30:9-33:20
 	android:label
 		ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:32:13-56
 	android:name
-		ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:31:13-50
+		ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:31:13-55
 activity#fleet.activity.PlayActivity
 ADDED from C:\Users\Radu\StudioProjects\FleetWorkspace\app\src\main\AndroidManifest.xml:34:9-37:20
 	android:label

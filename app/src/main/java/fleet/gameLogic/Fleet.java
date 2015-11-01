@@ -59,6 +59,24 @@ public class Fleet implements Parcelable {
     }
 
     /**
+     * Getter for battleships
+     * @return battleships array
+     */
+    public Ship[] getBattleships(){ return battleships;}
+
+    /**
+     * Getter for battleships
+     * @return battleships array
+     */
+    public Ship[] getCruisers(){ return cruisers;}
+
+    /**
+     * Getter for battleships
+     * @return battleships array
+     */
+    public Ship[] getDestroyers(){ return destroyers;}
+
+    /**
      * Getter for fleet name
      * @return fleet's name
      */
@@ -88,33 +106,33 @@ public class Fleet implements Parcelable {
      * @param ship A ship's image
      */
     public void populateFleet(String name, Bitmap ship) {
-        if(name.equals("Two.png")) {
+        if(name.startsWith("Two.")) {
             destroyers[3] = new Ship(ship);
-        } else if (name.equals("Three.png")) {
+        } else if (name.startsWith("Three.")) {
             destroyers[2] = new Ship(ship);
-        } else if (name.equals("Four.png")) {
+        } else if (name.startsWith("Four.")) {
             destroyers[1] = new Ship(ship);
-        } else if (name.equals("Five.png")) {
+        } else if (name.startsWith("Five.")) {
             destroyers[0] = new Ship(ship);
-        } else if (name.equals("Six.png")) {
+        } else if (name.startsWith("Six.")) {
             cruisers[3] = new Ship(ship);
-        } else if (name.equals("Seven.png")) {
+        } else if (name.startsWith("Seven.")) {
             cruisers[2] = new Ship(ship);
-        } else if (name.equals("Eight.png")) {
+        } else if (name.startsWith("Eight.")) {
             cruisers[1] = new Ship(ship);
-        } else if (name.equals("Nine.png")) {
+        } else if (name.startsWith("Nine.")) {
             cruisers[0] = new Ship(ship);
-        } else if (name.equals("Ten.png")) {
+        } else if (name.startsWith("Ten.")) {
             battleships[3] = new Ship(ship);
-        } else if (name.equals("Jack.png")) {
+        } else if (name.startsWith("Jack.")) {
             battleships[2] = new Ship(ship);
-        } else if (name.equals("Queen.png")) {
+        } else if (name.startsWith("Queen.")) {
             battleships[1] = new Ship(ship);
-        }else if (name.equals("King.png")) {
+        }else if (name.startsWith("King.")) {
             battleships[0] = new Ship(ship);
-        } else if (name.equals("Ace.png")) {
+        } else if (name.startsWith("Ace.")) {
             carrier = new Ship(ship);
-        } else if (name.equals("FaceDown.png")) {
+        } else if (name.startsWith("FaceDown.")) {
             facedown = ship;
         }
     }

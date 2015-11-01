@@ -3,13 +3,14 @@ package fleet.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.View;
+import fleet.gameLogic.Fleet;
 
 import java.util.ArrayList;
 
-import fleet.activity.GameActivity;
+import fleet.activity.SelectionActivity;
+import fleet.gameLogic.players.Player;
 
 /**
  * Created by Radu on 10/20/2015.
@@ -17,15 +18,19 @@ import fleet.activity.GameActivity;
 public class BuildView extends View {
     int screenW;
     int screenH;
-    ArrayList<Bitmap> fleetImgs;
-    GameActivity myContext;
-    Point[] slotsOrigin = new Point[12];
-    Bitmap[] shipImages = new Bitmap[12];
+    Fleet playerFleet;
+    int destroyerCount = 0;
+    int cruiserCount = 0;
+    int battleShipCount = 0;
 
-    public BuildView( Context myContext, ArrayList<Bitmap> fleetImgs){
+
+    SelectionActivity myContext;
+    Point[] slotsOrigin = new Point[12];
+
+    public BuildView( Context myContext, Fleet playerFleet){
         super(myContext);
-        this.fleetImgs = fleetImgs;
-        this.myContext = (GameActivity)myContext;
+        this.playerFleet = playerFleet;
+        this.myContext = (SelectionActivity)myContext;
     }
 
     @Override
@@ -59,17 +64,25 @@ public class BuildView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
+    private void organizeCards(){
+
+    }
+
     @Override
     /** @param canvas the canvas we will be drawing on
      *
      */
     protected void onDraw(Canvas canvas){
         int i = 0;
+        Point destroyerStack  = slotsOrigin[9];
+        Point cruiserStack = slotsOrigin[10];
+        Point battleShipStack = slotsOrigin[11];
+        canvas.drawBitmap(playerFleet.getBattleships()[battleShipCount].faceUp,battleShipStack.x,battleShipStack.y,null);
+
         for (Point point : slotsOrigin) {
+
             System.out.println(point.x + " " + point.y);
-            canvas.drawBitmap(fleetImgs.get(i), point.x, point.y, null);
-            canvas.drawCircle(point.x, point.y, 5, new Paint());
-            System.out.println(i);
+          //  canvas.drawBitmap(fleetImgs.get(i), point.x, point.y, null);
             i++;
         }
 

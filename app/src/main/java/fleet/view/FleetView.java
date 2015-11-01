@@ -20,14 +20,14 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 
 import fleet.R;
-import fleet.activity.GameActivity;
+import fleet.activity.SelectionActivity;
 import fleet.gameLogic.Fleet;
 
 public class FleetView extends View {
     private Paint blackPaint;
     private int screenW;
     private int screenH;
-    private GameActivity myContext;
+    private SelectionActivity myContext;
     private ArrayList<Fleet> fleets;
     private ArrayList<Bitmap> kings = new ArrayList<Bitmap>();
     private Integer fleetNum = 0;
@@ -61,7 +61,7 @@ public class FleetView extends View {
     public FleetView(Context context, ArrayList<Fleet> fleets) {
 
         super(context);
-        myContext = (GameActivity)context;
+        myContext = (SelectionActivity)context;
         audioManager = (AudioManager)
                 this.myContext.getSystemService(Context.AUDIO_SERVICE);
         selectionSound = new SoundPool(1,1,1);
@@ -223,7 +223,7 @@ public class FleetView extends View {
                     // Moving to the buildFleet view
                     Fleet playerFleet = fleets.get(fleetNum);
                     selectionSound.load(playerFleet.getFleetAttack(), 1);
-                    myContext.buildFleet(playerFleet.getFleetPath());
+                    myContext.buildFleet(playerFleet);
                   //  playIntent = new Intent(myContext, PlayActivity.class);
                   //  playIntent.putExtra("playerFleet", fleetNum.intValue());
                   //  playIntent.putParcelableArrayListExtra("fleets", fleets);

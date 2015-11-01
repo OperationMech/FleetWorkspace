@@ -19,7 +19,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="fleet.activity.FleetActivity"
+            android:name="fleet.activity.TitleActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="fleet.activity.GameActivity"
+            android:name="fleet.activity.SelectionActivity"
             android:label="@string/title_activity_game" >
         </activity>
         <activity

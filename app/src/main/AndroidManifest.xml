@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.FleetActivity"
+            android:name=".activity.TitleActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.GameActivity"
+            android:name=".activity.SelectionActivity"
             android:label="@string/title_activity_game" >
         </activity>
         <activity

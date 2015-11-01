@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class GameActivity extends Activity {
+public class SelectionActivity extends Activity {
     private final String FLEET_DIR = "fleets";
     private AssetManager assetManager;
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
@@ -63,30 +63,24 @@ public class GameActivity extends Activity {
      * Sets the current view to a build view, where the player can organize their fleet before
      * the game starts.
      *
-     * @param path The file path of the players selected fleet
+     * @param fleet The players selected fleet
      **/
-    public void buildFleet(String path){
-        this.playerFleetPath = path;
-        ArrayList<Bitmap> cards = new ArrayList<Bitmap>();
+    public void buildFleet(Fleet fleet){
+        this.playerFleetPath = fleet.getFleetPath();
         try {
             String[] fleetFiles = (assetManager.list(playerFleetPath));
-           // System.out.println(fleetFiles[0]);
-            int i = 0;
             for (String cardPath : fleetFiles) {
                 //getting all fleet bitmaps
-                if (!cardPath.equals("King.png") && !cardPath.equals("MainAttack.ogg") && !cardPath.equals("FaceDown.jpg")) {
+                if (!cardPath.startsWith("King.") && !cardPath.startsWith("MainAttack.") && !cardPath.startsWith("FaceDown.")) {
                     InputStream cardStream = assetManager.open(playerFleetPath + "/" + cardPath);
                     Bitmap cardImg = BitmapFactory.decodeStream(cardStream);
-                    System.out.println(i);
-                    System.out.println(cardPath);
-                    i++;
-                    cards.add(cardImg);
+                    fleet.populateFleet(cardPath,cardImg);
                 }
             }
         }catch(IOException e) {
             e.printStackTrace();
         }
-        BuildView buildView = new BuildView(this,cards);
+        BuildView buildView = new BuildView(this,fleet);
         setContentView(buildView);
     }
 
