@@ -19,13 +19,18 @@ public class Game {
         this.players = players;
     }
 
+    /**
+     * Game loop start function
+     */
     public void startGame() {
         while(!isWon) {
            isWon = gameLoop();
         }
     }
+
     /**
-     * Game Loop function
+     * Game loop function
+     * @return won status of the current game
      */
     public boolean gameLoop() {
         for (AbstractPlayer player : players) {

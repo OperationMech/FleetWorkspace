@@ -19,15 +19,26 @@ public class PlayerGameBoard {
         this.fleetPositions = selectedShips;
     }
 
+    /**
+     * Getter for Ship array
+     * @return Ship array
+     */
     public Ship[] getShips() {
         return fleetPositions;
     }
 
+    /**
+     * Setter for revealing the ship at an index
+     * @param index the index to reveal at
+     */
     public void revealShipAt(int index) {
         fleetPositions[index].reveal();
     }
 
-
+    /**
+     * Status check on if all ships are sunk
+     * @return boolean status of all ships
+     */
     public boolean allShipsSunk() {
         return  fleetPositions[0].isSunk && fleetPositions[1].isSunk &&
                 fleetPositions[2].isSunk && fleetPositions[3].isSunk &&

@@ -22,7 +22,10 @@ public abstract class AbstractPlayer implements Player {
         return playerFleet;
     }
 
-
+    /**
+     * Getter for player PlayerGameBoard
+     * @return the player's PlayerGameBoard
+     */
     public PlayerGameBoard getGameBoard() {
         return playerGameBoard;
     }
