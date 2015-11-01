@@ -1,6 +1,6 @@
 package fleet.gameLogic;
 
-import fleet.gameLogic.players.Player;
+import fleet.gameLogic.players.AbstractPlayer;
 import java.util.ArrayList;
 
 /**
@@ -8,15 +8,49 @@ import java.util.ArrayList;
  * Created by Radu on 9/27/2015.
  */
 public class Game {
-    protected ArrayList players;
+    protected ArrayList<AbstractPlayer> players;
+    private boolean isWon = false;
 
     /**
      * Game constructor
      * @param players passed to the game
      */
-    public void game(ArrayList<Player> players) {
+    public void game(ArrayList<AbstractPlayer> players) {
         this.players = players;
-        return;
+    }
+
+    public void startGame() {
+        while(!isWon) {
+           isWon = gameLoop();
+        }
+    }
+    /**
+     * Game Loop function
+     */
+    public boolean gameLoop() {
+        for (AbstractPlayer player : players) {
+            boolean isTurn = true;
+            while (isTurn) {
+                Ship[] shipAndTarget = new Ship[2];
+                shipAndTarget = player.attack();
+                if (player.getGameBoard().size() < 2) {
+                    players.remove(player);
+                }
+                if (players.size() < 2) {
+                    return true;
+                }
+                if (shipAndTarget[0] != null) {
+                    battle(shipAndTarget[0], shipAndTarget[1]);
+                    if (!player.getFleet().carrier.isSunk) {
+                        player.scout();
+                    }
+                    isTurn = false;
+                } else {
+                    // redo attack phase
+                }
+            }
+        }
+        return false;
     }
 
     /**

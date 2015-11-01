@@ -1,11 +1,13 @@
 package fleet.gameLogic;
 
+import java.util.ArrayList;
+
 /**
  * Per player gameboard class
  * Created by Radu on 9/27/2015.
  */
 public class PlayerGameBoard {
-    protected Ship[] fleetPositions = new Ship[9];
+    protected ArrayList<Ship> fleetPositions = new ArrayList<Ship>();
     private String fleetpath;
 
     /**
@@ -13,9 +15,13 @@ public class PlayerGameBoard {
      * @param selectedShips list of ships
      * @param fleetpath the player's fleet path
      */
-    public PlayerGameBoard(Ship[] selectedShips,String fleetpath) {
+    public PlayerGameBoard(ArrayList<Ship> selectedShips,String fleetpath) {
         this.fleetpath = fleetpath;
         this.fleetPositions = selectedShips;
+    }
+
+    public int size() {
+        return fleetPositions.size();
     }
 
 }
