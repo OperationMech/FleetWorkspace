@@ -77,6 +77,12 @@ public class Fleet implements Parcelable {
     public Ship[] getDestroyers(){ return destroyers;}
 
     /**
+     * Getter for the Carrier
+     * @return the carrier
+     */
+    public Ship getCarrier(){ return carrier;}
+
+    /**
      * Getter for fleet name
      * @return fleet's name
      */
