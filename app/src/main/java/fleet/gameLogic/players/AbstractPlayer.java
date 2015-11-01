@@ -3,6 +3,7 @@ package fleet.gameLogic.players;
 import java.util.ArrayList;
 
 import fleet.gameLogic.Fleet;
+import fleet.gameLogic.Game;
 import fleet.gameLogic.PlayerGameBoard;
 
 /**
@@ -12,6 +13,11 @@ import fleet.gameLogic.PlayerGameBoard;
 public abstract class AbstractPlayer implements Player {
     protected Fleet playerFleet;
     protected PlayerGameBoard playerGameBoard;
+    protected Game game;
+
+    public AbstractPlayer (Game game){
+        this.game = game;
+    }
 
     /**
      * Getter for player fleet

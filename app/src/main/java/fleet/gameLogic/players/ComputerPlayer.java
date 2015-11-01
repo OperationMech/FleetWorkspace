@@ -3,9 +3,11 @@ package fleet.gameLogic.players;
 import java.util.ArrayList;
 import java.util.Random;
 
+import fleet.gameLogic.Game;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.Fleet;
+import fleet.gameLogic.ShipClass;
 
 /**
  * Computer player
@@ -16,8 +18,8 @@ public class ComputerPlayer extends AbstractPlayer {
     /**
      * Computer player constructor
      */
-    public ComputerPlayer() {
-        super();
+    public ComputerPlayer(Game game) {
+        super(game);
     }
 
     /**
@@ -30,21 +32,29 @@ public class ComputerPlayer extends AbstractPlayer {
 
     /**
      * Scout selection
+     *
      * @param players arrayList of game players
      */
     @Override
     public void scout(ArrayList<AbstractPlayer> players) {
-        if(playerFleet.hasCarrier()) {
-            int localRandom = new Random().nextInt();
-            players.remove(this);
-            int targetPlayer = localRandom % players.size();
-            PlayerGameBoard targetBoard = players.get(targetPlayer).getGameBoard();
+        if (playerFleet.hasCarrier()) {
+            PlayerGameBoard targetBoard = selectPlayer();
             boolean hasTarget = false;
-            while(!hasTarget) {
-                int targetShip = localRandom % 9;
-                if (targetBoard.getShips()[targetShip].getFaceUpStatus()) {
+            int localRandom = new Random().nextInt();
+            int targetShip = localRandom % 9;
+            int scoutAttempts = 0;
+            //Finding a face down card to scout
+            while (!hasTarget && scoutAttempts <= 9) {
+                if (targetBoard.getShips().get(targetShip).getFaceUpStatus()) {
                     targetBoard.revealShipAt(targetShip);
                     hasTarget = true;
+                } else {
+                    scoutAttempts++;
+                    if (localRandom == 8) {
+                        localRandom = 0;
+                    } else {
+                        localRandom++;
+                    }
                 }
             }
         }
@@ -52,15 +62,59 @@ public class ComputerPlayer extends AbstractPlayer {
 
     /**
      * Attack selection
-     * @return both attacker and target ships
+     *
+     * @return both attacker and target ships. Position 0 is the attacking ship, position 1 is the defending ship.
+     * If no ships can be defeated, and there are no face down cards on the enemies board, both positions will be null.
      */
     @Override
     public Ship[] attack() {
-        return null;
+        PlayerGameBoard targetBoard = selectPlayer();
+        Ship[] combatants = new Ship[2];
+        ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
+        ArrayList<Ship> myShips = playerGameBoard.getShips();
+        if (!targetShips.isEmpty()){
+            //Looking for first situation where we can beat a face up ship
+            for (Ship defendingShip : targetShips){
+                switch (defendingShip.shipClass){
+                    case DESTROYER:
+                        for (Ship attackingShip : myShips){
+                            if(attackingShip.shipClass == ShipClass.CRUISER){
+                                combatants[0] = attackingShip;
+                                combatants[1] = defendingShip;
+                            }
+                        }
+                    case CRUISER:
+                        for (Ship attackingShip : myShips) {
+                            if (attackingShip.shipClass == ShipClass.BATTLESHIP) {
+                                combatants[0] = attackingShip;
+                                combatants[1] = defendingShip;
+                            }
+                        }
+                    case BATTLESHIP:
+                        for (Ship attackingShip : myShips){
+                            if(attackingShip.shipClass == ShipClass.DESTROYER) {
+                                combatants[0] = attackingShip;
+                                combatants[1] = defendingShip;
+                            }
+                        }
+                    case CARRIER:
+                        combatants[0] = myShips.get(0);
+                        combatants[1] = defendingShip;
+                }
+            }
+        } else {
+            //Enemy has no face up ships
+            int randomDefender = new Random().nextInt();
+            int randomAttacker = new Random().nextInt();
+            combatants[0] = playerGameBoard.getShips().get(randomAttacker % myShips.size());
+            combatants[1] = playerGameBoard.getShips().get(randomDefender % targetBoard.getShips().size());
+        }
+        return combatants;
     }
 
     /**
      * "Ready" function
+     *
      * @return for basic ai purposes always true
      */
     @Override
@@ -69,11 +123,16 @@ public class ComputerPlayer extends AbstractPlayer {
     }
 
     /**
-     * Getter for player fleet
-     * @return player's fleet
+     * Selects a player to target
+     *
      */
-    @Override
-    public Fleet getFleet() {
-        return null;
+    private PlayerGameBoard selectPlayer(){
+        int localRandom = new Random().nextInt();
+        ArrayList<AbstractPlayer> players = game.getPlayers();
+        players.remove(this);
+        int targetPlayer = localRandom % players.size();
+        PlayerGameBoard targetBoard = players.get(targetPlayer).getGameBoard();
+        return targetBoard;
     }
+
 }

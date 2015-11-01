@@ -3,6 +3,7 @@ package fleet.gameLogic.players;
 import java.util.ArrayList;
 
 import fleet.gameLogic.Fleet;
+import fleet.gameLogic.Game;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 
@@ -15,8 +16,8 @@ public class HumanPlayer extends AbstractPlayer{
     /**
      * HumanPlayer constructor
      */
-    public HumanPlayer() {
-        super();
+    public HumanPlayer(Game game) {
+        super(game);
     }
 
     /**

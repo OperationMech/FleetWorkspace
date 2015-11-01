@@ -12,7 +12,7 @@ public class Ship implements Parcelable {
     protected Bitmap faceUp;
     protected Boolean isSunk;
     protected Boolean isFaceUp;
-    protected ShipClass shipClass;
+    public ShipClass shipClass;
     protected int cardNum;
 
     /**

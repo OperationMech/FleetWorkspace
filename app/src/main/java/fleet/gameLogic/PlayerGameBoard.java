@@ -1,6 +1,8 @@
 package fleet.gameLogic;
 
 
+import java.util.ArrayList;
+
 /**
  * Per player gameboard class
  * Created by Radu on 9/27/2015.
@@ -11,24 +13,43 @@ public class PlayerGameBoard {
 
     /**
      * PlayerGameBoard constructor
+     *
      * @param selectedShips list of ships
-     * @param fleetpath the player's fleet path
+     * @param fleetpath     the player's fleet path
      */
-    public PlayerGameBoard(Ship[] selectedShips,String fleetpath) {
+    public PlayerGameBoard(Ship[] selectedShips, String fleetpath) {
         this.fleetpath = fleetpath;
         this.fleetPositions = selectedShips;
     }
 
     /**
      * Getter for Ship array
+     *
      * @return Ship array
      */
-    public Ship[] getShips() {
-        return fleetPositions;
+    public ArrayList<Ship> getShips() {
+        ArrayList<Ship> aliveShips = new ArrayList<Ship>();
+        for (Ship ship : fleetPositions) {
+            if (!ship.isSunk) {
+                aliveShips.add(ship);
+            }
+        }
+        return aliveShips;
+    }
+
+    public ArrayList<Ship> getFaceUpShips() {
+        ArrayList<Ship> faceUpShips = new ArrayList<Ship>();
+        for (Ship ship : fleetPositions) {
+            if (ship.isFaceUp) {
+                faceUpShips.add(ship);
+            }
+        }
+        return faceUpShips;
     }
 
     /**
      * Setter for revealing the ship at an index
+     *
      * @param index the index to reveal at
      */
     public void revealShipAt(int index) {
@@ -37,14 +58,15 @@ public class PlayerGameBoard {
 
     /**
      * Status check on if all ships are sunk
+     *
      * @return boolean status of all ships
      */
     public boolean allShipsSunk() {
-        return  fleetPositions[0].isSunk && fleetPositions[1].isSunk &&
-                fleetPositions[2].isSunk && fleetPositions[3].isSunk &&
-                fleetPositions[4].isSunk && fleetPositions[5].isSunk &&
-                fleetPositions[6].isSunk && fleetPositions[7].isSunk &&
-                fleetPositions[8].isSunk;
+        if (getShips().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

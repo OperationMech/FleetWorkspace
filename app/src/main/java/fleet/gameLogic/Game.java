@@ -20,6 +20,14 @@ public class Game {
     }
 
     /**
+     *
+     * @return Players currently in the game
+     */
+    public ArrayList<AbstractPlayer> getPlayers(){
+        return this.players;
+    }
+
+    /**
      * Game loop start function
      */
     public void startGame() {
