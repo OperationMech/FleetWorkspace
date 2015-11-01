@@ -1,5 +1,9 @@
 package fleet.gameLogic.players;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.Fleet;
 
@@ -26,10 +30,24 @@ public class ComputerPlayer extends AbstractPlayer {
 
     /**
      * Scout selection
+     * @param players arrayList of game players
      */
     @Override
-    public void scout() {
-
+    public void scout(ArrayList<AbstractPlayer> players) {
+        if(playerFleet.hasCarrier()) {
+            int localRandom = new Random().nextInt();
+            players.remove(this);
+            int targetPlayer = localRandom % players.size();
+            PlayerGameBoard targetBoard = players.get(targetPlayer).getGameBoard();
+            boolean hasTarget = false;
+            while(!hasTarget) {
+                int targetShip = localRandom % 9;
+                if (targetBoard.getShips()[targetShip].getFaceUpStatus()) {
+                    targetBoard.revealShipAt(targetShip);
+                    hasTarget = true;
+                }
+            }
+        }
     }
 
     /**

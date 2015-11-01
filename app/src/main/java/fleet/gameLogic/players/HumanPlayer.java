@@ -1,6 +1,9 @@
 package fleet.gameLogic.players;
 
+import java.util.ArrayList;
+
 import fleet.gameLogic.Fleet;
+import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 
 /**
@@ -26,10 +29,17 @@ public class HumanPlayer extends AbstractPlayer{
 
     /**
      * Scout selection
+     * @param players arrayList of game players
      */
     @Override
-    public void scout() {
-
+    public void scout(ArrayList<AbstractPlayer> players) {
+        if(playerFleet.hasCarrier()) {
+            players.remove(this);
+            int targetPlayer = 0;
+            PlayerGameBoard targetBoard = players.get(targetPlayer).getGameBoard();
+            int targetShip = 0;
+            targetBoard.revealShipAt(targetShip);
+        }
     }
 
     /**

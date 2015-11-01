@@ -33,7 +33,7 @@ public class Game {
             while (isTurn) {
                 Ship[] shipAndTarget = new Ship[2];
                 shipAndTarget = player.attack();
-                if (player.getGameBoard().size() < 2) {
+                if (player.getGameBoard().allShipsSunk()) {
                     players.remove(player);
                 }
                 if (players.size() < 2) {
@@ -41,12 +41,10 @@ public class Game {
                 }
                 if (shipAndTarget[0] != null) {
                     battle(shipAndTarget[0], shipAndTarget[1]);
-                    if (!player.getFleet().carrier.isSunk) {
-                        player.scout();
-                    }
+                    player.scout(players);
                     isTurn = false;
                 } else {
-                    // redo attack phase
+                    isTurn = true;
                 }
             }
         }

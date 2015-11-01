@@ -35,10 +35,17 @@ public class Fleet implements Parcelable {
     }
 
     /**
+     * Carrier in-play check
+     * @return does the fleet have an operational carrier
+     */
+    public boolean hasCarrier() {
+        return !carrier.isSunk;
+    }
+
+    /**
      * Getter for the king card image
      * @return King image
      */
-
     public Bitmap getKing() {
         return battleships[0].faceUp;
     }

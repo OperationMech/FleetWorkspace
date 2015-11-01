@@ -1,4 +1,6 @@
 package fleet.gameLogic.players;
+import java.util.ArrayList;
+
 import fleet.gameLogic.Fleet;
 import fleet.gameLogic.Ship;
 
@@ -15,7 +17,7 @@ public interface Player {
     /**
      * Scout selection
      */
-    public void scout();
+    public void scout(ArrayList<AbstractPlayer> players);
 
     /**
      * Attack selection

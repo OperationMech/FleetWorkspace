@@ -54,7 +54,15 @@ public class Ship implements Parcelable {
      * Card reveal function
      */
     public void reveal(){
-        this.isFaceUp = true;
+        isFaceUp = true;
+    }
+
+    /**
+     * Getter for isFaceUp
+     * @return isFaceUp boolean status
+     */
+    public boolean getFaceUpStatus() {
+        return isFaceUp;
     }
 
     /**
