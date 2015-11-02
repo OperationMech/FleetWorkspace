@@ -113,20 +113,23 @@ public class BuildView extends View {
             if (board.fleetPositions[i] != null) {
                 System.out.println(i +" ?");
                 Ship ship = board.fleetPositions[i];
-                Bitmap scaledImg;
+                Bitmap scaledImg = null;
+                System.out.println("aaa"  + ship.shipClass);
                 switch (ship.shipClass) {
                     case BATTLESHIP:
-                        scaledImg = battleshipImgs[ship.getShipNum() - 10];
-                        canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                        scaledImg = battleshipImgs[(ship.getShipNum()-1) % 4];
+                        break;
                     case CRUISER:
-                        scaledImg = cruiserImgs[ship.getShipNum() - 6];
-                        canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                        scaledImg = cruiserImgs[(ship.getShipNum()-1) % 4];
+                        break;
                     case DESTROYER:
-                        scaledImg = destroyerImgs[ship.getShipNum() - 2];
-                        canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                        scaledImg = destroyerImgs[(ship.getShipNum()-1) % 4];
+                        break;
                     case CARRIER:
-                        canvas.drawBitmap(carrierImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                        scaledImg = carrierImg;
+                        break;
                 }
+                canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
 
             }
         }
@@ -196,6 +199,7 @@ public class BuildView extends View {
                             //We are moving a cruiser off the stack onto the board
                             else if (movingShip == 10) {
                                 board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount-1];
+                                System.out.println("CruiserHIT");
                             }
                             //We are moving a battleship off the stack onto the board
                             else if (movingShip == 11) {
