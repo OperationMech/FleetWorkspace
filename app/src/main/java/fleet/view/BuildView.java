@@ -117,13 +117,13 @@ public class BuildView extends View {
                 System.out.println("aaa"  + ship.shipClass);
                 switch (ship.shipClass) {
                     case BATTLESHIP:
-                        scaledImg = battleshipImgs[(ship.getShipNum()-1) % 4];
+                        scaledImg = battleshipImgs[13 - ship.getShipNum()];
                         break;
                     case CRUISER:
-                        scaledImg = cruiserImgs[(ship.getShipNum()-1) % 4];
+                        scaledImg = cruiserImgs[9 - ship.getShipNum()];
                         break;
                     case DESTROYER:
-                        scaledImg = destroyerImgs[(ship.getShipNum()-1) % 4];
+                        scaledImg = destroyerImgs[5 - ship.getShipNum()];
                         break;
                     case CARRIER:
                         scaledImg = carrierImg;
