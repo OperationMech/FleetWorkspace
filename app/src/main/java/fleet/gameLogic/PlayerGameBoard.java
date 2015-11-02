@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by Radu on 9/27/2015.
  */
 public class PlayerGameBoard {
-    protected Ship[] fleetPositions = new Ship[9];
+    public Ship[] fleetPositions = new Ship[9];
     private String fleetpath;
 
     /**
@@ -20,6 +20,14 @@ public class PlayerGameBoard {
     public PlayerGameBoard(Ship[] selectedShips, String fleetpath) {
         this.fleetpath = fleetpath;
         this.fleetPositions = selectedShips;
+    }
+
+    /**
+     *
+     * Enpty constructor
+     */
+    public PlayerGameBoard(){
+
     }
 
     /**

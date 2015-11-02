@@ -13,7 +13,7 @@ public class Ship implements Parcelable {
     protected Boolean isSunk;
     protected Boolean isFaceUp;
     public ShipClass shipClass;
-    protected int cardNum;
+    protected int shipNum;
 
     /**
      * Ship constructor from parcel
@@ -24,7 +24,7 @@ public class Ship implements Parcelable {
         isSunk = (Boolean) in.readValue(Boolean.class.getClassLoader());
         isFaceUp = (Boolean) in.readValue(Boolean.class.getClassLoader());
         shipClass = (ShipClass) in.readValue(ShipClass.class.getClassLoader());
-        cardNum = in.readInt();
+        shipNum = in.readInt();
 
     }
 
@@ -46,8 +46,23 @@ public class Ship implements Parcelable {
      * Constructor for Ship
      * @param faceUp card face image
      */
-    public Ship(Bitmap faceUp){
+    public Ship(Bitmap faceUp,int shipNum) {
         this.faceUp = faceUp;
+        this.shipNum = shipNum;
+        if (shipNum == 1){
+            this.shipClass = ShipClass.CARRIER;
+        }else if (shipNum > 1 && shipNum <= 5){
+            this.shipClass = ShipClass.DESTROYER;
+        } else if(shipNum > 5 && shipNum <= 9){
+            this.shipClass = ShipClass.CRUISER;
+        } else {
+            this.shipClass = ShipClass.BATTLESHIP;
+        }
+
+    }
+
+    public int getShipNum(){
+        return shipNum;
     }
 
     /**
@@ -85,6 +100,6 @@ public class Ship implements Parcelable {
         dest.writeValue(isSunk);
         dest.writeValue(isFaceUp);
         dest.writeValue(shipClass);
-        dest.writeInt(cardNum);
+        dest.writeInt(shipNum);
     }
 }

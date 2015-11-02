@@ -28,7 +28,7 @@ public class Fleet implements Parcelable {
      * @param fleetPath
      */
     public Fleet(Bitmap kingImg, AssetFileDescriptor fleetSoundFile, String fleetPath){
-        battleships[0] = new Ship(kingImg);
+        battleships[0] = new Ship(kingImg,13);
         fleetName = fleetPath.split("/")[1];
         this.fleetPath = fleetPath;
         this.fleetSoundFile = fleetSoundFile;
@@ -113,31 +113,31 @@ public class Fleet implements Parcelable {
      */
     public void populateFleet(String name, Bitmap ship) {
         if(name.startsWith("Two.")) {
-            destroyers[3] = new Ship(ship);
+            destroyers[3] = new Ship(ship,2);
         } else if (name.startsWith("Three.")) {
-            destroyers[2] = new Ship(ship);
+            destroyers[2] = new Ship(ship,3);
         } else if (name.startsWith("Four.")) {
-            destroyers[1] = new Ship(ship);
+            destroyers[1] = new Ship(ship,4);
         } else if (name.startsWith("Five.")) {
-            destroyers[0] = new Ship(ship);
+            destroyers[0] = new Ship(ship,5);
         } else if (name.startsWith("Six.")) {
-            cruisers[3] = new Ship(ship);
+            cruisers[3] = new Ship(ship,6);
         } else if (name.startsWith("Seven.")) {
-            cruisers[2] = new Ship(ship);
+            cruisers[2] = new Ship(ship,7);
         } else if (name.startsWith("Eight.")) {
-            cruisers[1] = new Ship(ship);
+            cruisers[1] = new Ship(ship,8);
         } else if (name.startsWith("Nine.")) {
-            cruisers[0] = new Ship(ship);
+            cruisers[0] = new Ship(ship,9);
         } else if (name.startsWith("Ten.")) {
-            battleships[3] = new Ship(ship);
+            battleships[3] = new Ship(ship,10);
         } else if (name.startsWith("Jack.")) {
-            battleships[2] = new Ship(ship);
+            battleships[2] = new Ship(ship,11);
         } else if (name.startsWith("Queen.")) {
-            battleships[1] = new Ship(ship);
+            battleships[1] = new Ship(ship,12);
         }else if (name.startsWith("King.")) {
-            battleships[0] = new Ship(ship);
+            battleships[0] = new Ship(ship,13);
         } else if (name.startsWith("Ace.")) {
-            carrier = new Ship(ship);
+            carrier = new Ship(ship,1);
         } else if (name.startsWith("FaceDown.")) {
             facedown = ship;
         }
