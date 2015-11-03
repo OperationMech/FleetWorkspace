@@ -168,7 +168,7 @@ public class BuildView extends View {
             case MotionEvent.ACTION_UP:
                 if (movingShipSlot >= 0) {
                     Ship temp = null;
-                    for (int i = 0; i < 12; i++) { // <- I think this is causing an issue because we can put a card on 9 through 12
+                    for (int i = 0; i < 12; i++) { // <- I think this is causing an issue because we can put a card on 9 through 11
                         Point slot = slotsOrigin[i];
                         if (x > slot.x
                                 && x < slot.x + slotScaleX
