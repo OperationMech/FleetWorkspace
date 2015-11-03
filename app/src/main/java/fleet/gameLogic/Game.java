@@ -58,7 +58,7 @@ public class Game {
                 shipAndTarget = player.attack();
                 if (shipAndTarget[1] == null) {
                     players.remove(player);
-                    isTurn = true;
+                    isTurn = false;
                 }
                 if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
                     battle(shipAndTarget[0], shipAndTarget[1]);
