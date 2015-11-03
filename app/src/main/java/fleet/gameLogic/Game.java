@@ -44,13 +44,14 @@ public class Game {
         for (AbstractPlayer player : players) {
             boolean isTurn = true;
             while (isTurn) {
-                Ship[] shipAndTarget = new Ship[2];
-                shipAndTarget = player.attack();
-                if (player.getGameBoard().allShipsSunk()) {
-                    players.remove(player);
-                }
                 if (players.size() < 2) {
                     return true;
+                }
+                Ship[] shipAndTarget = new Ship[2];
+                shipAndTarget = player.attack();
+                if (shipAndTarget[1] == null) {
+                    players.remove(player);
+                    isTurn = false;
                 }
                 if (shipAndTarget[0] != null) {
                     battle(shipAndTarget[0], shipAndTarget[1]);
