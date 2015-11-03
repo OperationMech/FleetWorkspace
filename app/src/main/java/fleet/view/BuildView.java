@@ -11,7 +11,6 @@ import fleet.activity.SelectionActivity;
 import fleet.gameLogic.Fleet;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
-import fleet.gameLogic.ShipClass;
 
 /**
  * Created by Radu on 10/20/2015.
@@ -26,11 +25,13 @@ public class BuildView extends View {
     Bitmap[] battleshipImgs = new Bitmap[4];
     Bitmap[] cruiserImgs = new Bitmap[4];
     Bitmap[] destroyerImgs = new Bitmap[4];
+    Bitmap[] scaledImgs = new Bitmap[14];
     Bitmap carrierImg;
     PlayerGameBoard board = new PlayerGameBoard();
     int movingX;
     int movingY;
-    int movingShip = -1;
+    int movingShipSlot = -1;
+    Bitmap movingShipImg = null;
 
 
     SelectionActivity myContext;
@@ -79,15 +80,15 @@ public class BuildView extends View {
         int shipYScale = screenH / 5;
         for (int i = 0; i < 4; i++) {
             battleshipImgs[i] = Bitmap.createScaledBitmap(battleships[i].faceUp, shipXScale, shipYScale, false);
+            scaledImgs[battleships[i].getShipNum()] = battleshipImgs[i];
             cruiserImgs[i] = Bitmap.createScaledBitmap(cruisers[i].faceUp, shipXScale, shipYScale, false);
+            scaledImgs[cruisers[i].getShipNum()] = cruiserImgs[i];
             destroyerImgs[i] = Bitmap.createScaledBitmap(destroyers[i].faceUp, shipXScale, shipYScale, false);
+            scaledImgs[destroyers[i].getShipNum()] = destroyerImgs[i];
         }
         carrierImg = Bitmap.createScaledBitmap(playerFleet.getCarrier().faceUp, shipXScale, shipYScale, false);
+        scaledImgs[1] = carrierImg;
         super.onSizeChanged(w, h, oldw, oldh);
-    }
-
-    private void organizeCards() {
-
     }
 
     @Override
@@ -95,6 +96,10 @@ public class BuildView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
+        //Drawing moving Image
+        if (movingShipImg != null){
+            canvas.drawBitmap(movingShipImg,movingX,movingY,null);
+        }
         // Drawing stacks
         if (destroyerCount < 4) {
             Point destroyerStack = slotsOrigin[9];
@@ -111,26 +116,9 @@ public class BuildView extends View {
         //Drawing positions
         for (int i = 0; i < 9; i++) {
             if (board.fleetPositions[i] != null) {
-                System.out.println(i +" ?");
                 Ship ship = board.fleetPositions[i];
-                Bitmap scaledImg = null;
-                System.out.println("aaa"  + ship.shipClass);
-                switch (ship.shipClass) {
-                    case BATTLESHIP:
-                        scaledImg = battleshipImgs[13 - ship.getShipNum()];
-                        break;
-                    case CRUISER:
-                        scaledImg = cruiserImgs[9 - ship.getShipNum()];
-                        break;
-                    case DESTROYER:
-                        scaledImg = destroyerImgs[5 - ship.getShipNum()];
-                        break;
-                    case CARRIER:
-                        scaledImg = carrierImg;
-                        break;
-                }
+                Bitmap scaledImg = scaledImgs[ship.getShipNum()];
                 canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
-
             }
         }
         //canvas.drawBitmap(carrierImg, slotsOrigin[4].x, slotsOrigin[4].y, null);
@@ -147,8 +135,8 @@ public class BuildView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                for (movingShip = 0; movingShip < 12; movingShip++) {
-                    Point slot = slotsOrigin[movingShip];
+                for (movingShipSlot = 0; movingShipSlot < 12; movingShipSlot++) {
+                    Point slot = slotsOrigin[movingShipSlot];
                     if (x > slot.x
                             && x < slot.x + slotScaleX
                             && y > slot.y
@@ -156,16 +144,18 @@ public class BuildView extends View {
                         break;
                     }
                 }
-                System.out.println("hey"+movingShip);
-                if (movingShip  == 9){
+                if (movingShipSlot == 9){
+                    movingShipImg = destroyerImgs[destroyerCount];
                     destroyerCount ++;
                     invalidate();
                 }
-                if (movingShip  == 10){
+                if (movingShipSlot == 10){
+                    movingShipImg = cruiserImgs[cruiserCount];
                     cruiserCount ++;
                     invalidate();
                 }
-                if (movingShip  == 11){
+                if (movingShipSlot == 11){
+                    movingShipImg = battleshipImgs[battleShipCount];
                     battleShipCount ++;
                     invalidate();
                 }
@@ -173,10 +163,10 @@ public class BuildView extends View {
             case MotionEvent.ACTION_MOVE:
                 movingX = x;
                 movingY = y;
+                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-                if (movingShip >= 0) {
-                    int endSlot;
+                if (movingShipSlot >= 0) {
                     Ship temp = null;
                     for (int i = 0; i < 12; i++) {
                         Point slot = slotsOrigin[i];
@@ -185,24 +175,23 @@ public class BuildView extends View {
                                 && y > slot.y
                                 && y < slot.y + slotScaleY) {
                             //We are moving a ship already on the grid to another location
-                            if (i < 9 && movingShip < 9) {
+                            if (i < 9 && movingShipSlot < 9) {
                                 if (board.fleetPositions[i] != null) {
                                     temp = board.fleetPositions[i];
                                 }
-                                board.fleetPositions[i] = board.fleetPositions[movingShip];
-                                board.fleetPositions[movingShip] = temp;
+                                board.fleetPositions[i] = board.fleetPositions[movingShipSlot];
+                                board.fleetPositions[movingShipSlot] = temp;
                             }
                             //We are moving a destroyer off the stack onto the board
-                            else if (movingShip == 9 && destroyerCount < 5) {
+                            else if (movingShipSlot == 9) {
                                 board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount-1];
                             }
                             //We are moving a cruiser off the stack onto the board
-                            else if (movingShip == 10 && cruiserCount < 5) {
+                            else if (movingShipSlot == 10) {
                                 board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount-1];
-                                System.out.println("CruiserHIT");
                             }
                             //We are moving a battleship off the stack onto the board
-                            else if (movingShip == 11 && battleShipCount < 5) {
+                            else if (movingShipSlot == 11) {
                                 board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount-1];
                             }
                         }
