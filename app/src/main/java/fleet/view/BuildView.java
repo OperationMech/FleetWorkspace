@@ -230,6 +230,7 @@ public class BuildView extends View {
                             }
                         }
                     }
+                    movingShipSlot = -1;
                     movingShipImg = null;
                     invalidate();
                     if (board.isFull()){
