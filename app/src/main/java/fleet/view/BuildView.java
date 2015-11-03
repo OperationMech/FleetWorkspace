@@ -168,7 +168,7 @@ public class BuildView extends View {
             case MotionEvent.ACTION_UP:
                 if (movingShipSlot >= 0) {
                     Ship temp = null;
-                    for (int i = 0; i < 12; i++) {
+                    for (int i = 0; i < 12; i++) { // <- I think this is causing an issue because we can put a card on 9 through 12
                         Point slot = slotsOrigin[i];
                         if (x > slot.x
                                 && x < slot.x + slotScaleX
@@ -183,15 +183,15 @@ public class BuildView extends View {
                                 board.fleetPositions[movingShipSlot] = temp;
                             }
                             //We are moving a destroyer off the stack onto the board
-                            else if (movingShipSlot == 9) {
+                            else if (movingShipSlot == 9 && destroyerCount < 5) {
                                 board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount-1];
                             }
                             //We are moving a cruiser off the stack onto the board
-                            else if (movingShipSlot == 10) {
+                            else if (movingShipSlot == 10 && cruiserCount < 5) {
                                 board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount-1];
                             }
                             //We are moving a battleship off the stack onto the board
-                            else if (movingShipSlot == 11) {
+                            else if (movingShipSlot == 11 && battleShipCount < 5) {
                                 board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount-1];
                             }
                         }
