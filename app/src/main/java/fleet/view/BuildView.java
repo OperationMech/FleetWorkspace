@@ -206,12 +206,10 @@ public class BuildView extends View {
                     }
                     movingShipImg = null;
                     invalidate();
+                    if (board.isFull()){
+                        myContext.startGame();
                     break;
                 }
-
-                invalidate();
-                if (board.isFull()){
-
             }
                 return true;
         }
