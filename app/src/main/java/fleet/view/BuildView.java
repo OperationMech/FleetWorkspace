@@ -144,17 +144,17 @@ public class BuildView extends View {
                         break;
                     }
                 }
-                if (movingShipSlot == 9){
+                if (movingShipSlot == 9 && destroyerCount < 5){
                     movingShipImg = destroyerImgs[destroyerCount];
                     destroyerCount ++;
                     invalidate();
                 }
-                if (movingShipSlot == 10){
+                if (movingShipSlot == 10 && cruiserCount < 5){
                     movingShipImg = cruiserImgs[cruiserCount];
                     cruiserCount ++;
                     invalidate();
                 }
-                if (movingShipSlot == 11){
+                if (movingShipSlot == 11 && battleShipCount < 5){
                     movingShipImg = battleshipImgs[battleShipCount];
                     battleShipCount ++;
                     invalidate();
