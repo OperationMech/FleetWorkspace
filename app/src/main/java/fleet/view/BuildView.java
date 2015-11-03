@@ -111,7 +111,7 @@ public class BuildView extends View {
         }
         //Drawing positions
         for (int i = 0; i < 9; i++) {
-            if (board.fleetPositions[i] != null) {
+            if (board.fleetPositions[i] != null && i != movingShipSlot) {
                 Ship ship = board.fleetPositions[i];
                 Bitmap scaledImg = scaledImgs[ship.getShipNum()];
                 canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
