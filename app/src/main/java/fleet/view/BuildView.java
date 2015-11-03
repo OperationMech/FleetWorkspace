@@ -141,20 +141,25 @@ public class BuildView extends View {
                             && x < slot.x + slotScaleX
                             && y > slot.y
                             && y < slot.y + slotScaleY) {
+                        movingX = x;
+                        movingY = y;
                         break;
                     }
                 }
-                if (movingShipSlot == 9 && destroyerCount < 5){
+                if (movingShipSlot > 0 && movingShipSlot < 9){
+
+                }
+                if (movingShipSlot == 9){
                     movingShipImg = destroyerImgs[destroyerCount];
                     destroyerCount ++;
                     invalidate();
                 }
-                if (movingShipSlot == 10 && cruiserCount < 5){
+                if (movingShipSlot == 10){
                     movingShipImg = cruiserImgs[cruiserCount];
                     cruiserCount ++;
                     invalidate();
                 }
-                if (movingShipSlot == 11 && battleShipCount < 5){
+                if (movingShipSlot == 11){
                     movingShipImg = battleshipImgs[battleShipCount];
                     battleShipCount ++;
                     invalidate();
@@ -168,7 +173,7 @@ public class BuildView extends View {
             case MotionEvent.ACTION_UP:
                 if (movingShipSlot >= 0) {
                     Ship temp = null;
-                    for (int i = 0; i < 12; i++) { // <- I think this is causing an issue because we can put a card on 9 through 11
+                    for (int i = 0; i < 12; i++) {
                         Point slot = slotsOrigin[i];
                         if (x > slot.x
                                 && x < slot.x + slotScaleX
@@ -183,19 +188,20 @@ public class BuildView extends View {
                                 board.fleetPositions[movingShipSlot] = temp;
                             }
                             //We are moving a destroyer off the stack onto the board
-                            else if (movingShipSlot == 9 && destroyerCount < 5) {
+                            else if (movingShipSlot == 9) {
                                 board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount-1];
                             }
                             //We are moving a cruiser off the stack onto the board
-                            else if (movingShipSlot == 10 && cruiserCount < 5) {
+                            else if (movingShipSlot == 10) {
                                 board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount-1];
                             }
                             //We are moving a battleship off the stack onto the board
-                            else if (movingShipSlot == 11 && battleShipCount < 5) {
+                            else if (movingShipSlot == 11) {
                                 board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount-1];
                             }
                         }
                     }
+                    movingShipImg = null;
                     invalidate();
                     break;
                 }
