@@ -138,6 +138,7 @@ public class BuildView extends View {
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent playIntent = new Intent(myContext, PlayActivity.class);
                         playIntent.putExtra("mutedMusic", mutedMusic);
+                        playIntent.putExtra("playerBoard",playerFleet);
                         myContext.startActivity(playIntent);
                         break;
 

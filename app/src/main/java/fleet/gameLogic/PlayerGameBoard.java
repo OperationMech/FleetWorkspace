@@ -1,13 +1,14 @@
 package fleet.gameLogic;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Per player gameboard class
  * Created by Radu on 9/27/2015.
  */
-public class PlayerGameBoard {
+public class PlayerGameBoard implements Serializable {
     public Ship[] fleetPositions = new Ship[9];
     private String fleetpath;
 

@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import fleet.R;
+import fleet.gameLogic.PlayerGameBoard;
 import fleet.view.PlayView;
 import fleet.gameLogic.Fleet;
 
@@ -38,6 +39,7 @@ public class PlayActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
+        PlayerGameBoard playerBoard = (PlayerGameBoard)bundle.getSerializable("playerBoard");
         /*
         System.out.println(bundle.getInt("playerFleet"));
         int playerSelected = bundle.getInt("playerFleet");
@@ -54,7 +56,7 @@ public class PlayActivity extends Activity {
             e.printStackTrace();
         }
         */
-        PlayView playView = new PlayView(this);
+        PlayView playView = new PlayView(this,playerBoard);
         setContentView(playView);
     }
 
