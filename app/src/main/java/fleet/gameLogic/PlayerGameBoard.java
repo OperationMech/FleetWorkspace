@@ -77,4 +77,13 @@ public class PlayerGameBoard {
         }
     }
 
+    public boolean isFull() {
+        for (Ship ship: fleetPositions){
+            if (ship == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
