@@ -208,6 +208,9 @@ public class BuildView extends View {
                 }
 
                 invalidate();
+                if (board.isFull()){
+
+            }
                 return true;
         }
         return true;
