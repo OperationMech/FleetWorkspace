@@ -193,16 +193,16 @@ public class BuildView extends View {
                                 board.fleetPositions[movingShip] = temp;
                             }
                             //We are moving a destroyer off the stack onto the board
-                            else if (movingShip == 9) {
+                            else if (movingShip == 9 && destroyerCount < 5) {
                                 board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount-1];
                             }
                             //We are moving a cruiser off the stack onto the board
-                            else if (movingShip == 10) {
+                            else if (movingShip == 10 && cruiserCount < 5) {
                                 board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount-1];
                                 System.out.println("CruiserHIT");
                             }
                             //We are moving a battleship off the stack onto the board
-                            else if (movingShip == 11) {
+                            else if (movingShip == 11 && battleShipCount < 5) {
                                 board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount-1];
                             }
                         }
