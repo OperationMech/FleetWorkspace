@@ -96,10 +96,6 @@ public class BuildView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
-        //Drawing moving Image
-        if (movingShipImg != null){
-            canvas.drawBitmap(movingShipImg,movingX,movingY,null);
-        }
         // Drawing stacks
         if (destroyerCount < 4) {
             Point destroyerStack = slotsOrigin[9];
@@ -120,6 +116,10 @@ public class BuildView extends View {
                 Bitmap scaledImg = scaledImgs[ship.getShipNum()];
                 canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
             }
+        }
+        //Drawing moving Image
+        if (movingShipImg != null){
+            canvas.drawBitmap(movingShipImg,movingX,movingY,null);
         }
         //canvas.drawBitmap(carrierImg, slotsOrigin[4].x, slotsOrigin[4].y, null);
     }
@@ -147,7 +147,8 @@ public class BuildView extends View {
                     }
                 }
                 if (movingShipSlot > 0 && movingShipSlot < 9){
-
+                    movingShipImg = scaledImgs[board.fleetPositions[movingShipSlot].getShipNum()];
+                    invalidate();
                 }
                 if (movingShipSlot == 9){
                     movingShipImg = destroyerImgs[destroyerCount];
