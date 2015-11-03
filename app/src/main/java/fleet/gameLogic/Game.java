@@ -1,6 +1,11 @@
 package fleet.gameLogic;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import fleet.gameLogic.players.AbstractPlayer;
+import fleet.gameLogic.players.HumanPlayer;
+
 import java.util.ArrayList;
 
 /**
@@ -9,14 +14,16 @@ import java.util.ArrayList;
  */
 public class Game {
     protected ArrayList<AbstractPlayer> players;
+    protected Context myContext;
     private boolean isWon = false;
 
     /**
      * Game constructor
      * @param players passed to the game
      */
-    public void game(ArrayList<AbstractPlayer> players) {
+    public void game(ArrayList<AbstractPlayer> players, Context context) {
         this.players = players;
+        myContext = context;
     }
 
     /**
@@ -51,14 +58,16 @@ public class Game {
                 shipAndTarget = player.attack();
                 if (shipAndTarget[1] == null) {
                     players.remove(player);
-                    isTurn = false;
+                    isTurn = true;
                 }
-                if (shipAndTarget[0] != null) {
+                if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
                     battle(shipAndTarget[0], shipAndTarget[1]);
                     player.scout(players);
                     isTurn = false;
                 } else {
-                    isTurn = true;
+                    if(player.getClass().equals(HumanPlayer.class)) {
+                        Toast.makeText(myContext, "Carrier can't attack",Toast.LENGTH_LONG);
+                    }
                 }
             }
         }
