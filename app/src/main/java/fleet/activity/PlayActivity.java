@@ -32,13 +32,13 @@ public class PlayActivity extends Activity {
     protected Boolean musicMuted;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
+        /*
         System.out.println(bundle.getInt("playerFleet"));
         int playerSelected = bundle.getInt("playerFleet");
         Fleets = bundle.getParcelableArrayList("fleets");
@@ -53,6 +53,7 @@ public class PlayActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
         PlayView playView = new PlayView(this);
         setContentView(playView);
     }

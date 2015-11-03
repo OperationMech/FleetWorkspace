@@ -1,12 +1,16 @@
 package fleet.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 
+import fleet.activity.PlayActivity;
 import fleet.activity.SelectionActivity;
 import fleet.gameLogic.Fleet;
 import fleet.gameLogic.PlayerGameBoard;
@@ -126,6 +130,28 @@ public class BuildView extends View {
         //canvas.drawBitmap(carrierImg, slotsOrigin[4].x, slotsOrigin[4].y, null);
     }
 
+    public void startGame(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Intent playIntent = new Intent(myContext, PlayActivity.class);
+                        playIntent.putExtra("mutedMusic", mutedMusic);
+                        myContext.startActivity(playIntent);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
+        builder.setMessage("Play with this setup?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
@@ -207,7 +233,7 @@ public class BuildView extends View {
                     movingShipImg = null;
                     invalidate();
                     if (board.isFull()){
-                        myContext.startGame();
+                        startGame();
                     break;
                 }
             }
