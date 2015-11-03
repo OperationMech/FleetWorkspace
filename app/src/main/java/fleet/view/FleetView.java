@@ -51,6 +51,7 @@ public class FleetView extends View {
     private boolean resumeGamePressed =false;
     protected Intent playIntent;
     private AudioManager audioManager;
+    private boolean isMuted;
     SoundPool selectionSound;
 
     /**
@@ -58,10 +59,11 @@ public class FleetView extends View {
      * @param context The activity that has built this view
      * @param fleets An array list of fleets that where found in assets/fleets by an assetmanager
      **/
-    public FleetView(Context context, ArrayList<Fleet> fleets) {
+    public FleetView(Context context, ArrayList<Fleet> fleets, boolean musicMuted) {
 
         super(context);
         myContext = (SelectionActivity)context;
+        isMuted = musicMuted;
         audioManager = (AudioManager)
                 this.myContext.getSystemService(Context.AUDIO_SERVICE);
         selectionSound = new SoundPool(1,1,1);

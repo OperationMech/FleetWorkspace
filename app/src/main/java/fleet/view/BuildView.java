@@ -31,14 +31,16 @@ public class BuildView extends View {
     int movingX;
     int movingY;
     int movingShipSlot = -1;
+    boolean mutedMusic;
     Bitmap movingShipImg = null;
 
 
     SelectionActivity myContext;
     Point[] slotsOrigin = new Point[12];
 
-    public BuildView(Context myContext, Fleet playerFleet) {
+    public BuildView(Context myContext, Fleet playerFleet, boolean musicMuted) {
         super(myContext);
+        mutedMusic = musicMuted;
         this.playerFleet = playerFleet;
         this.myContext = (SelectionActivity) myContext;
         board.fleetPositions[4] = playerFleet.getCarrier();

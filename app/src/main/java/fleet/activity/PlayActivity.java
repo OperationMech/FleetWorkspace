@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +29,7 @@ public class PlayActivity extends Activity {
     private AssetManager assetManager;
     private String[] shipList;
     private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
+    protected Boolean musicMuted;
 
     @Override
 
@@ -36,6 +38,7 @@ public class PlayActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        musicMuted = bundle.getBoolean("musicMuted");
         System.out.println(bundle.getInt("playerFleet"));
         int playerSelected = bundle.getInt("playerFleet");
         Fleets = bundle.getParcelableArrayList("fleets");
@@ -59,6 +62,28 @@ public class PlayActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.fleet, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.global_mute:
+                setMusic();
+                item.setChecked(!item.isChecked());
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void setMusic() {
+        if(musicMuted) {
+            musicMuted = false;
+        } else {
+            musicMuted = true;
+        }
     }
 
 }

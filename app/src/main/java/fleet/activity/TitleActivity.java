@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class TitleActivity extends Activity {
     protected MediaPlayer mp;

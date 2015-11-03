@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ViewSwitcher;
 
 import java.io.IOException;
@@ -27,12 +28,15 @@ public class SelectionActivity extends Activity {
     private static int runOnce = 0;
     protected String playerFleetPath;
     private static final int REFRESH_SCREEN = 1;
+    protected boolean musicMuted;
     protected MediaPlayer mp;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getExtras();
+        musicMuted = bundle.getBoolean("musicMuted");
         assetManager = getAssets();
         if(runOnce == 0) {
             try {
@@ -54,7 +58,7 @@ public class SelectionActivity extends Activity {
         mp = MediaPlayer.create(this, R.raw.fleet_bgm);
         mp.setLooping(true);
         mp.start();
-        FleetView myView = new FleetView(this, fleets);
+        FleetView myView = new FleetView(this, fleets, musicMuted);
 
         setContentView(myView);
     }
@@ -80,7 +84,7 @@ public class SelectionActivity extends Activity {
         }catch(IOException e) {
             e.printStackTrace();
         }
-        BuildView buildView = new BuildView(this,fleet);
+        BuildView buildView = new BuildView(this,fleet, musicMuted);
         setContentView(buildView);
     }
 
@@ -89,6 +93,28 @@ public class SelectionActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.fleet, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.global_mute:
+                setMusic();
+                item.setChecked(!item.isChecked());
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void setMusic() {
+        if(musicMuted) {
+            musicMuted = false;
+        } else {
+            musicMuted = true;
+        }
     }
     @Override
     /**

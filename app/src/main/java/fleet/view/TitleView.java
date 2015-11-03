@@ -147,6 +147,7 @@ public class TitleView extends View {
             case MotionEvent.ACTION_UP:
                 if (playButtonPressed) {
                     Intent gameIntent = new Intent(myContext, SelectionActivity.class);
+                    gameIntent.putExtra("musicMuted", isMuted);
 
                     myContext.startActivity(gameIntent);
                 }
