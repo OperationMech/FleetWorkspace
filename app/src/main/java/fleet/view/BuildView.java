@@ -15,6 +15,7 @@ import fleet.activity.SelectionActivity;
 import fleet.gameLogic.Fleet;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
+import fleet.gameLogic.TransferBuffer;
 
 /**
  * Created by Radu on 10/20/2015.
@@ -138,7 +139,8 @@ public class BuildView extends View {
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent playIntent = new Intent(myContext, PlayActivity.class);
                         playIntent.putExtra("mutedMusic", mutedMusic);
-                        playIntent.putExtra("playerBoard",playerFleet);
+                       // playIntent.putExtra("playerBoard",playerFleet);
+                        TransferBuffer.board = board;
                         myContext.startActivity(playIntent);
                         break;
 

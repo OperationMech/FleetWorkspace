@@ -19,6 +19,7 @@ public class PlayView extends View {
     int screenW;
     int screenH;
     Point[] slotsOrigin = new Point[9];
+    Bitmap[] scaledImgs = new Bitmap[14];
 
     public PlayView(Context myContext, PlayerGameBoard board) {
         super(myContext);
@@ -43,6 +44,11 @@ public class PlayView extends View {
                 pointNum++;
             }
         }
+        int shipXScale = screenW / 4;
+        int shipYScale = screenH / 5;
+        for (Ship ship : board.fleetPositions){
+            scaledImgs[ship.getShipNum()] =  Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
+        }
     }
 
     @Override
@@ -54,8 +60,8 @@ public class PlayView extends View {
         for (int i = 0; i < 9; i++) {
             if (board.fleetPositions[i] != null) {
                 Ship ship = board.fleetPositions[i];
-               // Bitmap scaledImg = scaledImgs[ship.getShipNum()];
-               // canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                Bitmap scaledImg = scaledImgs[ship.getShipNum()];
+                canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
             }
         }
     }

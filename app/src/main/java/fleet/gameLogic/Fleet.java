@@ -10,7 +10,7 @@ import android.os.Parcelable;
  * Fleet class with parcelization
  * Created by Radu on 9/27/2015.
  */
-public class Fleet implements Parcelable {
+public class Fleet  {
     protected String fleetPath;
     protected String fleetName;
     protected Ship carrier;
@@ -108,8 +108,8 @@ public class Fleet implements Parcelable {
 
     /**
      * Adds ships to a fleet
-     * @param name A ship's filename
-     * @param ship A ship's image
+     * @param name TransferBuffer ship's filename
+     * @param ship TransferBuffer ship's image
      */
     public void populateFleet(String name, Bitmap ship) {
         if(name.startsWith("Two.")) {
@@ -146,17 +146,17 @@ public class Fleet implements Parcelable {
     /**
      * Parcelable creator
      */
-    public static final Parcelable.Creator<Fleet> CREATOR =
-            new Parcelable.Creator<Fleet>() {
+  //  public static final Parcelable.Creator<Fleet> CREATOR =
+    //        new Parcelable.Creator<Fleet>() {
 
-                public Fleet createFromParcel(Parcel in) {
-                    return new Fleet(in);
-                }
+   //             public Fleet createFromParcel(Parcel in) {
+    //                return new Fleet(in);
+     //           }
 
-                public Fleet[] newArray(int size) {
-                    return new Fleet[size];
-                }
-            };
+    //            public Fleet[] newArray(int size) {
+     //               return new Fleet[size];
+     //           }
+    //        };
 
     /**
      * De-parcel function
@@ -173,7 +173,7 @@ public class Fleet implements Parcelable {
      * Parcel options flag function
      * @return flag options
      */
-    @Override
+ //   @Override
     public int describeContents() {
         return 0;
     }
@@ -183,12 +183,12 @@ public class Fleet implements Parcelable {
      * @param dest the target parcel
      * @param flags options
      */
-    @Override
+  //  @Override
     public void writeToParcel(Parcel dest, int flags) {
 
         dest.writeString(fleetPath);
         dest.writeString(fleetName);
-        dest.writeParcelable(carrier, flags);
+      //  dest.writeParcelable(carrier, flags);
         dest.writeParcelable(facedown, flags);
     }
 }

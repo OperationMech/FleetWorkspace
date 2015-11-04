@@ -3,17 +3,15 @@ package fleet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import fleet.R;
 import fleet.gameLogic.PlayerGameBoard;
+import fleet.gameLogic.TransferBuffer;
 import fleet.view.PlayView;
 import fleet.gameLogic.Fleet;
 
@@ -31,15 +29,17 @@ public class PlayActivity extends Activity {
     private String[] shipList;
     private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
     protected Boolean musicMuted;
+    PlayerGameBoard board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        this.board = TransferBuffer.board;
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
-        PlayerGameBoard playerBoard = (PlayerGameBoard)bundle.getSerializable("playerBoard");
+       // PlayerGameBoard playerBoard = (PlayerGameBoard)bundle.getSerializable("playerBoard");
         /*
         System.out.println(bundle.getInt("playerFleet"));
         int playerSelected = bundle.getInt("playerFleet");
@@ -56,7 +56,7 @@ public class PlayActivity extends Activity {
             e.printStackTrace();
         }
         */
-        PlayView playView = new PlayView(this,playerBoard);
+        PlayView playView = new PlayView(this,board);
         setContentView(playView);
     }
 

@@ -4,11 +4,13 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Ship class
  * Created by Radu on 9/27/2015.
  */
-public class Ship implements Parcelable {
+public class Ship implements Serializable {
     public Bitmap faceUp;
     protected Boolean isSunk;
     protected Boolean isFaceUp;
@@ -32,15 +34,15 @@ public class Ship implements Parcelable {
     /**
      * Parcelable creator
      */
-    static final Parcelable.Creator<Ship> CREATOR = new Parcelable.Creator<Ship>() {
-        public Ship createFromParcel(Parcel in) {
-            return new Ship(in);
-        }
+  //  static final Parcelable.Creator<Ship> CREATOR = new Parcelable.Creator<Ship>() {
+ //       public Ship createFromParcel(Parcel in) {
+  //          return new Ship(in);
+  //      }
 
-        public Ship[] newArray(int size) {
-            return new Ship[size];
-        }
-    };
+    //    public Ship[] newArray(int size) {
+  //          return new Ship[size];
+ //       }
+ //   };
 
     /**
      * Constructor for Ship
@@ -84,7 +86,7 @@ public class Ship implements Parcelable {
      * Parcelized flag options function
      * @return flag options
      */
-    @Override
+   // @Override
     public int describeContents() {
         return 0;
     }
@@ -94,7 +96,7 @@ public class Ship implements Parcelable {
      * @param dest target parcel
      * @param flags options
      */
-    @Override
+  //  @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(faceUp, 0);
         dest.writeValue(isSunk);
