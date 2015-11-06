@@ -67,6 +67,7 @@ public class PlayView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
+        System.out.println(selectedShip);
         //Drawing positions
         for (int i = 0; i < 9; i++) {
             if (board.fleetPositions[i] != null) {
@@ -93,16 +94,17 @@ public class PlayView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                for (selectedShip = 0; selectedShip < 9; selectedShip++) {
-                    Point slot = slotsOrigin[selectedShip];
+                for (int i = 0; i < 9; i++) {
+                    Point slot = slotsOrigin[i];
                     if (x > slot.x
                             && x < slot.x + slotScaleX
                             && y > slot.y
                             && y < slot.y + slotScaleY) {
-                        System.out.println("AAAAAAAAAA " + selectedShip);
+                        selectedShip = i;
                         break;
                     }
                 }
+                invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
