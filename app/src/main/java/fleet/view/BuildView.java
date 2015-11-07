@@ -179,8 +179,10 @@ public class BuildView extends View {
                     }
                 }
                 if (movingShipSlot > 0 && movingShipSlot < 9) {
-                    movingShipImg = scaledImgs[board.fleetPositions[movingShipSlot].getShipNum()];
-                    invalidate();
+                    if (board.fleetPositions[movingShipSlot] != null) {
+                        movingShipImg = scaledImgs[board.fleetPositions[movingShipSlot].getShipNum()];
+                        invalidate();
+                    }
                 }
                 if (movingShipSlot == 9) {
                     movingShipImg = destroyerImgs[destroyerCount];

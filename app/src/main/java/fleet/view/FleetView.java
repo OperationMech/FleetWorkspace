@@ -60,7 +60,7 @@ public class FleetView extends View {
      * @param fleets An array list of fleets that where found in assets/fleets by an assetmanager
      **/
     public FleetView(Context context, ArrayList<Fleet> fleets, boolean musicMuted) {
-
+        //TODO: Make this less of a mess
         super(context);
         myContext = (SelectionActivity)context;
         isMuted = musicMuted;
@@ -129,7 +129,6 @@ public class FleetView extends View {
         rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
         resumeGameY = (int) (fleetKingY - screenH * 0.2);
         background = Bitmap.createScaledBitmap(background,screenW,screenH,false);
-
         super.onSizeChanged(w, h, oldw, oldh);
     }
 

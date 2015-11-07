@@ -2,6 +2,7 @@ package fleet.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +10,9 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.lang.annotation.Target;
+
+import fleet.R;
 import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
@@ -28,7 +32,10 @@ public class PlayView extends View {
     private Paint blackPaint;
     public Player player;
     Point targetingButtonOrigin;
+    Bitmap findTarget = BitmapFactory.decodeResource(getResources(), R.drawable.find_target);
+    Bitmap confirmTarget = BitmapFactory.decodeResource(getResources(), R.drawable.confirm_target);
     Point myFleetOrigin;
+    Bitmap myFleet = BitmapFactory.decodeResource(getResources(), R.drawable.my_fleet);
     Point selectedTextOrigin;
 
     public PlayView(Context myContext, Player player) {
@@ -66,8 +73,12 @@ public class PlayView extends View {
         for (Ship ship : board.fleetPositions) {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
+        confirmTarget = Bitmap.createScaledBitmap(confirmTarget,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
+        findTarget = Bitmap.createScaledBitmap(findTarget,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
+        myFleet = Bitmap.createScaledBitmap(myFleet,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
+
         //Finding other UI origin points
-        targetingButtonOrigin = new Point((int) (screenW * .70), (int) (screenH * 0.95));
+        targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.75));
         myFleetOrigin = new Point((int)(screenW * .70), (int) (screenH * 0.85));
         selectedTextOrigin = new Point((int) (screenW * .25), (int) (screenH * 0.95));
     }
@@ -91,9 +102,12 @@ public class PlayView extends View {
                 String text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
                 canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
                 System.out.println(text);
+                canvas.drawBitmap(findTarget,targetingButtonOrigin.x,targetingButtonOrigin.y,null);
             }
         }else{
             //TODO: Draw things facedown
+            canvas.drawBitmap(myFleet,myFleetOrigin.x,myFleetOrigin.y,null);
+            canvas.drawBitmap(confirmTarget,targetingButtonOrigin.x,targetingButtonOrigin.y,null);
         }
     }
 

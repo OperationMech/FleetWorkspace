@@ -38,7 +38,6 @@ public class TitleView extends View {
         this.mp = mp;
         isMuted = musicState;
         titleBackground = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
-        titleGraphic = BitmapFactory.decodeResource(getResources(), fleet.R.drawable.title_graphic);
         titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
         playButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_up);
         playButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_down);
