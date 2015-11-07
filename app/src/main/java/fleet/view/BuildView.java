@@ -113,7 +113,7 @@ public class BuildView extends View {
             Point cruiserStack = slotsOrigin[10];
             canvas.drawBitmap(cruiserImgs[cruiserCount], cruiserStack.x, cruiserStack.y, null);
         }
-        if (battleShipCount <4) {
+        if (battleShipCount < 4) {
             Point battleShipStack = slotsOrigin[11];
             canvas.drawBitmap(battleshipImgs[battleShipCount], battleShipStack.x, battleShipStack.y, null);
         }
@@ -126,13 +126,13 @@ public class BuildView extends View {
             }
         }
         //Drawing moving Image
-        if (movingShipImg != null){
-            canvas.drawBitmap(movingShipImg,movingX,movingY,null);
+        if (movingShipImg != null) {
+            canvas.drawBitmap(movingShipImg, movingX, movingY, null);
         }
         //canvas.drawBitmap(carrierImg, slotsOrigin[4].x, slotsOrigin[4].y, null);
     }
 
-    public void startGame(){
+    public void startGame() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -140,7 +140,7 @@ public class BuildView extends View {
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent playIntent = new Intent(myContext, PlayActivity.class);
                         playIntent.putExtra("mutedMusic", mutedMusic);
-                       // playIntent.putExtra("playerBoard",playerFleet);
+                        // playIntent.putExtra("playerBoard",playerFleet);
                         TransferBuffer.board = board;
                         myContext.startActivity(playIntent);
                         break;
@@ -178,23 +178,23 @@ public class BuildView extends View {
                         break;
                     }
                 }
-                if (movingShipSlot > 0 && movingShipSlot < 9){
+                if (movingShipSlot > 0 && movingShipSlot < 9) {
                     movingShipImg = scaledImgs[board.fleetPositions[movingShipSlot].getShipNum()];
                     invalidate();
                 }
-                if (movingShipSlot == 9){
+                if (movingShipSlot == 9) {
                     movingShipImg = destroyerImgs[destroyerCount];
-                    destroyerCount ++;
+                    destroyerCount++;
                     invalidate();
                 }
-                if (movingShipSlot == 10){
+                if (movingShipSlot == 10) {
                     movingShipImg = cruiserImgs[cruiserCount];
-                    cruiserCount ++;
+                    cruiserCount++;
                     invalidate();
                 }
-                if (movingShipSlot == 11){
+                if (movingShipSlot == 11) {
                     movingShipImg = battleshipImgs[battleShipCount];
-                    battleShipCount ++;
+                    battleShipCount++;
                     invalidate();
                 }
                 break;
@@ -206,6 +206,7 @@ public class BuildView extends View {
             case MotionEvent.ACTION_UP:
                 if (movingShipSlot >= 0) {
                     Ship temp = null;
+                    boolean placed = false;
                     for (int i = 0; i < 12; i++) {
                         Point slot = slotsOrigin[i];
                         if (x > slot.x
@@ -219,29 +220,43 @@ public class BuildView extends View {
                                 }
                                 board.fleetPositions[i] = board.fleetPositions[movingShipSlot];
                                 board.fleetPositions[movingShipSlot] = temp;
+                                placed = true;
                             }
                             //We are moving a destroyer off the stack onto the board
                             else if (movingShipSlot == 9) {
-                                board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount-1];
+                                board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount - 1];
+                                placed = true;
                             }
                             //We are moving a cruiser off the stack onto the board
                             else if (movingShipSlot == 10) {
-                                board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount-1];
+                                board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount - 1];
+                                placed = true;
                             }
                             //We are moving a battleship off the stack onto the board
                             else if (movingShipSlot == 11) {
-                                board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount-1];
+                                board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount - 1];
+                                placed = true;
                             }
+                        }
+                    }
+                    if (!placed) {
+                        //If the moving ship was coming off one of the stacks we want to put it back.
+                        if (movingShipSlot == 9) {
+                            destroyerCount--;
+                        } else if (movingShipSlot == 10) {
+                            cruiserCount--;
+                        } else if (movingShipSlot == 11) {
+                            battleShipCount--;
                         }
                     }
                     movingShipSlot = -1;
                     movingShipImg = null;
                     invalidate();
-                    if (board.isFull()){
+                    if (board.isFull()) {
                         startGame();
-                    break;
+                        break;
+                    }
                 }
-            }
                 return true;
         }
         return true;
