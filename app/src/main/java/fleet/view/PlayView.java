@@ -12,6 +12,7 @@ import android.view.View;
 import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
+import fleet.gameLogic.players.Player;
 
 /**
  * Created by Radu on 10/18/2015.
@@ -25,10 +26,15 @@ public class PlayView extends View {
     Bitmap[] scaledImgs = new Bitmap[14];
     int selectedShip = -1;
     private Paint blackPaint;
+    public Player player;
+    Point targetingButtonOrigin;
+    Point myFleetOrigin;
+    Point selectedTextOrigin;
 
-    public PlayView(Context myContext, PlayerGameBoard board) {
+    public PlayView(Context myContext, Player player) {
         super(myContext);
-        this.board = board;
+        this.player = player;
+        this.board = player.getGameBoard();
         this.myContext = (PlayActivity) myContext;
         blackPaint = new Paint();
         blackPaint.setAntiAlias(true);
@@ -54,12 +60,16 @@ public class PlayView extends View {
                 pointNum++;
             }
         }
+        //Scaling images
         int shipXScale = screenW / 4;
         int shipYScale = screenH / 5;
-
         for (Ship ship : board.fleetPositions) {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
+        //Finding other UI origin points
+        targetingButtonOrigin = new Point((int) (screenW * .70), (int) (screenH * 0.95));
+        myFleetOrigin = new Point((int)(screenW * .70), (int) (screenH * 0.85));
+        selectedTextOrigin = new Point((int) (screenW * .25), (int) (screenH * 0.95));
     }
 
     @Override
@@ -67,19 +77,23 @@ public class PlayView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
-        System.out.println(selectedShip);
-        //Drawing positions
-        for (int i = 0; i < 9; i++) {
-            if (board.fleetPositions[i] != null) {
-                Ship ship = board.fleetPositions[i];
-                Bitmap scaledImg = scaledImgs[ship.getShipNum()];
-                canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+        //Checking if the current player is the player that owns this board
+        if (player.getPlayerID() == myContext.getCurrentPlayer()) {
+            //Drawing positions
+            for (int i = 0; i < 9; i++) {
+                if (board.fleetPositions[i] != null) {
+                    Ship ship = board.fleetPositions[i];
+                    Bitmap scaledImg = scaledImgs[ship.getShipNum()];
+                    canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                }
             }
-        }
-        if(selectedShip >= 0 ) {
-            String text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
-            canvas.drawText(text, 0, text.length(), (int) (screenW * .75), (int) (screenH * 0.95), blackPaint);
-            System.out.println(text);
+            if (selectedShip >= 0) {
+                String text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
+                canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
+                System.out.println(text);
+            }
+        }else{
+            //TODO: Draw things facedown
         }
     }
 

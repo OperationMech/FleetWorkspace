@@ -18,8 +18,8 @@ public class ComputerPlayer extends AbstractPlayer {
     /**
      * Computer player constructor
      */
-    public ComputerPlayer(Game game) {
-        super(game);
+    public ComputerPlayer(PlayerGameBoard board, int playerID) {
+        super(board,playerID);
     }
 
     /**

@@ -16,8 +16,8 @@ public class HumanPlayer extends AbstractPlayer{
     /**
      * HumanPlayer constructor
      */
-    public HumanPlayer(Game game) {
-        super(game);
+    public HumanPlayer(PlayerGameBoard board, int playerID) {
+        super(board, playerID);
     }
 
     /**

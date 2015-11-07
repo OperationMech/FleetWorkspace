@@ -10,8 +10,9 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import fleet.R;
-import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.TransferBuffer;
+import fleet.gameLogic.players.ComputerPlayer;
+import fleet.gameLogic.players.HumanPlayer;
 import fleet.view.PlayView;
 import fleet.gameLogic.Fleet;
 
@@ -29,13 +30,14 @@ public class PlayActivity extends Activity {
     private String[] shipList;
     private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
     protected Boolean musicMuted;
-    PlayerGameBoard board;
+    protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
+    private int nextPlayerID = 0;
+    private int currentPlayer = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        this.board = TransferBuffer.board;
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
@@ -56,8 +58,41 @@ public class PlayActivity extends Activity {
             e.printStackTrace();
         }
         */
-        PlayView playView = new PlayView(this,board);
-        setContentView(playView);
+        populatePlayers();
+        setContentView(activePlayers.get(currentPlayer));
+    }
+
+
+    private void populatePlayers (){
+        HumanPlayer humanPlayer = new HumanPlayer(TransferBuffer.board, nextPlayerID);
+        nextPlayerID++;
+        PlayView humanPlayView = new PlayView(this,humanPlayer);
+        activePlayers.add(humanPlayView);
+        //TODO:make a different board for computer player
+        ComputerPlayer computerPlayer = new ComputerPlayer(TransferBuffer.board, nextPlayerID);
+        nextPlayerID++;
+        PlayView computerPlayView = new PlayView(this,computerPlayer);
+        activePlayers.add(computerPlayView);
+    }
+    
+    public void nextPlayerTurn(){
+        if (currentPlayer < activePlayers.size()){
+            currentPlayer++;
+        }else {
+            currentPlayer = 0;
+        }
+        String playerType = activePlayers.get(currentPlayer).player.getClass().getSimpleName();
+
+        if ( playerType.equals("HumanPlayer")){
+            setContentView(activePlayers.get(currentPlayer));
+        }else{
+
+        }
+
+    }
+
+    public int getCurrentPlayer(){
+        return currentPlayer;
     }
 
     @Override

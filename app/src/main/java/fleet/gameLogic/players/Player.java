@@ -2,6 +2,7 @@ package fleet.gameLogic.players;
 import java.util.ArrayList;
 
 import fleet.gameLogic.Fleet;
+import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 
 /**
@@ -36,6 +37,18 @@ public interface Player {
      * @return player's fleet
      */
     public Fleet getFleet();
+
+    /**
+     * Getter for player PlayerGameBoard
+     * @return the player's PlayerGameBoard
+     */
+    public PlayerGameBoard getGameBoard();
+
+    /**
+     * Getter for player ID
+     * @return the player's ID
+     */
+    public int getPlayerID();
 
 
 }

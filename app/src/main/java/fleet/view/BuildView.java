@@ -16,6 +16,7 @@ import fleet.gameLogic.Fleet;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.TransferBuffer;
+import fleet.gameLogic.players.HumanPlayer;
 
 /**
  * Created by Radu on 10/20/2015.

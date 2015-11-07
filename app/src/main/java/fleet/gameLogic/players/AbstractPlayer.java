@@ -14,9 +14,11 @@ public abstract class AbstractPlayer implements Player {
     protected Fleet playerFleet;
     protected PlayerGameBoard playerGameBoard;
     protected Game game;
+    private int playerID;
 
-    public AbstractPlayer (Game game){
-        this.game = game;
+    public AbstractPlayer (PlayerGameBoard board,int playerID){
+        this.playerGameBoard = board;
+        this.playerID = playerID;
     }
 
     /**
@@ -34,6 +36,14 @@ public abstract class AbstractPlayer implements Player {
      */
     public PlayerGameBoard getGameBoard() {
         return playerGameBoard;
+    }
+
+    /**
+     * Getter for player playerID
+     * @return the player's playerID
+     */
+    public int getPlayerID(){
+        return playerID;
     }
 
 }
