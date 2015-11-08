@@ -15,6 +15,7 @@ import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.players.AbstractPlayer;
+import fleet.gameLogic.players.ComputerPlayer;
 
 /**
  * Created by Radu on 10/18/2015.
@@ -54,6 +55,9 @@ public class PlayView extends View {
         blackPaint.setColor(Color.BLACK);
         blackPaint.setTextSize((float) 24.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
+        if(player.getClass().equals(ComputerPlayer.class)) {
+            this.myContext.runTurn(player);
+        }
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -163,6 +167,11 @@ public class PlayView extends View {
                         caller.setAttacker(selected);
                     } else {
                         caller.setDefender(selected);
+                        caller.setScoutTarget(selected);
+                    }
+                    if((caller.getPlayerID() != player.getPlayerID())) {
+                        myContext.runTurn(caller);
+                        break;
                     }
                     myContext.getNextPlayerView();
                     break;

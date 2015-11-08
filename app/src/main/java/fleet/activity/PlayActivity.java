@@ -94,44 +94,44 @@ public class PlayActivity extends Activity {
     }
 
     /**
-     * Game loop start function
+     * Game start function
      */
     public void startGame() {
-        isWon = gameLoop();
+        game();
     }
 
     /**
-     * Game loop function
-     *
+     * Game function
      * @return won status of the current game
      */
-    public boolean gameLoop() {
+    public void game() {
         AbstractPlayer player = players.get(currentPlayer);
         activePlayers.get(currentPlayer).caller = player;
         setContentView(activePlayers.get(currentPlayer));
-        /*while (!player.ready()) {
-            Ship[] shipAndTarget = new Ship[2];
-            shipAndTarget = player.attack();
-            if (shipAndTarget[1] == null) {
-                if (player.getClass().equals(HumanPlayer.class)) {
-                    Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
-                }
-                players.remove(player);
-                break;
+    }
+
+    public void runTurn(AbstractPlayer player) {
+        Ship[] shipAndTarget = new Ship[2];
+        shipAndTarget = player.attack(players);
+        if (shipAndTarget[1] == null) {
+            if (player.getClass().equals(HumanPlayer.class)) {
+                Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
             }
-            if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
-                shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
-                player.scout(players);
-            } else {
-                if (player.getClass().equals(HumanPlayer.class)) {
-                    Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
-                }
-            }
-        }*/
-        if (players.size() < 2) {
-            return true;
+            players.remove(player);
         }
-        return true;
+        if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
+            shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
+            if(shipAndTarget[1].getStatus()) {
+                Toast.makeText(this,shipAndTarget[1].getShipNum() + ": Remains afloat", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this,shipAndTarget[1].getShipNum() + ": Is no more", Toast.LENGTH_SHORT).show();
+            }
+            player.scout(players);
+        } else {
+            if (player.getClass().equals(HumanPlayer.class)) {
+                Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     /**

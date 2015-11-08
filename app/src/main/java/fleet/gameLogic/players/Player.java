@@ -22,9 +22,10 @@ public interface Player {
 
     /**
      * Attack selection
-     * @return both attacker and target ships
+     * @param players in the game
+     * @return both attacker and target ships. Position 0 is the attacking ship, position 1 is the defending ship.
      */
-    public Ship[] attack();
+    public Ship[] attack(ArrayList<AbstractPlayer> players);
 
     /**
      * "Ready" function

@@ -55,7 +55,7 @@ public class Game {
                     return true;
                 }
                 Ship[] shipAndTarget = new Ship[2];
-                shipAndTarget = player.attack();
+                shipAndTarget = player.attack(players);
                 if (shipAndTarget[1] == null) {
                     players.remove(player);
                     isTurn = false;

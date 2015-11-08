@@ -54,10 +54,11 @@ public class HumanPlayer extends AbstractPlayer{
 
     /**
      * Attack selection
-     * @return both attacker and target ships
+     * @param players the game
+     * @return both attacker and target ships. Position 0 is the attacking ship, position 1 is the defending ship.
      */
     @Override
-    public Ship[] attack() {
+    public Ship[] attack(ArrayList<AbstractPlayer> players) {
         Ship[] ships = {attackSelected, attackTarget};
         return ships;
     }

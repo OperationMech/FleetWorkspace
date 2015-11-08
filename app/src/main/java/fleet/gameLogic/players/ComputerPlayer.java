@@ -37,7 +37,7 @@ public class ComputerPlayer extends AbstractPlayer {
      */
     @Override
     public void scout(ArrayList<AbstractPlayer> players) {
-        PlayerGameBoard targetBoard = selectPlayer();
+        PlayerGameBoard targetBoard = selectPlayer(players);
         boolean hasTarget = false;
         int localRandom = new Random().nextInt();
         int targetShip = localRandom % 9;
@@ -60,13 +60,13 @@ public class ComputerPlayer extends AbstractPlayer {
 
     /**
      * Attack selection
-     *
+     * @param players in the game.
      * @return both attacker and target ships. Position 0 is the attacking ship, position 1 is the defending ship.
      * If no ships can be defeated, and there are no face down cards on the enemies board, both positions will be null.
      */
     @Override
-    public Ship[] attack() {
-        PlayerGameBoard targetBoard = selectPlayer();
+    public Ship[] attack(ArrayList<AbstractPlayer> players) {
+        PlayerGameBoard targetBoard = selectPlayer(players);
         Ship[] combatants = new Ship[2];
         ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
         ArrayList<Ship> myShips = playerGameBoard.getShips();
@@ -122,14 +122,13 @@ public class ComputerPlayer extends AbstractPlayer {
 
     /**
      * Selects a player to target
+     * @param players in the game.
      */
-    private PlayerGameBoard selectPlayer() {
+    private PlayerGameBoard selectPlayer(ArrayList<AbstractPlayer> players) {
         int localRandom = new Random().nextInt();
-        ArrayList<AbstractPlayer> players = game.getPlayers();
         players.remove(this);
         int targetPlayer = localRandom % players.size();
-        PlayerGameBoard targetBoard = players.get(targetPlayer).getGameBoard();
-        return targetBoard;
+        return players.get(targetPlayer).getGameBoard();
     }
 
 }
