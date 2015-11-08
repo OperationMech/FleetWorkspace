@@ -268,19 +268,28 @@ public class BuildView extends View {
                                 placed = true;
                             }
                             //We are moving a destroyer off the stack onto the board
-                            else if (movingShipSlot == 9 &&  board.fleetPositions[i] == null) {
-                                board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount - 1];
-                                placed = true;
+                            else if (movingShipSlot == 9 &&  i < 9) {
+                                //Only dropping on empty slots
+                                if( board.fleetPositions[i] == null) {
+                                    board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount - 1];
+                                    placed = true;
+                                }
                             }
                             //We are moving a cruiser off the stack onto the board
-                            else if (movingShipSlot == 10 &&  board.fleetPositions[i] == null) {
-                                board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount - 1];
-                                placed = true;
+                            else if (movingShipSlot == 10 && i < 9) {
+                                //Only dropping on empty slots
+                                if( board.fleetPositions[i] == null) {
+                                    board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount - 1];
+                                    placed = true;
+                                }
                             }
                             //We are moving a battleship off the stack onto the board
-                            else if (movingShipSlot == 11 &&  board.fleetPositions[i] == null) {
-                                board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount - 1];
-                                placed = true;
+                            else if (movingShipSlot == 11 &&  i < 9) {
+                                //Only dropping on empty slots
+                                if( board.fleetPositions[i] == null) {
+                                    board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount - 1];
+                                    placed = true;
+                                }
                             }
                         }
                     }
