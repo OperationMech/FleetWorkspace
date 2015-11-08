@@ -175,9 +175,9 @@ public class PlayView extends View {
                         Ship selected = board.fleetPositions[selectedShip];
                         if (caller.getPlayerID() == player.getPlayerID()){
                             //Depending on who is looking at the board, what we are setting is different
-                            player.setScoutTarget(selected);
+                            caller.setScoutTarget(selected);
                         } else  {
-                            player.setAttackTarget(selected);
+                            caller.setAttackTarget(selected);
                         }
                     }
                 }
