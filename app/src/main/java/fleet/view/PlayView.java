@@ -99,7 +99,6 @@ public class PlayView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
-
         if (player.getPlayerID() == caller.getPlayerID()) {
             //Checking if the current player is the player that owns this board
             for (int i = 0; i < 9; i++) {

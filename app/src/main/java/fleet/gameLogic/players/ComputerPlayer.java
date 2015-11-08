@@ -39,7 +39,7 @@ public class ComputerPlayer extends AbstractPlayer {
     public void scout(ArrayList<AbstractPlayer> players) {
         PlayerGameBoard targetBoard = selectPlayer(players);
         boolean hasTarget = false;
-        int localRandom = new Random().nextInt();
+        int localRandom = Math.abs(new Random().nextInt());
         int targetShip = localRandom % 9;
         int scoutAttempts = 0;
         //Finding a face down card to scout
@@ -102,8 +102,8 @@ public class ComputerPlayer extends AbstractPlayer {
             }
         } else {
             //Enemy has no face up ships
-            int randomDefender = new Random().nextInt();
-            int randomAttacker = new Random().nextInt();
+            int randomDefender = Math.abs(new Random().nextInt());
+            int randomAttacker = Math.abs(new Random().nextInt());
             combatants[0] = playerGameBoard.getShips().get(randomAttacker % myShips.size());
             combatants[1] = playerGameBoard.getShips().get(randomDefender % targetBoard.getShips().size());
         }
@@ -125,7 +125,7 @@ public class ComputerPlayer extends AbstractPlayer {
      * @param players in the game.
      */
     private PlayerGameBoard selectPlayer(ArrayList<AbstractPlayer> players) {
-        int localRandom = new Random().nextInt();
+        int localRandom = Math.abs(new Random().nextInt());
         players.remove(this);
         int targetPlayer = localRandom % players.size();
         return players.get(targetPlayer).getGameBoard();
