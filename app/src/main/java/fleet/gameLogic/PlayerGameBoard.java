@@ -13,7 +13,6 @@ import fleet.gameLogic.players.Player;
 public class PlayerGameBoard {
     public Ship[] fleetPositions = new Ship[9];
     public Bitmap faceDown;
-    private String fleetpath;
     public Player player;
 
     /**
