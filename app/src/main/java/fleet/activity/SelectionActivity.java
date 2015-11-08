@@ -2,6 +2,7 @@ package fleet.activity;
 
 import fleet.R;
 import fleet.gameLogic.Fleet;
+import fleet.gameLogic.TransferBuffer;
 import fleet.view.BuildView;
 import fleet.view.FleetView;
 
@@ -24,6 +25,7 @@ public class SelectionActivity extends Activity {
     private AssetManager assetManager;
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
+    private ArrayList<String> unusedFleetPaths = new ArrayList<String>();
     private static int runOnce = 0;
     protected String playerFleetPath;
     protected boolean musicMuted;
@@ -42,6 +44,7 @@ public class SelectionActivity extends Activity {
                 fleetList = (assetManager.list(FLEET_DIR));
                 for (String fleet : fleetList) {
                     String fleetPath = (FLEET_DIR + "/" + fleet);
+                    unusedFleetPaths.add(fleetPath);
                     InputStream kingStream = assetManager.open(fleetPath + "/King.png");
                     AssetFileDescriptor fleetSoundFile = assetManager.openFd(fleetPath + "/MainAttack.ogg");
                     Bitmap kingImg = BitmapFactory.decodeStream(kingStream);
@@ -69,6 +72,7 @@ public class SelectionActivity extends Activity {
      **/
     public void buildFleet(Fleet fleet){
         this.playerFleetPath = fleet.getFleetPath();
+        unusedFleetPaths.remove(fleet.getFleetPath());
         try {
             String[] fleetFiles = (assetManager.list(playerFleetPath));
             for (String cardPath : fleetFiles) {
@@ -83,6 +87,7 @@ public class SelectionActivity extends Activity {
             e.printStackTrace();
         }
         BuildView buildView = new BuildView(this,fleet, musicMuted);
+        TransferBuffer.unusedFleetPaths = unusedFleetPaths;
         setContentView(buildView);
     }
 

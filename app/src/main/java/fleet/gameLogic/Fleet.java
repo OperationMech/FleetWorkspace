@@ -19,7 +19,7 @@ public class Fleet  {
 
 
     /**
-     * Fleet constructor
+     * Fleet constructor for selection screen
      * @param kingImg
      * @param fleetSoundFile
      * @param fleetPath
@@ -29,6 +29,15 @@ public class Fleet  {
         fleetName = fleetPath.split("/")[1];
         this.fleetPath = fleetPath;
         this.fleetSoundFile = fleetSoundFile;
+    }
+
+    /**
+     * Fleet constructor for AI
+     * @param fleetPath
+     */
+    public Fleet(String fleetPath){
+        fleetName = fleetPath.split("/")[1];
+        this.fleetPath = fleetPath;
     }
 
     /**
