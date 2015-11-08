@@ -97,9 +97,7 @@ public class PlayActivity extends Activity {
      * Game loop start function
      */
     public void startGame() {
-        while (!isWon) {
-            isWon = gameLoop();
-        }
+        isWon = gameLoop();
     }
 
     /**
@@ -111,7 +109,7 @@ public class PlayActivity extends Activity {
         AbstractPlayer player = players.get(currentPlayer);
         activePlayers.get(currentPlayer).caller = player;
         setContentView(activePlayers.get(currentPlayer));
-        while (!player.ready()) {
+        /*while (!player.ready()) {
             Ship[] shipAndTarget = new Ship[2];
             shipAndTarget = player.attack();
             if (shipAndTarget[1] == null) {
@@ -129,11 +127,11 @@ public class PlayActivity extends Activity {
                     Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
                 }
             }
-        }
+        }*/
         if (players.size() < 2) {
             return true;
         }
-        return false;
+        return true;
     }
 
     /**
