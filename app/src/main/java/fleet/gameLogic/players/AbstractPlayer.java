@@ -59,11 +59,11 @@ public abstract class AbstractPlayer implements Player {
         return true;
     }
 
-    public void setAttackTarget(Ship ship ) {
+    public void setDefender(Ship ship ) {
         attackTarget = ship;
     }
 
-    public void setAttackSelected(Ship ship) {
+    public void setAttacker(Ship ship) {
         attackSelected = ship;
     }
 

@@ -82,7 +82,7 @@ public class PlayActivity extends Activity {
         activePlayers.add(computerPlayView);
     }
 
-    public void swapPlayerView() {
+    public void nextTurn() {
         if (currentPlayer < activePlayers.size()) {
             activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
             currentPlayer++;

@@ -9,14 +9,12 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import fleet.R;
 import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.players.AbstractPlayer;
-import fleet.gameLogic.players.HumanPlayer;
 
 /**
  * Created by Radu on 10/18/2015.
@@ -131,16 +129,6 @@ public class PlayView extends View {
         }
     }
 
-    public void setShips() {
-        if (caller.getPlayerID() == player.getPlayerID()) {
-            ((HumanPlayer) player).setAttackSelected(player.getGameBoard().fleetPositions[selectedShip]);
-        } else {
-            ((HumanPlayer) caller).setAttackTarget(player.getGameBoard().fleetPositions[selectedShip]);
-            ((HumanPlayer) caller).setScoutTarget(player.getGameBoard().fleetPositions[selectedShip]);
-        }
-
-    }
-
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
@@ -172,9 +160,9 @@ public class PlayView extends View {
                     Ship selected = board.fleetPositions[selectedShip];
                     if (caller.getPlayerID() == player.getPlayerID()) {
                         //Depending on who is looking at the board, what we are setting is different
-                        caller.setScoutTarget(selected);
+                        caller.setAttacker(selected);
                     } else {
-                        caller.setAttackTarget(selected);
+                        caller.setDefender(selected);
                     }
                     break;
                 }

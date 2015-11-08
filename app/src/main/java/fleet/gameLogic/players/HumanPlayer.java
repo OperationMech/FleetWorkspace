@@ -29,12 +29,12 @@ public class HumanPlayer extends AbstractPlayer{
     }
 
     @Override
-    public void setAttackTarget(Ship ship ) {
+    public void setDefender(Ship ship ) {
         attackTarget = ship;
     }
 
     @Override
-    public void setAttackSelected(Ship ship) {
+    public void setAttacker(Ship ship) {
         attackSelected = ship;
     }
 
