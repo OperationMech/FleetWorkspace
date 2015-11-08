@@ -178,6 +178,10 @@ public class PlayActivity extends Activity {
         return currentPlayer;
     }
 
+    public void showCurrentPlayerView(){
+        setContentView(activePlayers.get(currentPlayer));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

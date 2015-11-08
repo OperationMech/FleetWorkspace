@@ -169,16 +169,12 @@ public class PlayView extends View {
                         && x < targetingButtonOrigin.x + findTarget.getWidth()
                         && y > targetingButtonOrigin.y
                         && y < targetingButtonOrigin.y + findTarget.getHeight()) {
-                    if (selectedShip == -1) {
-                        Toast.makeText(myContext, "First select a ship", Toast.LENGTH_SHORT).show();
+                    Ship selected = board.fleetPositions[selectedShip];
+                    if (caller.getPlayerID() == player.getPlayerID()) {
+                        //Depending on who is looking at the board, what we are setting is different
+                        caller.setScoutTarget(selected);
                     } else {
-                        Ship selected = board.fleetPositions[selectedShip];
-                        if (caller.getPlayerID() == player.getPlayerID()){
-                            //Depending on who is looking at the board, what we are setting is different
-                            caller.setScoutTarget(selected);
-                        } else  {
-                            caller.setAttackTarget(selected);
-                        }
+                        caller.setAttackTarget(selected);
                     }
                     break;
                 }
@@ -187,15 +183,13 @@ public class PlayView extends View {
                         && x < myFleetOrigin.x + myFleet.getWidth()
                         && y > myFleetOrigin.y
                         && y < myFleetOrigin.y + myFleet.getHeight()
-                        &&  caller.getPlayerID() != player.getPlayerID()){
-                    //TODO:GIVE ME MY METHOD
+                        && caller.getPlayerID() != player.getPlayerID()) {
+                    myContext.showCurrentPlayerView();
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
-                //TODO button collision detection
-                //myContext.swapPlayerView();
                 break;
         }
         return true;
