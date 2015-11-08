@@ -135,7 +135,6 @@ public class BuildView extends View {
         if (movingShipImg != null) {
             canvas.drawBitmap(movingShipImg, movingX, movingY, null);
         }
-        //canvas.drawBitmap(carrierImg, slotsOrigin[4].x, slotsOrigin[4].y, null);
     }
 
     /**
@@ -154,7 +153,6 @@ public class BuildView extends View {
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent playIntent = new Intent(myContext, PlayActivity.class);
                         playIntent.putExtra("mutedMusic", mutedMusic);
-                        // playIntent.putExtra("playerBoard",playerFleet);
                         TransferBuffer.board = board;
                         myContext.startActivity(playIntent);
                         break;

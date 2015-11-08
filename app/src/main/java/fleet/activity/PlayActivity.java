@@ -22,7 +22,7 @@ import fleet.gameLogic.Fleet;
 
 /**
  * Created by Radu on 10/18/2015.
- * <p/>
+ *
  * //                         \\
  * ||   !!UNDER CONSTRUCTION!!  ||
  * \\                         //
@@ -30,7 +30,6 @@ import fleet.gameLogic.Fleet;
 public class PlayActivity extends Activity {
 
     private AssetManager assetManager;
-    private String[] shipList;
     private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
     protected Boolean musicMuted;
     protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
@@ -46,11 +45,7 @@ public class PlayActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
-        // PlayerGameBoard playerBoard = (PlayerGameBoard)bundle.getSerializable("playerBoard");
         /*
-        System.out.println(bundle.getInt("playerFleet"));
-        int playerSelected = bundle.getInt("playerFleet");
-        Fleets = bundle.getParcelableArrayList("fleets");
         assetManager = getAssets();
         try {
             shipList = (assetManager.list(Fleets.get(playerSelected).getFleetPath()));
@@ -184,7 +179,6 @@ public class PlayActivity extends Activity {
     public void getNextPlayerView() {
         if (currentPlayer < activePlayers.size()) {
             activePlayers.get(currentPlayer + 1).caller = players.get(currentPlayer);
-            System.out.println("?");
             setContentView(activePlayers.get(currentPlayer + 1));
         } else {
             activePlayers.get(0).caller = players.get(currentPlayer);

@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ViewSwitcher;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +28,6 @@ public class SelectionActivity extends Activity {
     private String[] fleetList;
     private static int runOnce = 0;
     protected String playerFleetPath;
-    private static final int REFRESH_SCREEN = 1;
     protected boolean musicMuted;
     protected MediaPlayer mp;
 

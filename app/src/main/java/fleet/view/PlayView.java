@@ -111,7 +111,6 @@ public class PlayView extends View {
             if (selectedShip >= 0) {
                 String text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
                 canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
-                System.out.println(text);
                 canvas.drawBitmap(findTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
             }
         } else {
@@ -153,7 +152,6 @@ public class PlayView extends View {
                         break;
                     }
                 }
-                //setShips();
                 invalidate();
                 //Targeting button has been clicked
                 if (x > targetingButtonOrigin.x
