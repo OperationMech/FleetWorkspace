@@ -10,8 +10,6 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.lang.annotation.Target;
-
 import fleet.R;
 import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
