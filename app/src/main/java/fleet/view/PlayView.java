@@ -157,7 +157,8 @@ public class PlayView extends View {
                 if (x > targetingButtonOrigin.x
                         && x < targetingButtonOrigin.x + findTarget.getWidth()
                         && y > targetingButtonOrigin.y
-                        && y < targetingButtonOrigin.y + findTarget.getHeight()) {
+                        && y < targetingButtonOrigin.y + findTarget.getHeight() &&
+                        board.fleetPositions[selectedShip].getStatus()) {
                     Ship selected = board.fleetPositions[selectedShip];
                     if (caller.getPlayerID() == player.getPlayerID()) {
                         //Depending on who is looking at the board, what we are setting is different

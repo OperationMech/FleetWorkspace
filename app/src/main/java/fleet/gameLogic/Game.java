@@ -1,10 +1,8 @@
 package fleet.gameLogic;
 
-import android.content.Context;
-import android.widget.Toast;
+
 
 import fleet.gameLogic.players.AbstractPlayer;
-import fleet.gameLogic.players.HumanPlayer;
 
 import java.util.ArrayList;
 
@@ -14,16 +12,14 @@ import java.util.ArrayList;
  */
 public class Game {
     protected ArrayList<AbstractPlayer> players;
-    protected Context myContext;
     private boolean isWon = false;
 
     /**
      * Game constructor
      * @param players passed to the game
      */
-    public void game(ArrayList<AbstractPlayer> players, Context context) {
+    public void game(ArrayList<AbstractPlayer> players) {
         this.players = players;
-        myContext = context;
     }
 
     /**
@@ -64,10 +60,6 @@ public class Game {
                     battle(shipAndTarget[0], shipAndTarget[1]);
                     player.scout(players);
                     isTurn = false;
-                } else {
-                    if(player.getClass().equals(HumanPlayer.class)) {
-                        Toast.makeText(myContext, "Carrier can't attack",Toast.LENGTH_LONG).show();
-                    }
                 }
             }
         }

@@ -117,11 +117,11 @@ public class PlayActivity extends Activity {
         if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
             shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
             if(shipAndTarget[1].getStatus()) {
-                Toast.makeText(this,shipAndTarget[1].getShipNum() + ": Remains afloat", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() +": Remains afloat", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this,shipAndTarget[1].getShipNum() + ": Is no more", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() + ": Is no more", Toast.LENGTH_SHORT).show();
             }
-            player.scout(players);
+            //player.scout(players);
         } else {
             if (player.getClass().equals(HumanPlayer.class)) {
                 Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
