@@ -5,8 +5,6 @@ import fleet.gameLogic.Fleet;
 import fleet.view.BuildView;
 import fleet.view.FleetView;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -86,26 +84,6 @@ public class SelectionActivity extends Activity {
         }
         BuildView buildView = new BuildView(this,fleet, musicMuted);
         setContentView(buildView);
-    }
-
-    public void startGame(){
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Play with this setup?").setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
     }
 
     @Override

@@ -227,10 +227,6 @@ public class FleetView extends View {
                     Fleet playerFleet = fleets.get(fleetNum);
                     selectionSound.load(playerFleet.getFleetAttack(), 1);
                     myContext.buildFleet(playerFleet);
-                  //  playIntent = new Intent(myContext, PlayActivity.class);
-                  //  playIntent.putExtra("playerFleet", fleetNum.intValue());
-                  //  playIntent.putParcelableArrayListExtra("fleets", fleets);
-                    //   myContext.startActivity(playIntent);
                 }
                 selectFleetPressed = false;
                 resumeGamePressed = false;

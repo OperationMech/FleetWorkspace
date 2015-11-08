@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -18,21 +17,18 @@ public class TitleView extends View {
     private Bitmap titleGraphic;
     private Bitmap playButtonUp;
     private Bitmap playButtonDown;
-    // private Bitmap optionsButtonUp;
-    // private Bitmap optionsButtonDown;
     private Bitmap muteButtonUp;
     private Bitmap muteButtonDown;
     private Bitmap titleBackground;
     private int screenW;
     private int screenH;
     private boolean playButtonPressed;
-    // private boolean optionsButtonPressed;
     private boolean muteButtonPressed;
     private boolean isMuted;
     private Context myContext;
     private MediaPlayer mp;
 
-    public TitleView(Context context,MediaPlayer mp, boolean musicState) {
+    public TitleView(Context context, MediaPlayer mp, boolean musicState) {
         super(context);
         myContext = context;
         this.mp = mp;
@@ -41,8 +37,6 @@ public class TitleView extends View {
         titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
         playButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_up);
         playButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_down);
-       // optionsButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.options_button_up);
-       // optionsButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.options_button_down);
         muteButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_up);
         muteButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_down);
     }
@@ -57,8 +51,8 @@ public class TitleView extends View {
         }
     }
 
-    /** @param canvas the canvas we will be drawing on
-     *
+    /**
+     * @param canvas the canvas we will be drawing on
      */
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(titleBackground, 0, 0, null);
@@ -68,20 +62,11 @@ public class TitleView extends View {
         } else {
             canvas.drawBitmap(muteButtonUp, (screenW - muteButtonUp.getWidth()), 0, null);
         }
-
         if (playButtonPressed) {
             canvas.drawBitmap(playButtonDown, (screenW - playButtonDown.getWidth()) / 2, (int) (screenH * 0.7), null);
         } else {
             canvas.drawBitmap(playButtonUp, (screenW - playButtonUp.getWidth()) / 2, (int) (screenH * 0.7), null);
         }
-
-        /*
-        if (optionsButtonPressed) {
-            canvas.drawBitmap(optionsButtonDown, (screenW - optionsButtonDown.getWidth()) / 2, (int) (screenH * 0.5), null);
-        } else {
-            canvas.drawBitmap(optionsButtonUp, (screenW - optionsButtonUp.getWidth()) / 2, (int) (screenH * 0.5), null);
-        }
-        */
 
         if (muteButtonPressed) {
             if (isMuted) {
@@ -93,7 +78,6 @@ public class TitleView extends View {
                 mp.pause();
                 isMuted = true;
             }
-
         }
     }
 
@@ -102,7 +86,7 @@ public class TitleView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         screenW = w;
         screenH = h;
-        titleBackground = Bitmap.createScaledBitmap(titleBackground,screenW,screenH,false);
+        titleBackground = Bitmap.createScaledBitmap(titleBackground, screenW, screenH, false);
     }
 
     @Override
@@ -121,17 +105,6 @@ public class TitleView extends View {
                     playButtonPressed = true;
                     break;
                 }
-
-                /*
-                if (x > (screenW - optionsButtonUp.getWidth()) / 2 &&
-                        x < ((screenW - optionsButtonUp.getWidth()) / 2) + optionsButtonUp.getWidth() &&
-                        y > (int) (screenH * 0.5) &&
-                        y < (int) (screenH * 0.5) + optionsButtonUp.getHeight()) {
-                    optionsButtonPressed = true;
-                    break;
-                }
-                */
-
                 if (x > (screenW - muteButtonUp.getWidth()) &&
                         x < ((screenW - muteButtonUp.getWidth())) + muteButtonUp.getWidth() &&
                         y > (int) 0 &&
@@ -139,23 +112,18 @@ public class TitleView extends View {
                     muteButtonPressed = true;
                     break;
                 }
-
             case MotionEvent.ACTION_MOVE:
-
                 break;
             case MotionEvent.ACTION_UP:
                 if (playButtonPressed) {
                     Intent gameIntent = new Intent(myContext, SelectionActivity.class);
                     gameIntent.putExtra("musicMuted", isMuted);
-
                     myContext.startActivity(gameIntent);
                 }
                 muteButtonPressed = false;
-                //optionsButtonPressed = false;
                 playButtonPressed = false;
                 break;
         }
-
         invalidate();
         return true;
     }
