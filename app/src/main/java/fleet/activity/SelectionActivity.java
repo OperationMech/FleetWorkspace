@@ -25,8 +25,8 @@ public class SelectionActivity extends Activity {
     private AssetManager assetManager;
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
-    private ArrayList<String> unusedFleetPaths = new ArrayList<String>();
-    private static int runOnce = 0;
+    private ArrayList<String> unusedFleetPaths;
+  //  private static int runOnce = 0;
     protected String playerFleetPath;
     protected boolean musicMuted;
     protected MediaPlayer mp;
@@ -38,7 +38,8 @@ public class SelectionActivity extends Activity {
         Bundle bundle = getIntent().getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
         assetManager = getAssets();
-        if(runOnce == 0) {
+        unusedFleetPaths = new ArrayList<String>();
+     //   if(runOnce == 0) {
             try {
                 //Scans the /assets/fleet/ directory for fleets
                 fleetList = (assetManager.list(FLEET_DIR));
@@ -54,8 +55,8 @@ public class SelectionActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            runOnce = 1;
-        }
+      //      runOnce = 1;
+      //  }
         mp = MediaPlayer.create(this, R.raw.fleet_bgm);
         mp.setLooping(true);
         mp.start();
