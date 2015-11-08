@@ -69,8 +69,14 @@ public class ComputerPlayer extends AbstractPlayer {
         PlayerGameBoard targetBoard = selectPlayer(players);
         Ship[] combatants = new Ship[2];
         ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
+        ArrayList<Ship> targetShipsFiltered = new ArrayList<Ship>();
+        for(Ship ship : targetShips) {
+            if(ship.getStatus()) {
+                targetShipsFiltered.add(ship);
+            }
+        }
         ArrayList<Ship> myShips = playerGameBoard.getShips();
-        if (!targetShips.isEmpty()) {
+        if (!targetShipsFiltered.isEmpty()) {
             //Looking for first situation where we can beat a face up ship
             for (Ship defendingShip : targetShips) {
                 switch (defendingShip.shipClass) {
@@ -81,6 +87,7 @@ public class ComputerPlayer extends AbstractPlayer {
                                 combatants[1] = defendingShip;
                             }
                         }
+                        break;
                     case CRUISER:
                         for (Ship attackingShip : myShips) {
                             if (attackingShip.shipClass == ShipClass.BATTLESHIP) {
@@ -88,6 +95,7 @@ public class ComputerPlayer extends AbstractPlayer {
                                 combatants[1] = defendingShip;
                             }
                         }
+                        break;
                     case BATTLESHIP:
                         for (Ship attackingShip : myShips) {
                             if (attackingShip.shipClass == ShipClass.DESTROYER) {
@@ -95,9 +103,11 @@ public class ComputerPlayer extends AbstractPlayer {
                                 combatants[1] = defendingShip;
                             }
                         }
+                        break;
                     case CARRIER:
                         combatants[0] = myShips.get(0);
                         combatants[1] = defendingShip;
+                        break;
                 }
             }
         } else {
