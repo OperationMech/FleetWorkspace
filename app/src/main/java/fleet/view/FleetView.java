@@ -55,7 +55,7 @@ public class FleetView extends View {
     SoundPool selectionSound;
 
     /**
-     * Constructor
+     * FleetView constructor
      * @param context The activity that has built this view
      * @param fleets An array list of fleets that where found in assets/fleets by an assetmanager
      **/
@@ -112,7 +112,6 @@ public class FleetView extends View {
     @Override
     /**
      * Called when the screen orientation is changed
-     *
      * @param w Width of the screen
      * @param h Hight of the screen
      * @param oldw Previous width of the screen
@@ -132,8 +131,9 @@ public class FleetView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
-    /** @param canvas the canvas we will be drawing on
-     *
+    /**
+     * onDraw callback routine
+     * @param canvas the canvas we will be drawing on
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void onDraw(Canvas canvas) {
@@ -162,7 +162,9 @@ public class FleetView extends View {
         }
     }
 
-    /** @param event The user's action
+    /**
+     * onTouchEvent callback routine
+     * @param event The user's action
      * @return  True when event has been processed
      */
     public boolean onTouchEvent(MotionEvent event) {

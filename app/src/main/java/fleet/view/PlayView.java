@@ -38,6 +38,11 @@ public class PlayView extends View {
     Bitmap myFleet = BitmapFactory.decodeResource(getResources(), R.drawable.my_fleet);
     Point selectedTextOrigin;
 
+    /**
+     * PlayView constructor
+     * @param myContext the context instance
+     * @param player the player instance
+     */
     public PlayView(Context myContext, Player player) {
         super(myContext);
         this.player = player;

@@ -2,12 +2,9 @@ package fleet.gameLogic;
 
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 
 /**
- * Fleet class with parcelization
+ * Fleet class
  * Created by Radu on 9/27/2015.
  */
 public class Fleet  {
@@ -141,54 +138,5 @@ public class Fleet  {
         } else if (name.startsWith("FaceDown.")) {
             facedown = ship;
         }
-    }
-
-    /**
-     * Parcelable creator
-     */
-  //  public static final Parcelable.Creator<Fleet> CREATOR =
-    //        new Parcelable.Creator<Fleet>() {
-
-   //             public Fleet createFromParcel(Parcel in) {
-    //                return new Fleet(in);
-     //           }
-
-    //            public Fleet[] newArray(int size) {
-     //               return new Fleet[size];
-     //           }
-    //        };
-
-    /**
-     * De-parcel function
-     * @param in Parcelized fleet
-     */
-    public Fleet(Parcel in) {
-        this.fleetPath = in.readString();
-        this.fleetName = in.readString();
-        this.carrier = in.readParcelable(Ship.class.getClassLoader());
-        this.facedown = in.readParcelable(Bitmap.class.getClassLoader());
-    }
-
-    /**
-     * Parcel options flag function
-     * @return flag options
-     */
- //   @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /**
-     * Parcelize with flags
-     * @param dest the target parcel
-     * @param flags options
-     */
-  //  @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-        dest.writeString(fleetPath);
-        dest.writeString(fleetName);
-      //  dest.writeParcelable(carrier, flags);
-        dest.writeParcelable(facedown, flags);
     }
 }
