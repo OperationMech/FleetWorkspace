@@ -3,14 +3,19 @@ package fleet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import fleet.R;
+import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.ShipClass;
 import fleet.gameLogic.TransferBuffer;
@@ -45,23 +50,39 @@ public class PlayActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
-        /*
-        assetManager = getAssets();
-        try {
-            shipList = (assetManager.list(Fleets.get(playerSelected).getFleetPath()));
-            for (String ship : shipList) {
-                InputStream shipStream = assetManager.open(Fleets.get(playerSelected).getFleetPath() +"/"+ ship);
-                Fleets.get(playerSelected).populateFleet(ship, BitmapFactory.decodeStream(shipStream));
-            }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
         populatePlayers();
         startGame();
     }
 
+    private PlayerGameBoard createBoard(String fleetPath){
+        Fleet aiFleet = new Fleet(fleetPath);
+        PlayerGameBoard aiBoard = new PlayerGameBoard();
+        assetManager = getAssets();
+        try {
+            String[] fleetFiles = (assetManager.list(fleetPath));
+            for (String cardPath : fleetFiles) {
+                if ( !cardPath.startsWith("MainAttack.")) {
+                    InputStream cardStream = assetManager.open(fleetPath + "/" + cardPath);
+                    Bitmap cardImg = BitmapFactory.decodeStream(cardStream);
+                    aiFleet.populateFleet(cardPath,cardImg);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        aiBoard.fleetPositions[0] = aiFleet.getCarrier();
+        aiBoard.fleetPositions[1] = aiFleet.getBattleships()[0];
+        aiBoard.fleetPositions[2] = aiFleet.getBattleships()[1];
+        aiBoard.fleetPositions[3] = aiFleet.getBattleships()[2];
+        aiBoard.fleetPositions[4] = aiFleet.getCruisers()[0];
+        aiBoard.fleetPositions[5] = aiFleet.getCruisers()[1];
+        aiBoard.fleetPositions[6] = aiFleet.getDestroyers()[0];
+        aiBoard.fleetPositions[7] = aiFleet.getDestroyers()[1];
+        aiBoard.fleetPositions[8] = aiFleet.getDestroyers()[2];
+        aiBoard.setFaceDown(aiFleet.getFacedown());
+        return  aiBoard;
+    }
 
     private void populatePlayers() {
         HumanPlayer humanPlayer = new HumanPlayer(TransferBuffer.board, nextPlayerID);
@@ -70,7 +91,8 @@ public class PlayActivity extends Activity {
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
         //TODO:make a different board for computer player
-        ComputerPlayer computerPlayer = new ComputerPlayer(TransferBuffer.board, nextPlayerID);
+        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0));
+        ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
         players.add(computerPlayer);
         nextPlayerID++;
         PlayView computerPlayView = new PlayView(this, computerPlayer);
