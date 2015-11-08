@@ -108,6 +108,8 @@ public class PlayActivity extends Activity {
      */
     public boolean gameLoop() {
         AbstractPlayer player = players.get(currentPlayer);
+        activePlayers.get(currentPlayer).caller = player;
+        setContentView(activePlayers.get(currentPlayer));
         while (!player.ready()) {
             Ship[] shipAndTarget = new Ship[2];
             shipAndTarget = player.attack();
