@@ -1,7 +1,5 @@
 package fleet.gameLogic;
 
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import fleet.gameLogic.players.Player;
@@ -10,7 +8,7 @@ import fleet.gameLogic.players.Player;
  * Per player gameboard class
  * Created by Radu on 9/27/2015.
  */
-public class PlayerGameBoard implements Serializable {
+public class PlayerGameBoard {
     public Ship[] fleetPositions = new Ship[9];
     private String fleetpath;
     public Player player;

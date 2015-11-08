@@ -66,7 +66,7 @@ public class Game {
                     isTurn = false;
                 } else {
                     if(player.getClass().equals(HumanPlayer.class)) {
-                        Toast.makeText(myContext, "Carrier can't attack",Toast.LENGTH_LONG);
+                        Toast.makeText(myContext, "Carrier can't attack",Toast.LENGTH_LONG).show();
                     }
                 }
             }

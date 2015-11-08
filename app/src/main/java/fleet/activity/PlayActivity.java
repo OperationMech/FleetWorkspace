@@ -6,11 +6,15 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import fleet.R;
+import fleet.gameLogic.Ship;
+import fleet.gameLogic.ShipClass;
 import fleet.gameLogic.TransferBuffer;
+import fleet.gameLogic.players.AbstractPlayer;
 import fleet.gameLogic.players.ComputerPlayer;
 import fleet.gameLogic.players.HumanPlayer;
 import fleet.view.PlayView;
@@ -31,8 +35,10 @@ public class PlayActivity extends Activity {
     private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
     protected Boolean musicMuted;
     protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
+    private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
     private int nextPlayerID = 0;
     private int currentPlayer = 0;
+    private boolean isWon = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,32 +69,107 @@ public class PlayActivity extends Activity {
     }
 
 
-    private void populatePlayers (){
+    private void populatePlayers() {
         HumanPlayer humanPlayer = new HumanPlayer(TransferBuffer.board, nextPlayerID);
+        players.add(humanPlayer);
         nextPlayerID++;
         PlayView humanPlayView = new PlayView(this,humanPlayer);
         activePlayers.add(humanPlayView);
         //TODO:make a different board for computer player
         ComputerPlayer computerPlayer = new ComputerPlayer(TransferBuffer.board, nextPlayerID);
+        players.add(computerPlayer);
         nextPlayerID++;
         PlayView computerPlayView = new PlayView(this,computerPlayer);
         activePlayers.add(computerPlayView);
     }
     
-    public void nextPlayerTurn(){
+    public void swapPlayerView() {
         if (currentPlayer < activePlayers.size()){
             currentPlayer++;
         }else {
             currentPlayer = 0;
         }
-        String playerType = activePlayers.get(currentPlayer).player.getClass().getSimpleName();
 
-        if ( playerType.equals("HumanPlayer")){
-            setContentView(activePlayers.get(currentPlayer));
-        }else{
+        setContentView(activePlayers.get(currentPlayer));
+    }
 
+    /**
+     * Game loop start function
+     */
+    public void startGame() {
+        while(!isWon) {
+            isWon = gameLoop();
         }
+    }
 
+    /**
+     * Game loop function
+     * @return won status of the current game
+     */
+    public boolean gameLoop() {
+        for (AbstractPlayer player : players) {
+            boolean isTurn = true;
+            swapPlayerView();
+            while (isTurn) {
+                if (players.size() < 2) {
+                    return true;
+                }
+                Ship[] shipAndTarget = new Ship[2];
+                shipAndTarget = player.attack();
+                if (shipAndTarget[1] == null) {
+                    players.remove(player);
+                    isTurn = false;
+                }
+                if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
+                    shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
+                    player.scout(players);
+                    isTurn = false;
+                } else {
+                    if(player.getClass().equals(HumanPlayer.class)) {
+                        Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Battle resolve function
+     * @param attacker ship selected by the attacker
+     * @param defender target ship
+     * @return boolean value for target
+     */
+    protected boolean battle(Ship attacker, Ship defender) {
+        attacker.reveal();
+        defender.reveal();
+
+        // When the classes match draw
+        if (attacker.shipClass == defender.shipClass) {
+            return false;
+        }
+        // Rock - paper - scissor logic
+        if (defender.shipClass == ShipClass.CARRIER) {
+            return true;
+        } else {
+            switch (attacker.shipClass) {
+                case DESTROYER:
+                    if (defender.shipClass == ShipClass.BATTLESHIP) {
+                        return true;
+                    }
+
+                case CRUISER:
+                    if (defender.shipClass == ShipClass.DESTROYER) {
+                        return true;
+                    }
+
+                case BATTLESHIP:
+                    if (defender.shipClass == ShipClass.CRUISER) {
+                        return true;
+                    }
+            }
+        }
+        return defender.getStatus();
     }
 
     public int getCurrentPlayer(){
