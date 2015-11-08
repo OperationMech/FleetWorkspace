@@ -55,7 +55,7 @@ public class PlayView extends View {
         blackPaint.setColor(Color.BLACK);
         blackPaint.setTextSize((float) 24.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
-        if(player.getClass().equals(ComputerPlayer.class)) {
+        if (player.getClass().equals(ComputerPlayer.class)) {
             this.myContext.runTurn(player);
         }
     }
@@ -104,8 +104,10 @@ public class PlayView extends View {
             for (int i = 0; i < 9; i++) {
                 if (board.fleetPositions[i] != null) {
                     Ship ship = board.fleetPositions[i];
-                    Bitmap scaledImg = scaledImgs[ship.getShipNum()];
-                    canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                    if (ship.getStatus()) {
+                        Bitmap scaledImg = scaledImgs[ship.getShipNum()];
+                        canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                    }
                 }
             }
             if (selectedShip >= 0) {
@@ -119,10 +121,12 @@ public class PlayView extends View {
                 if (board.fleetPositions[i] != null) {
                     Ship ship = board.fleetPositions[i];
                     Bitmap scaledImg = scaledImgs[ship.getShipNum()];
-                    if (ship.getFaceUpStatus()) {
-                        canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
-                    } else {
-                        canvas.drawBitmap(faceDown, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                    if (ship.getStatus()) {
+                        if (ship.getFaceUpStatus()) {
+                            canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                        } else {
+                            canvas.drawBitmap(faceDown, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                        }
                     }
                 }
             }
@@ -147,7 +151,8 @@ public class PlayView extends View {
                     if (x > slot.x
                             && x < slot.x + slotScaleX
                             && y > slot.y
-                            && y < slot.y + slotScaleY) {
+                            && y < slot.y + slotScaleY
+                            && board.fleetPositions[i].getStatus()) {
                         selectedShip = i;
                         break;
                     }
@@ -167,7 +172,7 @@ public class PlayView extends View {
                         caller.setDefender(selected);
                         caller.setScoutTarget(selected);
                     }
-                    if((caller.getPlayerID() != player.getPlayerID())) {
+                    if ((caller.getPlayerID() != player.getPlayerID())) {
                         myContext.runTurn(caller);
                         break;
                     }
