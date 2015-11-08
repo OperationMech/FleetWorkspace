@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import fleet.gameLogic.Fleet;
 import fleet.gameLogic.Game;
 import fleet.gameLogic.PlayerGameBoard;
+import fleet.gameLogic.Ship;
 
 /**
  * Abstract Player subclass
  * Created by Radu on 9/30/2015.
  */
 public abstract class AbstractPlayer implements Player {
+    protected Ship attackTarget = null;
+    protected Ship attackSelected = null;
+    protected Ship scoutTarget = null;
     protected Fleet playerFleet;
     protected PlayerGameBoard playerGameBoard;
     protected Game game;

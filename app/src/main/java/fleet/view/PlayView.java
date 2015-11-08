@@ -14,6 +14,7 @@ import fleet.R;
 import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
+import fleet.gameLogic.players.HumanPlayer;
 import fleet.gameLogic.players.Player;
 
 /**
@@ -29,7 +30,8 @@ public class PlayView extends View {
     Bitmap faceDown;
     int selectedShip = -1;
     private Paint blackPaint;
-    public Player player;
+    private Player player;
+    public Player caller;
     Point targetingButtonOrigin;
     Bitmap findTarget = BitmapFactory.decodeResource(getResources(), R.drawable.find_target);
     Bitmap confirmTarget = BitmapFactory.decodeResource(getResources(), R.drawable.confirm_target);
@@ -40,12 +42,12 @@ public class PlayView extends View {
     /**
      * PlayView constructor
      * @param myContext the context instance
-     * @param player the player instance
+     * @param owner the player instance
      */
-    public PlayView(Context myContext, Player player) {
+    public PlayView(Context myContext, Player owner) {
         super(myContext);
-        this.player = player;
-        this.board = player.getGameBoard();
+        this.player = owner;
+        this.board = owner.getGameBoard();
         this.myContext = (PlayActivity) myContext;
         blackPaint = new Paint();
         blackPaint.setAntiAlias(true);
@@ -94,7 +96,7 @@ public class PlayView extends View {
      */
     protected void onDraw(Canvas canvas) {
 
-        if (player.getPlayerID() == myContext.getCurrentPlayer()) {
+        if (player.getPlayerID() == caller.getPlayerID()) {
             //Checking if the current player is the player that owns this board
             for (int i = 0; i < 9; i++) {
                 if (board.fleetPositions[i] != null) {
@@ -127,6 +129,16 @@ public class PlayView extends View {
         }
     }
 
+    public void setShips() {
+        if(caller.getPlayerID() == player.getPlayerID()) {
+            ((HumanPlayer) player).setAttackSelected(player.getGameBoard().fleetPositions[selectedShip]);
+        } else {
+            ((HumanPlayer) caller).setAttackTarget(player.getGameBoard().fleetPositions[selectedShip]);
+            ((HumanPlayer) caller).setScoutTarget(player.getGameBoard().fleetPositions[selectedShip]);
+        }
+
+    }
+
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
@@ -148,11 +160,14 @@ public class PlayView extends View {
                         break;
                     }
                 }
+                setShips();
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
+                //TODO button collision detection
+                //myContext.swapPlayerView();
                 break;
         }
         return true;

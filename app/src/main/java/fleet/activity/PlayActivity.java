@@ -85,11 +85,12 @@ public class PlayActivity extends Activity {
     
     public void swapPlayerView() {
         if (currentPlayer < activePlayers.size()){
+            activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
             currentPlayer++;
         }else {
+            activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
             currentPlayer = 0;
         }
-
         setContentView(activePlayers.get(currentPlayer));
     }
 
@@ -108,8 +109,9 @@ public class PlayActivity extends Activity {
      */
     public boolean gameLoop() {
         for (AbstractPlayer player : players) {
-            boolean isTurn = true;
+            activePlayers.get(currentPlayer+1).caller = player;
             swapPlayerView();
+            boolean isTurn = true;
             while (isTurn) {
                 Ship[] shipAndTarget = new Ship[2];
                 shipAndTarget = player.attack();

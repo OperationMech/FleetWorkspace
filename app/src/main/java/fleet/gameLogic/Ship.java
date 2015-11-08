@@ -17,7 +17,8 @@ public class Ship {
      * Constructor for Ship
      * @param faceUp card face image
      */
-    public Ship(Bitmap faceUp,int shipNum) {
+    public Ship(Bitmap faceUp, int shipNum ) {
+        this.isFaceUp = false;
         this.faceUp = faceUp;
         this.shipNum = shipNum;
         if (shipNum == 1){

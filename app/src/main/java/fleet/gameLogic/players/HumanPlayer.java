@@ -28,19 +28,25 @@ public class HumanPlayer extends AbstractPlayer{
 
     }
 
+    public void setAttackTarget(Ship ship ) {
+        attackTarget = ship;
+    }
+
+    public void setAttackSelected(Ship ship) {
+        attackSelected = ship;
+    }
+
+    public void setScoutTarget(Ship ship) {
+        scoutTarget = ship;
+    }
+
     /**
      * Scout selection
      * @param players arrayList of game players
      */
     @Override
     public void scout(ArrayList<AbstractPlayer> players) {
-        if(playerFleet.hasCarrier()) {
-            players.remove(this);
-            int targetPlayer = 0;
-            PlayerGameBoard targetBoard = players.get(targetPlayer).getGameBoard();
-            int targetShip = 0;
-            targetBoard.revealShipAt(targetShip);
-        }
+        scoutTarget.reveal();
     }
 
     /**
@@ -49,7 +55,7 @@ public class HumanPlayer extends AbstractPlayer{
      */
     @Override
     public Ship[] attack() {
-        Ship[] ships = {null, null};
+        Ship[] ships = {attackSelected, attackTarget};
         return ships;
     }
 
