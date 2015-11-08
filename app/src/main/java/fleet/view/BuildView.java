@@ -199,7 +199,7 @@ public class BuildView extends View {
                     }
                 }
                 // Get a ship from the grid if one exists
-                if (movingShipSlot > 0 && movingShipSlot < 9) {
+                if (movingShipSlot >= 0 && movingShipSlot < 9) {
                     if (board.fleetPositions[movingShipSlot] != null) {
                         movingShipImg = scaledImgs[board.fleetPositions[movingShipSlot].getShipNum()];
                         invalidate();
