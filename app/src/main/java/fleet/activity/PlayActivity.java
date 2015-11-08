@@ -165,7 +165,7 @@ public class PlayActivity extends Activity {
                     }
             }
         }
-        return defender.getStatus();
+        return false;
     }
 
     public int getCurrentPlayer() {
