@@ -9,13 +9,14 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import fleet.R;
 import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
+import fleet.gameLogic.players.AbstractPlayer;
 import fleet.gameLogic.players.HumanPlayer;
-import fleet.gameLogic.players.Player;
 
 /**
  * Created by Radu on 10/18/2015.
@@ -30,8 +31,8 @@ public class PlayView extends View {
     Bitmap faceDown;
     int selectedShip = -1;
     private Paint blackPaint;
-    private Player player;
-    public Player caller;
+    private AbstractPlayer player;
+    public AbstractPlayer caller;
     Point targetingButtonOrigin;
     Bitmap findTarget = BitmapFactory.decodeResource(getResources(), R.drawable.find_target);
     Bitmap confirmTarget = BitmapFactory.decodeResource(getResources(), R.drawable.confirm_target);
@@ -41,10 +42,11 @@ public class PlayView extends View {
 
     /**
      * PlayView constructor
+     *
      * @param myContext the context instance
-     * @param owner the player instance
+     * @param owner     the player instance
      */
-    public PlayView(Context myContext, Player owner) {
+    public PlayView(Context myContext, AbstractPlayer owner) {
         super(myContext);
         this.player = owner;
         this.board = owner.getGameBoard();
@@ -79,14 +81,14 @@ public class PlayView extends View {
         for (Ship ship : board.fleetPositions) {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
-        faceDown = Bitmap.createScaledBitmap(board.faceDown,shipXScale,shipYScale,false);
-        confirmTarget = Bitmap.createScaledBitmap(confirmTarget,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
-        findTarget = Bitmap.createScaledBitmap(findTarget,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
-        myFleet = Bitmap.createScaledBitmap(myFleet,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
+        faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
+        confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
+        findTarget = Bitmap.createScaledBitmap(findTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
+        myFleet = Bitmap.createScaledBitmap(myFleet, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
 
         //Finding other UI origin points
         targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.75));
-        myFleetOrigin = new Point((int)(screenW * .60), (int) (screenH * 0.85));
+        myFleetOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.85));
         selectedTextOrigin = new Point((int) (screenW * .25), (int) (screenH * 0.95));
     }
 
@@ -109,28 +111,28 @@ public class PlayView extends View {
                 String text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
                 canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
                 System.out.println(text);
-                canvas.drawBitmap(findTarget,targetingButtonOrigin.x,targetingButtonOrigin.y,null);
+                canvas.drawBitmap(findTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
             }
-        }else{
+        } else {
             //Drawing the view for if an enemy player is looking at this view
             for (int i = 0; i < 9; i++) {
                 if (board.fleetPositions[i] != null) {
                     Ship ship = board.fleetPositions[i];
                     Bitmap scaledImg = scaledImgs[ship.getShipNum()];
-                    if(ship.getFaceUpStatus()) {
+                    if (ship.getFaceUpStatus()) {
                         canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
-                    }else{
+                    } else {
                         canvas.drawBitmap(faceDown, slotsOrigin[i].x, slotsOrigin[i].y, null);
                     }
                 }
             }
-            canvas.drawBitmap(myFleet,myFleetOrigin.x,myFleetOrigin.y,null);
-            canvas.drawBitmap(confirmTarget,targetingButtonOrigin.x,targetingButtonOrigin.y,null);
+            canvas.drawBitmap(myFleet, myFleetOrigin.x, myFleetOrigin.y, null);
+            canvas.drawBitmap(confirmTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
         }
     }
 
     public void setShips() {
-        if(caller.getPlayerID() == player.getPlayerID()) {
+        if (caller.getPlayerID() == player.getPlayerID()) {
             ((HumanPlayer) player).setAttackSelected(player.getGameBoard().fleetPositions[selectedShip]);
         } else {
             ((HumanPlayer) caller).setAttackTarget(player.getGameBoard().fleetPositions[selectedShip]);
@@ -160,8 +162,25 @@ public class PlayView extends View {
                         break;
                     }
                 }
-                setShips();
+                //setShips();
                 invalidate();
+                //Targeting button has been clicked
+                if (x > targetingButtonOrigin.x
+                        && x < targetingButtonOrigin.x + findTarget.getWidth()
+                        && y > targetingButtonOrigin.y
+                        && y < targetingButtonOrigin.y + findTarget.getHeight()) {
+                    if (selectedShip == -1) {
+                        Toast.makeText(myContext, "First select a ship", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Ship selected = board.fleetPositions[selectedShip];
+                        if (caller.getPlayerID() == player.getPlayerID()){
+                            //Depending on who is looking at the board, what we are setting is different
+                            player.setScoutTarget(selected);
+                        } else  {
+                            player.setAttackTarget(selected);
+                        }
+                    }
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
