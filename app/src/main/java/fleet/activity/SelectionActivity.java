@@ -77,7 +77,7 @@ public class SelectionActivity extends Activity {
             String[] fleetFiles = (assetManager.list(playerFleetPath));
             for (String cardPath : fleetFiles) {
                 //getting all fleet bitmaps
-                if (!cardPath.startsWith("King.") && !cardPath.startsWith("MainAttack.") && !cardPath.startsWith("FaceDown.")) {
+                if (!cardPath.startsWith("King.") && !cardPath.startsWith("MainAttack.")) {
                     InputStream cardStream = assetManager.open(playerFleetPath + "/" + cardPath);
                     Bitmap cardImg = BitmapFactory.decodeStream(cardStream);
                     fleet.populateFleet(cardPath,cardImg);

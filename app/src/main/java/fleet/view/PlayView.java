@@ -26,6 +26,7 @@ public class PlayView extends View {
     int screenH;
     Point[] slotsOrigin = new Point[9];
     Bitmap[] scaledImgs = new Bitmap[14];
+    Bitmap faceDown;
     int selectedShip = -1;
     private Paint blackPaint;
     public Player player;
@@ -76,6 +77,7 @@ public class PlayView extends View {
         for (Ship ship : board.fleetPositions) {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
+        faceDown = Bitmap.createScaledBitmap(board.faceDown,shipXScale,shipYScale,false);
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
         findTarget = Bitmap.createScaledBitmap(findTarget,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
         myFleet = Bitmap.createScaledBitmap(myFleet,(int)(scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(),false);
@@ -91,9 +93,9 @@ public class PlayView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
-        //Checking if the current player is the player that owns this board
+
         if (player.getPlayerID() == myContext.getCurrentPlayer()) {
-            //Drawing positions
+            //Checking if the current player is the player that owns this board
             for (int i = 0; i < 9; i++) {
                 if (board.fleetPositions[i] != null) {
                     Ship ship = board.fleetPositions[i];
@@ -108,7 +110,18 @@ public class PlayView extends View {
                 canvas.drawBitmap(findTarget,targetingButtonOrigin.x,targetingButtonOrigin.y,null);
             }
         }else{
-            //TODO: Draw things facedown
+            //Drawing the view for if an enemy player is looking at this view
+            for (int i = 0; i < 9; i++) {
+                if (board.fleetPositions[i] != null) {
+                    Ship ship = board.fleetPositions[i];
+                    Bitmap scaledImg = scaledImgs[ship.getShipNum()];
+                    if(ship.getFaceUpStatus()) {
+                        canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                    }else{
+                        canvas.drawBitmap(faceDown, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                    }
+                }
+            }
             canvas.drawBitmap(myFleet,myFleetOrigin.x,myFleetOrigin.y,null);
             canvas.drawBitmap(confirmTarget,targetingButtonOrigin.x,targetingButtonOrigin.y,null);
         }
