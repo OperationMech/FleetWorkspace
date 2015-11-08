@@ -131,7 +131,9 @@ public class PlayView extends View {
                 }
             }
             canvas.drawBitmap(myFleet, myFleetOrigin.x, myFleetOrigin.y, null);
-            canvas.drawBitmap(confirmTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
+            if (selectedShip >= 0) {
+                canvas.drawBitmap(confirmTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
+            }
         }
     }
 
