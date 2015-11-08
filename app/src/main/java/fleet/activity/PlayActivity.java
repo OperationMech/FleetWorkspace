@@ -84,11 +84,11 @@ public class PlayActivity extends Activity {
 
     public void nextTurn() {
         if (currentPlayer < activePlayers.size()) {
-            activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
             currentPlayer++;
-        } else {
             activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
+        } else {
             currentPlayer = 0;
+            activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
         }
         setContentView(activePlayers.get(currentPlayer));
     }
@@ -104,6 +104,7 @@ public class PlayActivity extends Activity {
 
     /**
      * Game loop function
+     *
      * @return won status of the current game
      */
     public boolean gameLoop() {
@@ -178,8 +179,19 @@ public class PlayActivity extends Activity {
         return currentPlayer;
     }
 
-    public void showCurrentPlayerView(){
+    public void showCurrentPlayerView() {
         setContentView(activePlayers.get(currentPlayer));
+    }
+
+    public void getNextPlayerView() {
+        if (currentPlayer < activePlayers.size()) {
+            activePlayers.get(currentPlayer + 1).caller = players.get(currentPlayer);
+            System.out.println("?");
+            setContentView(activePlayers.get(currentPlayer + 1));
+        } else {
+            activePlayers.get(0).caller = players.get(currentPlayer);
+            setContentView(activePlayers.get(0));
+        }
     }
 
     @Override

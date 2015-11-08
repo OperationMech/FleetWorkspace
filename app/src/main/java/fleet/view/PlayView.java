@@ -164,6 +164,7 @@ public class PlayView extends View {
                     } else {
                         caller.setDefender(selected);
                     }
+                    myContext.getNextPlayerView();
                     break;
                 }
                 //My Fleet button has been clicked
