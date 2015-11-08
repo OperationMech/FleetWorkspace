@@ -50,4 +50,26 @@ public abstract class AbstractPlayer implements Player {
         return playerID;
     }
 
+    /**
+     * Ready function
+     * @return ready status
+     */
+    @Override
+    public boolean ready() {
+        return true;
+    }
+
+    public void setAttackTarget(Ship ship ) {
+        attackTarget = ship;
+    }
+
+    public void setAttackSelected(Ship ship) {
+        attackSelected = ship;
+    }
+
+    public void setScoutTarget(Ship ship) {
+        scoutTarget = ship;
+    }
+
+
 }

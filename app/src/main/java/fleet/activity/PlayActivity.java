@@ -22,11 +22,10 @@ import fleet.gameLogic.Fleet;
 
 /**
  * Created by Radu on 10/18/2015.
- *
- *      //                         \\
- *     ||   !!UNDER CONSTRUCTION!!  ||
- *      \\                         //
- *
+ * <p/>
+ * //                         \\
+ * ||   !!UNDER CONSTRUCTION!!  ||
+ * \\                         //
  */
 public class PlayActivity extends Activity {
 
@@ -47,7 +46,7 @@ public class PlayActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         musicMuted = bundle.getBoolean("musicMuted");
-       // PlayerGameBoard playerBoard = (PlayerGameBoard)bundle.getSerializable("playerBoard");
+        // PlayerGameBoard playerBoard = (PlayerGameBoard)bundle.getSerializable("playerBoard");
         /*
         System.out.println(bundle.getInt("playerFleet"));
         int playerSelected = bundle.getInt("playerFleet");
@@ -73,21 +72,21 @@ public class PlayActivity extends Activity {
         HumanPlayer humanPlayer = new HumanPlayer(TransferBuffer.board, nextPlayerID);
         players.add(humanPlayer);
         nextPlayerID++;
-        PlayView humanPlayView = new PlayView(this,humanPlayer);
+        PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
         //TODO:make a different board for computer player
         ComputerPlayer computerPlayer = new ComputerPlayer(TransferBuffer.board, nextPlayerID);
         players.add(computerPlayer);
         nextPlayerID++;
-        PlayView computerPlayView = new PlayView(this,computerPlayer);
+        PlayView computerPlayView = new PlayView(this, computerPlayer);
         activePlayers.add(computerPlayView);
     }
-    
+
     public void swapPlayerView() {
-        if (currentPlayer < activePlayers.size()){
+        if (currentPlayer < activePlayers.size()) {
             activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
             currentPlayer++;
-        }else {
+        } else {
             activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
             currentPlayer = 0;
         }
@@ -98,7 +97,7 @@ public class PlayActivity extends Activity {
      * Game loop start function
      */
     public void startGame() {
-        while(!isWon) {
+        while (!isWon) {
             isWon = gameLoop();
         }
     }
@@ -108,39 +107,35 @@ public class PlayActivity extends Activity {
      * @return won status of the current game
      */
     public boolean gameLoop() {
-        for (AbstractPlayer player : players) {
-            activePlayers.get(currentPlayer+1).caller = player;
-            swapPlayerView();
-            boolean isTurn = true;
-            while (isTurn) {
-                Ship[] shipAndTarget = new Ship[2];
-                shipAndTarget = player.attack();
-                if (shipAndTarget[1] == null) {
-                    if (player.getClass().equals(HumanPlayer.class)) {
-                        Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
-                    }
-                    players.remove(player);
-                    break;
+        AbstractPlayer player = players.get(currentPlayer);
+        while (!player.ready()) {
+            Ship[] shipAndTarget = new Ship[2];
+            shipAndTarget = player.attack();
+            if (shipAndTarget[1] == null) {
+                if (player.getClass().equals(HumanPlayer.class)) {
+                    Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
                 }
-                if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
-                    shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
-                    player.scout(players);
-                    isTurn = false;
-                } else {
-                    if(player.getClass().equals(HumanPlayer.class)) {
-                        Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
-                    }
+                players.remove(player);
+                break;
+            }
+            if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
+                shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
+                player.scout(players);
+            } else {
+                if (player.getClass().equals(HumanPlayer.class)) {
+                    Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
                 }
             }
-            if(players.size() < 2) {
-                return true;
-            }
+        }
+        if (players.size() < 2) {
+            return true;
         }
         return false;
     }
 
     /**
      * Battle resolve function
+     *
      * @param attacker ship selected by the attacker
      * @param defender target ship
      * @return boolean value for target
@@ -177,7 +172,7 @@ public class PlayActivity extends Activity {
         return defender.getStatus();
     }
 
-    public int getCurrentPlayer(){
+    public int getCurrentPlayer() {
         return currentPlayer;
     }
 
@@ -191,7 +186,7 @@ public class PlayActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
             case R.id.global_mute:
@@ -204,7 +199,7 @@ public class PlayActivity extends Activity {
     }
 
     public void setMusic() {
-        if(musicMuted) {
+        if (musicMuted) {
             musicMuted = false;
         } else {
             musicMuted = true;

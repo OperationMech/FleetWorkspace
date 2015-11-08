@@ -19,7 +19,7 @@ public class ComputerPlayer extends AbstractPlayer {
      * Computer player constructor
      */
     public ComputerPlayer(PlayerGameBoard board, int playerID) {
-        super(board,playerID);
+        super(board, playerID);
     }
 
     /**
@@ -37,24 +37,22 @@ public class ComputerPlayer extends AbstractPlayer {
      */
     @Override
     public void scout(ArrayList<AbstractPlayer> players) {
-        if (playerFleet.hasCarrier()) {
-            PlayerGameBoard targetBoard = selectPlayer();
-            boolean hasTarget = false;
-            int localRandom = new Random().nextInt();
-            int targetShip = localRandom % 9;
-            int scoutAttempts = 0;
-            //Finding a face down card to scout
-            while (!hasTarget && scoutAttempts <= 9) {
-                if (targetBoard.getShips().get(targetShip).getFaceUpStatus()) {
-                    targetBoard.revealShipAt(targetShip);
-                    hasTarget = true;
+        PlayerGameBoard targetBoard = selectPlayer();
+        boolean hasTarget = false;
+        int localRandom = new Random().nextInt();
+        int targetShip = localRandom % 9;
+        int scoutAttempts = 0;
+        //Finding a face down card to scout
+        while (!hasTarget && scoutAttempts <= 9) {
+            if (targetBoard.getShips().get(targetShip).getFaceUpStatus()) {
+                targetBoard.revealShipAt(targetShip);
+                hasTarget = true;
+            } else {
+                scoutAttempts++;
+                if (localRandom == 8) {
+                    localRandom = 0;
                 } else {
-                    scoutAttempts++;
-                    if (localRandom == 8) {
-                        localRandom = 0;
-                    } else {
-                        localRandom++;
-                    }
+                    localRandom++;
                 }
             }
         }
@@ -72,13 +70,13 @@ public class ComputerPlayer extends AbstractPlayer {
         Ship[] combatants = new Ship[2];
         ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
         ArrayList<Ship> myShips = playerGameBoard.getShips();
-        if (!targetShips.isEmpty()){
+        if (!targetShips.isEmpty()) {
             //Looking for first situation where we can beat a face up ship
-            for (Ship defendingShip : targetShips){
-                switch (defendingShip.shipClass){
+            for (Ship defendingShip : targetShips) {
+                switch (defendingShip.shipClass) {
                     case DESTROYER:
-                        for (Ship attackingShip : myShips){
-                            if(attackingShip.shipClass == ShipClass.CRUISER){
+                        for (Ship attackingShip : myShips) {
+                            if (attackingShip.shipClass == ShipClass.CRUISER) {
                                 combatants[0] = attackingShip;
                                 combatants[1] = defendingShip;
                             }
@@ -91,8 +89,8 @@ public class ComputerPlayer extends AbstractPlayer {
                             }
                         }
                     case BATTLESHIP:
-                        for (Ship attackingShip : myShips){
-                            if(attackingShip.shipClass == ShipClass.DESTROYER) {
+                        for (Ship attackingShip : myShips) {
+                            if (attackingShip.shipClass == ShipClass.DESTROYER) {
                                 combatants[0] = attackingShip;
                                 combatants[1] = defendingShip;
                             }
@@ -118,15 +116,14 @@ public class ComputerPlayer extends AbstractPlayer {
      * @return for basic ai purposes always true
      */
     @Override
-    public boolean arrangeFleet() {
+    public boolean ready() {
         return true;
     }
 
     /**
      * Selects a player to target
-     *
      */
-    private PlayerGameBoard selectPlayer(){
+    private PlayerGameBoard selectPlayer() {
         int localRandom = new Random().nextInt();
         ArrayList<AbstractPlayer> players = game.getPlayers();
         players.remove(this);

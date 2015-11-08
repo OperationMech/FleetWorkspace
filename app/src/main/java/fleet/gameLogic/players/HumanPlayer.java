@@ -28,14 +28,17 @@ public class HumanPlayer extends AbstractPlayer{
 
     }
 
+    @Override
     public void setAttackTarget(Ship ship ) {
         attackTarget = ship;
     }
 
+    @Override
     public void setAttackSelected(Ship ship) {
         attackSelected = ship;
     }
 
+    @Override
     public void setScoutTarget(Ship ship) {
         scoutTarget = ship;
     }
@@ -64,7 +67,7 @@ public class HumanPlayer extends AbstractPlayer{
      * @return if the player has their fleet arranged for a game
      */
     @Override
-    public boolean arrangeFleet() {
+    public boolean ready() {
         return false;
     }
 

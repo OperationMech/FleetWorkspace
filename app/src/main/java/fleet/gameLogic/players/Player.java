@@ -30,7 +30,7 @@ public interface Player {
      * "Ready" function
      * @return if the player has their fleet arranged for a game
      */
-    public boolean arrangeFleet();
+    public boolean ready();
 
     /**
      * Getter for player fleet
