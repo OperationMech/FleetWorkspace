@@ -180,6 +180,15 @@ public class PlayView extends View {
                             caller.setAttackTarget(selected);
                         }
                     }
+                    break;
+                }
+                //My Fleet button has been clicked
+                if (x > myFleetOrigin.x
+                        && x < myFleetOrigin.x + myFleet.getWidth()
+                        && y > myFleetOrigin.y
+                        && y < myFleetOrigin.y + myFleet.getHeight()
+                        &&  caller.getPlayerID() != player.getPlayerID()){
+                    //TODO:GIVE ME MY METHOD
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
