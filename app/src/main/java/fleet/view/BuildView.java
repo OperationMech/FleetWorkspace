@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import fleet.activity.PlayActivity;
 import fleet.activity.SelectionActivity;
@@ -208,6 +209,7 @@ public class BuildView extends View {
                 if (movingShipSlot == 9 ) {
                     //checking if there are cards left on the stack
                     if (destroyerCount == 4){
+                        Toast.makeText(myContext, "No destroyers remaining", Toast.LENGTH_SHORT).show();
                         movingShipSlot = -1;
                     }else {
                         movingShipImg = destroyerImgs[destroyerCount];
@@ -219,6 +221,7 @@ public class BuildView extends View {
                 if (movingShipSlot == 10) {
                     //checking if there are cards left on the stack
                     if (cruiserCount == 4){
+                        Toast.makeText(myContext, "No cruisers remaining", Toast.LENGTH_SHORT).show();
                         movingShipSlot = -1;
                     }else {
                         movingShipImg = cruiserImgs[cruiserCount];
@@ -230,6 +233,7 @@ public class BuildView extends View {
                 if (movingShipSlot == 11) {
                     //checking if there are cards left on the stack
                     if (battleShipCount == 4){
+                        Toast.makeText(myContext, "No battleships remaining", Toast.LENGTH_SHORT).show();
                         movingShipSlot = -1;
                     }else {
                         movingShipImg = battleshipImgs[battleShipCount];
