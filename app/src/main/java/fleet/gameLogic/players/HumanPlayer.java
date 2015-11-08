@@ -49,7 +49,8 @@ public class HumanPlayer extends AbstractPlayer{
      */
     @Override
     public Ship[] attack() {
-        return null;
+        Ship[] ships = {null, null};
+        return ships;
     }
 
     /**

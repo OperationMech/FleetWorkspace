@@ -65,7 +65,7 @@ public class PlayActivity extends Activity {
         }
         */
         populatePlayers();
-        setContentView(activePlayers.get(currentPlayer));
+        startGame();
     }
 
 
@@ -111,14 +111,14 @@ public class PlayActivity extends Activity {
             boolean isTurn = true;
             swapPlayerView();
             while (isTurn) {
-                if (players.size() < 2) {
-                    return true;
-                }
                 Ship[] shipAndTarget = new Ship[2];
                 shipAndTarget = player.attack();
                 if (shipAndTarget[1] == null) {
+                    if (player.getClass().equals(HumanPlayer.class)) {
+                        Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
+                    }
                     players.remove(player);
-                    isTurn = false;
+                    break;
                 }
                 if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
                     shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
@@ -129,6 +129,9 @@ public class PlayActivity extends Activity {
                         Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
                     }
                 }
+            }
+            if(players.size() < 2) {
+                return true;
             }
         }
         return false;
