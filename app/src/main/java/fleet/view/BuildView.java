@@ -17,7 +17,6 @@ import fleet.gameLogic.Fleet;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.TransferBuffer;
-import fleet.gameLogic.players.HumanPlayer;
 
 /**
  * Created by Radu on 10/20/2015.
@@ -57,6 +56,7 @@ public class BuildView extends View {
         this.playerFleet = playerFleet;
         this.myContext = (SelectionActivity) myContext;
         board.fleetPositions[4] = playerFleet.getCarrier();
+        board.setFaceDown(playerFleet.getFacedown());
     }
 
     /**

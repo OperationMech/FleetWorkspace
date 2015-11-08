@@ -40,6 +40,14 @@ public class Fleet  {
     }
 
     /**
+     * Getter for facedown
+     * @return facedown
+     */
+    public Bitmap getFacedown(){
+        return facedown;
+    }
+
+    /**
      * Getter for the king card image
      * @return King image
      */

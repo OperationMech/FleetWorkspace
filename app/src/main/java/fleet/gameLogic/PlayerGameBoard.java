@@ -1,5 +1,7 @@
 package fleet.gameLogic;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 import fleet.gameLogic.players.Player;
@@ -10,6 +12,7 @@ import fleet.gameLogic.players.Player;
  */
 public class PlayerGameBoard {
     public Ship[] fleetPositions = new Ship[9];
+    public Bitmap faceDown;
     private String fleetpath;
     public Player player;
 
@@ -44,6 +47,15 @@ public class PlayerGameBoard {
             }
         }
         return faceUpShips;
+    }
+
+    /**
+     * Setter for the faceDown bitmap
+     *
+     * @param faceDown the index to reveal at
+     */
+    public void setFaceDown(Bitmap faceDown){
+        this.faceDown = faceDown;
     }
 
     /**
