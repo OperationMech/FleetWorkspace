@@ -205,22 +205,37 @@ public class BuildView extends View {
                     }
                 }
                 // Get a ship from the destroyers pile
-                if (movingShipSlot == 9) {
-                    movingShipImg = destroyerImgs[destroyerCount];
-                    destroyerCount++;
-                    invalidate();
+                if (movingShipSlot == 9 ) {
+                    //checking if there are cards left on the stack
+                    if (destroyerCount == 4){
+                        movingShipSlot = -1;
+                    }else {
+                        movingShipImg = destroyerImgs[destroyerCount];
+                        destroyerCount++;
+                        invalidate();
+                    }
                 }
                 // Get a ship from the cruisers pile
                 if (movingShipSlot == 10) {
-                    movingShipImg = cruiserImgs[cruiserCount];
-                    cruiserCount++;
-                    invalidate();
+                    //checking if there are cards left on the stack
+                    if (cruiserCount == 4){
+                        movingShipSlot = -1;
+                    }else {
+                        movingShipImg = cruiserImgs[cruiserCount];
+                        cruiserCount++;
+                        invalidate();
+                    }
                 }
                 // Get a ship from the battleships pile
                 if (movingShipSlot == 11) {
-                    movingShipImg = battleshipImgs[battleShipCount];
-                    battleShipCount++;
-                    invalidate();
+                    //checking if there are cards left on the stack
+                    if (battleShipCount == 4){
+                        movingShipSlot = -1;
+                    }else {
+                        movingShipImg = battleshipImgs[battleShipCount];
+                        battleShipCount++;
+                        invalidate();
+                    }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -249,17 +264,17 @@ public class BuildView extends View {
                                 placed = true;
                             }
                             //We are moving a destroyer off the stack onto the board
-                            else if (movingShipSlot == 9) {
+                            else if (movingShipSlot == 9 &&  board.fleetPositions[i] == null) {
                                 board.fleetPositions[i] = playerFleet.getDestroyers()[destroyerCount - 1];
                                 placed = true;
                             }
                             //We are moving a cruiser off the stack onto the board
-                            else if (movingShipSlot == 10) {
+                            else if (movingShipSlot == 10 &&  board.fleetPositions[i] == null) {
                                 board.fleetPositions[i] = playerFleet.getCruisers()[cruiserCount - 1];
                                 placed = true;
                             }
                             //We are moving a battleship off the stack onto the board
-                            else if (movingShipSlot == 11) {
+                            else if (movingShipSlot == 11 &&  board.fleetPositions[i] == null) {
                                 board.fleetPositions[i] = playerFleet.getBattleships()[battleShipCount - 1];
                                 placed = true;
                             }
