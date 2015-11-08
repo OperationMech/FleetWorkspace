@@ -55,9 +55,6 @@ public class PlayView extends View {
         blackPaint.setColor(Color.BLACK);
         blackPaint.setTextSize((float) 24.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
-        if (player.getClass().equals(ComputerPlayer.class)) {
-            this.myContext.runTurn(player);
-        }
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -176,6 +173,9 @@ public class PlayView extends View {
                     }
                     if ((caller.getPlayerID() != player.getPlayerID())) {
                         myContext.runTurn(caller);
+                        if (player.getClass().equals(ComputerPlayer.class)) {
+                            this.myContext.runTurn(player);
+                        }
                         myContext.showCurrentPlayerView();
                         break;
                     }
