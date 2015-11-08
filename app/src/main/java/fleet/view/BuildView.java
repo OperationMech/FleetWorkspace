@@ -44,6 +44,12 @@ public class BuildView extends View {
     SelectionActivity myContext;
     Point[] slotsOrigin = new Point[12];
 
+    /**
+     * BuildView constructor
+     * @param myContext the context instance
+     * @param playerFleet the player's selected fleet
+     * @param musicMuted music muting option boolean
+     */
     public BuildView(Context myContext, Fleet playerFleet, boolean musicMuted) {
         super(myContext);
         mutedMusic = musicMuted;
@@ -52,7 +58,6 @@ public class BuildView extends View {
         board.fleetPositions[4] = playerFleet.getCarrier();
     }
 
-    @Override
     /**
      * Called when the screen orientation is changed
      *
@@ -61,7 +66,7 @@ public class BuildView extends View {
      * @param oldw Previous width of the screen
      * @param oldh Previous height of the screen
      **/
-
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         screenW = w;
         screenH = h;
@@ -79,7 +84,6 @@ public class BuildView extends View {
                 pointNum++;
             }
         }
-
         //scaling Images
         Ship[] battleships = playerFleet.getBattleships();
         Ship[] cruisers = playerFleet.getCruisers();
@@ -99,10 +103,11 @@ public class BuildView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
-    @Override
-    /** @param canvas the canvas we will be drawing on
-     *
+    /**
+     * onDraw callback routine
+     * @param canvas the canvas we will be drawing on
      */
+    @Override
     protected void onDraw(Canvas canvas) {
         // Drawing stacks
         if (destroyerCount < 4) {
@@ -132,8 +137,16 @@ public class BuildView extends View {
         //canvas.drawBitmap(carrierImg, slotsOrigin[4].x, slotsOrigin[4].y, null);
     }
 
+    /**
+     * Execute game
+     */
     public void startGame() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            /**
+             * onClick callback routine
+             * @param dialog dialog option
+             * @param which case check
+             */
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
@@ -150,12 +163,17 @@ public class BuildView extends View {
                 }
             }
         };
-
+        // The actual dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
         builder.setMessage("Play with this setup?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
 
+    /**
+     * onTouchEvent callback routine
+     * @param event gesture event
+     * @return event handled
+     */
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
@@ -167,6 +185,7 @@ public class BuildView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                // Get a ship on the grid
                 for (movingShipSlot = 0; movingShipSlot < 12; movingShipSlot++) {
                     Point slot = slotsOrigin[movingShipSlot];
                     if (x > slot.x
@@ -178,22 +197,26 @@ public class BuildView extends View {
                         break;
                     }
                 }
+                // Get a ship from the grid if one exists
                 if (movingShipSlot > 0 && movingShipSlot < 9) {
                     if (board.fleetPositions[movingShipSlot] != null) {
                         movingShipImg = scaledImgs[board.fleetPositions[movingShipSlot].getShipNum()];
                         invalidate();
                     }
                 }
+                // Get a ship from the destroyers pile
                 if (movingShipSlot == 9) {
                     movingShipImg = destroyerImgs[destroyerCount];
                     destroyerCount++;
                     invalidate();
                 }
+                // Get a ship from the cruisers pile
                 if (movingShipSlot == 10) {
                     movingShipImg = cruiserImgs[cruiserCount];
                     cruiserCount++;
                     invalidate();
                 }
+                // Get a ship from the battleships pile
                 if (movingShipSlot == 11) {
                     movingShipImg = battleshipImgs[battleShipCount];
                     battleShipCount++;
@@ -201,6 +224,7 @@ public class BuildView extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
+                // Allow for moving of the cards
                 movingX = x;
                 movingY = y;
                 invalidate();
