@@ -78,7 +78,7 @@ public class ComputerPlayer extends AbstractPlayer {
         ArrayList<Ship> myShips = playerGameBoard.getShips();
         if (!targetShipsFiltered.isEmpty()) {
             //Looking for first situation where we can beat a face up ship
-            for (Ship defendingShip : targetShips) {
+            for (Ship defendingShip : targetShipsFiltered) {
                 switch (defendingShip.shipClass) {
                     case DESTROYER:
                         for (Ship attackingShip : myShips) {
@@ -108,6 +108,10 @@ public class ComputerPlayer extends AbstractPlayer {
                         combatants[0] = myShips.get(0);
                         combatants[1] = defendingShip;
                         break;
+                    default:
+                        combatants[0] = myShips.get(0);
+                        combatants[1] = null;
+
                 }
             }
         } else {
@@ -115,7 +119,7 @@ public class ComputerPlayer extends AbstractPlayer {
             int randomDefender = Math.abs(new Random().nextInt());
             int randomAttacker = Math.abs(new Random().nextInt());
             combatants[0] = playerGameBoard.getShips().get(randomAttacker % myShips.size());
-            combatants[1] = playerGameBoard.getShips().get(randomDefender % targetBoard.getShips().size());
+            combatants[1] = targetBoard.getShips().get(randomDefender % targetBoard.getShips().size());
         }
         return combatants;
     }
