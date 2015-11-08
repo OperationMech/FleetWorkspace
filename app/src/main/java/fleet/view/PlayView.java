@@ -86,7 +86,7 @@ public class PlayView extends View {
 
         //Finding other UI origin points
         targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.75));
-        myFleetOrigin = new Point((int)(screenW * .70), (int) (screenH * 0.85));
+        myFleetOrigin = new Point((int)(screenW * .60), (int) (screenH * 0.85));
         selectedTextOrigin = new Point((int) (screenW * .25), (int) (screenH * 0.95));
     }
 
