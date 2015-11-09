@@ -28,6 +28,7 @@ public class PlayView extends View {
     Point[] slotsOrigin = new Point[9];
     Bitmap[] scaledImgs = new Bitmap[14];
     Bitmap faceDown;
+    Bitmap faceDownIcon;
     int selectedShip = -1;
     private Paint blackPaint;
     private AbstractPlayer player;
@@ -81,6 +82,7 @@ public class PlayView extends View {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
         faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
+        faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale/5, shipYScale/5, false);
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
         findTarget = Bitmap.createScaledBitmap(findTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
         myFleet = Bitmap.createScaledBitmap(myFleet, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
@@ -104,6 +106,9 @@ public class PlayView extends View {
                     if (ship.getStatus()) {
                         Bitmap scaledImg = scaledImgs[ship.getShipNum()];
                         canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
+                        if(!ship.getFaceUpStatus()){
+                            canvas.drawBitmap(faceDownIcon, slotsOrigin[i].x, slotsOrigin[i].y + scaledImg.getHeight(), null);
+                        }
                     }
                 }
             }
