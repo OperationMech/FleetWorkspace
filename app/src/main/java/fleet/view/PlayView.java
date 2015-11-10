@@ -88,8 +88,8 @@ public class PlayView extends View {
         myFleet = Bitmap.createScaledBitmap(myFleet, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
 
         //Finding other UI origin points
-        targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.75));
-        myFleetOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.85));
+        targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.80));
+        myFleetOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.90));
         selectedTextOrigin = new Point((int) (screenW * .25), (int) (screenH * 0.95));
     }
 
