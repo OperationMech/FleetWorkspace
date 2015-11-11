@@ -140,8 +140,8 @@ public class ComputerPlayer extends AbstractPlayer {
      */
     private PlayerGameBoard selectPlayer(ArrayList<AbstractPlayer> players) {
         int localRandom = Math.abs(new Random().nextInt());
-        ArrayList<AbstractPlayer> localPlayers = players;
-        localPlayers.remove(this);
+        ArrayList<AbstractPlayer> localPlayers = (ArrayList<AbstractPlayer>)players.clone();
+       // localPlayers.remove(this);
         int targetPlayer = localRandom % localPlayers.size();
         return localPlayers.get(targetPlayer).getGameBoard();
     }

@@ -102,13 +102,13 @@ public class PlayActivity extends Activity {
     public void nextTurn() {
         if (currentPlayer < activePlayers.size() - 1) {
             currentPlayer++;
-            activePlayers.get(currentPlayer).viewer = players.get(currentPlayer);
         } else {
             currentPlayer = 0;
-            activePlayers.get(0).viewer = players.get(currentPlayer);
         }
+        activePlayers.get(currentPlayer).viewer = players.get(currentPlayer);
         AbstractPlayer nextPlayer = players.get(currentPlayer);
         if (nextPlayer.getClass().equals(HumanPlayer.class)) {
+            activePlayers.get(currentPlayer).viewer = nextPlayer;
             setContentView(activePlayers.get(currentPlayer));
         }else if (nextPlayer.getClass().equals(ComputerPlayer.class)) {
             nextPlayer.attack(players);
@@ -147,7 +147,9 @@ public class PlayActivity extends Activity {
             players.remove(player);
         }
         if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
-            shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
+            if (battle(shipAndTarget[0], shipAndTarget[1])){
+                player.getGameBoard().sinkShip(shipAndTarget[1]);
+            }
             if (shipAndTarget[1].getStatus()) {
                 Toast.makeText(this, shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() + ": Remains afloat", Toast.LENGTH_SHORT).show();
             } else {
