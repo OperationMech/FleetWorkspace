@@ -44,8 +44,8 @@ public class ComputerPlayer extends AbstractPlayer {
         int scoutAttempts = 0;
         //Finding a face down card to scout
         while (!hasTarget && scoutAttempts <= 9) {
-            if (targetBoard.fleetPositions[targetShip].getFaceUpStatus()) {
-                targetBoard.revealShipAt(targetShip);
+            if (!targetBoard.fleetPositions[targetShip].getFaceUpStatus()) {
+                scoutTarget = targetBoard.fleetPositions[targetShip];
                 hasTarget = true;
             } else {
                 scoutAttempts++;
@@ -141,7 +141,7 @@ public class ComputerPlayer extends AbstractPlayer {
     private PlayerGameBoard selectPlayer(ArrayList<AbstractPlayer> players) {
         int localRandom = Math.abs(new Random().nextInt());
         ArrayList<AbstractPlayer> localPlayers = (ArrayList<AbstractPlayer>)players.clone();
-       // localPlayers.remove(this);
+        localPlayers.remove(this);
         int targetPlayer = localRandom % localPlayers.size();
         return localPlayers.get(targetPlayer).getGameBoard();
     }

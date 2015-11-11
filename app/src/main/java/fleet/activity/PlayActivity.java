@@ -100,20 +100,20 @@ public class PlayActivity extends Activity {
     }
 
     public void nextTurn() {
-        if (currentPlayer < activePlayers.size() - 1) {
+        if (currentPlayer < activePlayers.size() -1 ) {
             currentPlayer++;
         } else {
             currentPlayer = 0;
         }
         activePlayers.get(currentPlayer).viewer = players.get(currentPlayer);
         AbstractPlayer nextPlayer = players.get(currentPlayer);
-        if (nextPlayer.getClass().equals(HumanPlayer.class)) {
+        if (nextPlayer.getClass() == HumanPlayer.class) {
             activePlayers.get(currentPlayer).viewer = nextPlayer;
             setContentView(activePlayers.get(currentPlayer));
-        }else if (nextPlayer.getClass().equals(ComputerPlayer.class)) {
-            nextPlayer.attack(players);
+        }else if (nextPlayer.getClass() == ComputerPlayer.class) {
             attackAction(nextPlayer);
             nextPlayer.scout(players);
+            scoutAction(nextPlayer);
         }
     }
 

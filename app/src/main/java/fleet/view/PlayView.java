@@ -177,7 +177,7 @@ public class PlayView extends View {
                         if (viewer.getAttacked()) {
                             viewer.setScoutTarget(selected);
                             myContext.scoutAction(viewer);
-                            myContext.showCurrentPlayerView();
+                            //myContext.showCurrentPlayerView();
                             break;
                         } else {
                             viewer.setDefender(selected);
