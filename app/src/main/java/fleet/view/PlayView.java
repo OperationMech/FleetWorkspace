@@ -15,7 +15,6 @@ import fleet.activity.PlayActivity;
 import fleet.gameLogic.PlayerGameBoard;
 import fleet.gameLogic.Ship;
 import fleet.gameLogic.players.AbstractPlayer;
-import fleet.gameLogic.players.ComputerPlayer;
 
 /**
  * Created by Radu on 10/18/2015.
@@ -32,7 +31,7 @@ public class PlayView extends View {
     int selectedShip = -1;
     private Paint blackPaint;
     private AbstractPlayer player;
-    public AbstractPlayer caller;
+    public AbstractPlayer viewer;
     Point targetingButtonOrigin;
     Bitmap findTarget = BitmapFactory.decodeResource(getResources(), R.drawable.find_target);
     Bitmap confirmTarget = BitmapFactory.decodeResource(getResources(), R.drawable.confirm_target);
@@ -99,7 +98,7 @@ public class PlayView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
-        if (player.getPlayerID() == caller.getPlayerID()) {
+        if (player.getPlayerID() == viewer.getPlayerID()) {
             //Checking if the current player is the player that owns this board
             for (int i = 0; i < 9; i++) {
                 if (board.fleetPositions[i] != null) {
@@ -170,24 +169,24 @@ public class PlayView extends View {
                         && y < targetingButtonOrigin.y + findTarget.getHeight() &&
                         selectedShip != -1) {
                     Ship selected = board.fleetPositions[selectedShip];
-                    if (caller.getPlayerID() == player.getPlayerID()) {
+                    if (viewer.getPlayerID() == player.getPlayerID()) {
                         //Depending on who is looking at the board, what we are setting is different
-                        caller.setAttacker(selected);
+                        viewer.setAttacker(selected);
                         myContext.getNextPlayerView();
                     } else {
-                        if (caller.getAttacked()) {
-                            caller.setScoutTarget(selected);
-                            myContext.scoutAction(caller);
+                        if (viewer.getAttacked()) {
+                            viewer.setScoutTarget(selected);
+                            myContext.scoutAction(viewer);
                             myContext.showCurrentPlayerView();
                             break;
                         } else {
-                            caller.setDefender(selected);
-                            myContext.attackAction(caller);
+                            viewer.setDefender(selected);
+                            myContext.attackAction(viewer);
                             break;
                         }
                     }
-                   // if ((caller.getPlayerID() != player.getPlayerID())) {
-                       // myContext.attackAction(caller);
+                   // if ((viewer.getPlayerID() != player.getPlayerID())) {
+                       // myContext.attackAction(viewer);
                     //    if (player.getClass().equals(ComputerPlayer.class)) {
                    //         this.myContext.attackAction(player);
                   //      }
@@ -200,7 +199,7 @@ public class PlayView extends View {
                         && x < myFleetOrigin.x + myFleet.getWidth()
                         && y > myFleetOrigin.y
                         && y < myFleetOrigin.y + myFleet.getHeight()
-                        && caller.getPlayerID() != player.getPlayerID()) {
+                        && viewer.getPlayerID() != player.getPlayerID()) {
                     myContext.showCurrentPlayerView();
                 }
                 break;

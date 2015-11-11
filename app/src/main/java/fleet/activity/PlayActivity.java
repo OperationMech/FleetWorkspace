@@ -22,7 +22,6 @@ import fleet.gameLogic.TransferBuffer;
 import fleet.gameLogic.players.AbstractPlayer;
 import fleet.gameLogic.players.ComputerPlayer;
 import fleet.gameLogic.players.HumanPlayer;
-import fleet.gameLogic.players.Player;
 import fleet.view.PlayView;
 import fleet.gameLogic.Fleet;
 
@@ -102,11 +101,11 @@ public class PlayActivity extends Activity {
 
     public void nextTurn() {
         if (currentPlayer < activePlayers.size() - 1) {
-            activePlayers.get(currentPlayer+1).caller = players.get(currentPlayer);
             currentPlayer++;
+            activePlayers.get(currentPlayer).viewer = players.get(currentPlayer);
         } else {
-            activePlayers.get(0).caller = players.get(currentPlayer);
             currentPlayer = 0;
+            activePlayers.get(0).viewer = players.get(currentPlayer);
         }
         AbstractPlayer nextPlayer = players.get(currentPlayer);
         if (nextPlayer.getClass().equals(HumanPlayer.class)) {
@@ -132,7 +131,7 @@ public class PlayActivity extends Activity {
      */
     public void game() {
         AbstractPlayer player = players.get(currentPlayer);
-        activePlayers.get(currentPlayer).caller = player;
+        activePlayers.get(currentPlayer).viewer = player;
         setContentView(activePlayers.get(currentPlayer));
     }
 
@@ -216,10 +215,10 @@ public class PlayActivity extends Activity {
 
     public void getNextPlayerView() {
         if (currentPlayer < activePlayers.size() - 1) {
-            activePlayers.get(currentPlayer + 1).caller = players.get(currentPlayer);
+            activePlayers.get(currentPlayer + 1).viewer = players.get(currentPlayer);
             setContentView(activePlayers.get(currentPlayer + 1));
         } else {
-            activePlayers.get(0).caller = players.get(currentPlayer);
+            activePlayers.get(0).viewer = players.get(currentPlayer);
             setContentView(activePlayers.get(0));
         }
     }
