@@ -102,11 +102,11 @@ public class PlayActivity extends Activity {
 
     public void nextTurn() {
         if (currentPlayer < activePlayers.size() - 1) {
+            activePlayers.get(currentPlayer+1).caller = players.get(currentPlayer);
             currentPlayer++;
-            activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
         } else {
+            activePlayers.get(0).caller = players.get(currentPlayer);
             currentPlayer = 0;
-            activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
         }
         AbstractPlayer nextPlayer = players.get(currentPlayer);
         if (nextPlayer.getClass().equals(HumanPlayer.class)) {
@@ -219,8 +219,7 @@ public class PlayActivity extends Activity {
             activePlayers.get(currentPlayer + 1).caller = players.get(currentPlayer);
             setContentView(activePlayers.get(currentPlayer + 1));
         } else {
-            AbstractPlayer testvar = players.get(currentPlayer);
-            activePlayers.get(0).caller = testvar;
+            activePlayers.get(0).caller = players.get(currentPlayer);
             setContentView(activePlayers.get(0));
         }
     }
