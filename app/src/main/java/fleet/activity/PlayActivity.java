@@ -40,7 +40,7 @@ public class PlayActivity extends Activity {
     protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
     private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
     private int nextPlayerID = 0;
-    private int currentPlayer = 0;
+    private int currentPlayerID = 0;
     private boolean isWon = false;
 
     @Override
@@ -52,7 +52,7 @@ public class PlayActivity extends Activity {
         musicMuted = bundle.getBoolean("musicMuted");
 
         populatePlayers();
-        startGame();
+        nextTurn();
     }
 
     private PlayerGameBoard createBoard(String fleetPath) {
@@ -86,53 +86,39 @@ public class PlayActivity extends Activity {
 
     private void populatePlayers() {
         HumanPlayer humanPlayer = new HumanPlayer(TransferBuffer.board, nextPlayerID);
-        players.add(nextPlayerID,humanPlayer);
+        players.add(nextPlayerID, humanPlayer);
         nextPlayerID++;
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
         //TODO:make a different board for computer player
         PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0));
         ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
-        players.add(nextPlayerID,computerPlayer);
+        players.add(nextPlayerID, computerPlayer);
         nextPlayerID++;
         PlayView computerPlayView = new PlayView(this, computerPlayer);
         activePlayers.add(computerPlayView);
     }
 
     public void nextTurn() {
-        if (currentPlayer < activePlayers.size() -1 ) {
-            currentPlayer++;
+        if (currentPlayerID < activePlayers.size() - 1) {
+            currentPlayerID++;
         } else {
-            currentPlayer = 0;
+            currentPlayerID = 0;
         }
-        activePlayers.get(currentPlayer).viewer = players.get(currentPlayer);
-        AbstractPlayer nextPlayer = players.get(currentPlayer);
-        if (nextPlayer.getClass() == HumanPlayer.class) {
-            activePlayers.get(currentPlayer).viewer = nextPlayer;
-            setContentView(activePlayers.get(currentPlayer));
-        }else if (nextPlayer.getClass() == ComputerPlayer.class) {
-            attackAction(nextPlayer);
-            nextPlayer.scout(players);
-            scoutAction(nextPlayer);
+        activePlayers.get(currentPlayerID).viewer = players.get(currentPlayerID);
+        AbstractPlayer currentPlayer = players.get(currentPlayerID);
+        currentPlayer.setAttacked(false);
+        if (currentPlayer.getClass() == HumanPlayer.class) {
+            activePlayers.get(currentPlayerID).viewer = currentPlayer;
+            setContentView(activePlayers.get(currentPlayerID));
+        } else if (currentPlayer.getClass() == ComputerPlayer.class) {
+            attackAction(currentPlayer);
+            if (currentPlayer.getGameBoard().hasCarrier) {
+                currentPlayer.scout(players);
+                scoutAction(currentPlayer);
+            }
+            nextTurn();
         }
-    }
-
-    /**
-     * Game start function
-     */
-    public void startGame() {
-        game();
-    }
-
-    /**
-     * Game function
-     *
-     * @return won status of the current game
-     */
-    public void game() {
-        AbstractPlayer player = players.get(currentPlayer);
-        activePlayers.get(currentPlayer).viewer = player;
-        setContentView(activePlayers.get(currentPlayer));
     }
 
     public void attackAction(AbstractPlayer player) {
@@ -147,7 +133,7 @@ public class PlayActivity extends Activity {
             players.remove(player);
         }
         if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
-            if (battle(shipAndTarget[0], shipAndTarget[1])){
+            if (battle(shipAndTarget[0], shipAndTarget[1])) {
                 player.getGameBoard().sinkShip(shipAndTarget[1]);
             }
             if (shipAndTarget[1].getStatus()) {
@@ -164,8 +150,6 @@ public class PlayActivity extends Activity {
 
     public void scoutAction(AbstractPlayer player) {
         player.getScoutTarget().reveal();
-        player.setAttacked(false);
-        nextTurn();
     }
 
     /**
@@ -208,19 +192,19 @@ public class PlayActivity extends Activity {
     }
 
     public int getCurrentPlayer() {
-        return currentPlayer;
+        return currentPlayerID;
     }
 
     public void showCurrentPlayerView() {
-        setContentView(activePlayers.get(currentPlayer));
+        setContentView(activePlayers.get(currentPlayerID));
     }
 
     public void getNextPlayerView() {
-        if (currentPlayer < activePlayers.size() - 1) {
-            activePlayers.get(currentPlayer + 1).viewer = players.get(currentPlayer);
-            setContentView(activePlayers.get(currentPlayer + 1));
+        if (currentPlayerID < activePlayers.size() - 1) {
+            activePlayers.get(currentPlayerID + 1).viewer = players.get(currentPlayerID);
+            setContentView(activePlayers.get(currentPlayerID + 1));
         } else {
-            activePlayers.get(0).viewer = players.get(currentPlayer);
+            activePlayers.get(0).viewer = players.get(currentPlayerID);
             setContentView(activePlayers.get(0));
         }
     }

@@ -177,11 +177,15 @@ public class PlayView extends View {
                         if (viewer.getAttacked()) {
                             viewer.setScoutTarget(selected);
                             myContext.scoutAction(viewer);
-                            //myContext.showCurrentPlayerView();
+                            myContext.nextTurn();
                             break;
                         } else {
                             viewer.setDefender(selected);
                             myContext.attackAction(viewer);
+                            if (!viewer.getGameBoard().hasCarrier){
+                                //Its the next players turn if the current player doesn't have a carrier
+                                myContext.nextTurn();
+                            }
                             break;
                         }
                     }
