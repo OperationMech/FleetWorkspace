@@ -44,15 +44,15 @@ public class ComputerPlayer extends AbstractPlayer {
         int scoutAttempts = 0;
         //Finding a face down card to scout
         while (!hasTarget && scoutAttempts <= 9) {
-            if (targetBoard.getShips().get(targetShip).getFaceUpStatus()) {
+            if (targetBoard.fleetPositions[targetShip].getFaceUpStatus()) {
                 targetBoard.revealShipAt(targetShip);
                 hasTarget = true;
             } else {
                 scoutAttempts++;
-                if (localRandom == 8) {
-                    localRandom = 0;
+                if (targetShip == 8) {
+                    targetShip = 0;
                 } else {
-                    localRandom++;
+                    targetShip++;
                 }
             }
         }
