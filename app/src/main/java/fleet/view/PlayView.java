@@ -35,6 +35,7 @@ public class PlayView extends View {
     Point targetingButtonOrigin;
     Bitmap findTarget = BitmapFactory.decodeResource(getResources(), R.drawable.find_target);
     Bitmap confirmTarget = BitmapFactory.decodeResource(getResources(), R.drawable.confirm_target);
+    Bitmap scout = BitmapFactory.decodeResource(getResources(),R.drawable.scout);
     Point myFleetOrigin;
     Bitmap myFleet = BitmapFactory.decodeResource(getResources(), R.drawable.my_fleet);
     Point selectedTextOrigin;
@@ -86,6 +87,7 @@ public class PlayView extends View {
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
         findTarget = Bitmap.createScaledBitmap(findTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
         myFleet = Bitmap.createScaledBitmap(myFleet, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
+        scout = Bitmap.createScaledBitmap(scout, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
 
         //Finding other UI origin points
         targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.80));
@@ -134,7 +136,11 @@ public class PlayView extends View {
             }
             canvas.drawBitmap(myFleet, myFleetOrigin.x, myFleetOrigin.y, null);
             if (selectedShip >= 0) {
-                canvas.drawBitmap(confirmTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
+                if (viewer.getAttacked()){
+                    canvas.drawBitmap(scout, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
+                }else {
+                    canvas.drawBitmap(confirmTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
+                }
             }
         }
     }
