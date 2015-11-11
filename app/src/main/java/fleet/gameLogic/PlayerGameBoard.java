@@ -14,7 +14,6 @@ public class PlayerGameBoard {
     public Ship[] fleetPositions = new Ship[9];
     public Bitmap faceDown;
     public Player player;
-    public boolean hasCarrier = true;
 
     /**
      *
@@ -37,6 +36,17 @@ public class PlayerGameBoard {
             }
         }
         return aliveShips;
+    }
+
+    public boolean hasCarrier(){
+        boolean carrierStatus = true;
+        for (Ship ship : fleetPositions) {
+            if (ship.shipClass == ShipClass.CARRIER){
+                carrierStatus = ship.getStatus();
+                break;
+            }
+        }
+        return  carrierStatus;
     }
 
     public ArrayList<Ship> getFaceUpShips() {
@@ -77,13 +87,6 @@ public class PlayerGameBoard {
             return true;
         } else {
             return false;
-        }
-    }
-
-    public void sinkShip(Ship ship){
-        ship.sinkShip(true);
-        if (ship.shipClass == ShipClass.CARRIER){
-            hasCarrier = false;
         }
     }
 

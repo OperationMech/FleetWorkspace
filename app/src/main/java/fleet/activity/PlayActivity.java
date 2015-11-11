@@ -113,7 +113,7 @@ public class PlayActivity extends Activity {
             setContentView(activePlayers.get(currentPlayerID));
         } else if (currentPlayer.getClass() == ComputerPlayer.class) {
             attackAction(currentPlayer);
-            if (currentPlayer.getGameBoard().hasCarrier) {
+            if (currentPlayer.getGameBoard().hasCarrier()) {
                 currentPlayer.scout(players);
                 scoutAction(currentPlayer);
             }
@@ -133,9 +133,7 @@ public class PlayActivity extends Activity {
             players.remove(player);
         }
         if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
-            if (battle(shipAndTarget[0], shipAndTarget[1])) {
-                player.getGameBoard().sinkShip(shipAndTarget[1]);
-            }
+            shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
             if (shipAndTarget[1].getStatus()) {
                 Toast.makeText(this, shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() + ": Remains afloat", Toast.LENGTH_SHORT).show();
             } else {

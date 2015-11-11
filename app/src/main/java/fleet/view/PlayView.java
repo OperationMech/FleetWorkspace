@@ -188,7 +188,7 @@ public class PlayView extends View {
                         } else {
                             viewer.setDefender(selected);
                             myContext.attackAction(viewer);
-                            if (!viewer.getGameBoard().hasCarrier){
+                            if (!viewer.getGameBoard().hasCarrier()){
                                 //Its the next players turn if the current player doesn't have a carrier
                                 myContext.nextTurn();
                             }
