@@ -22,12 +22,13 @@ import fleet.gameLogic.TransferBuffer;
 import fleet.gameLogic.players.AbstractPlayer;
 import fleet.gameLogic.players.ComputerPlayer;
 import fleet.gameLogic.players.HumanPlayer;
+import fleet.gameLogic.players.Player;
 import fleet.view.PlayView;
 import fleet.gameLogic.Fleet;
 
 /**
  * Created by Radu on 10/18/2015.
- *
+ * <p/>
  * //                         \\
  * ||   !!UNDER CONSTRUCTION!!  ||
  * \\                         //
@@ -55,17 +56,17 @@ public class PlayActivity extends Activity {
         startGame();
     }
 
-    private PlayerGameBoard createBoard(String fleetPath){
+    private PlayerGameBoard createBoard(String fleetPath) {
         Fleet aiFleet = new Fleet(fleetPath);
         PlayerGameBoard aiBoard = new PlayerGameBoard();
         assetManager = getAssets();
         try {
             String[] fleetFiles = (assetManager.list(fleetPath));
             for (String cardPath : fleetFiles) {
-                if ( !cardPath.startsWith("MainAttack.")) {
+                if (!cardPath.startsWith("MainAttack.")) {
                     InputStream cardStream = assetManager.open(fleetPath + "/" + cardPath);
                     Bitmap cardImg = BitmapFactory.decodeStream(cardStream);
-                    aiFleet.populateFleet(cardPath,cardImg);
+                    aiFleet.populateFleet(cardPath, cardImg);
                 }
             }
         } catch (IOException e) {
@@ -81,33 +82,40 @@ public class PlayActivity extends Activity {
         aiBoard.fleetPositions[7] = aiFleet.getDestroyers()[1];
         aiBoard.fleetPositions[8] = aiFleet.getDestroyers()[2];
         aiBoard.setFaceDown(aiFleet.getFacedown());
-        return  aiBoard;
+        return aiBoard;
     }
 
     private void populatePlayers() {
         HumanPlayer humanPlayer = new HumanPlayer(TransferBuffer.board, nextPlayerID);
-        players.add(humanPlayer);
+        players.add(nextPlayerID,humanPlayer);
         nextPlayerID++;
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
         //TODO:make a different board for computer player
         PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0));
         ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
-        players.add(computerPlayer);
+        players.add(nextPlayerID,computerPlayer);
         nextPlayerID++;
         PlayView computerPlayView = new PlayView(this, computerPlayer);
         activePlayers.add(computerPlayView);
     }
 
     public void nextTurn() {
-        if (currentPlayer < activePlayers.size()) {
+        if (currentPlayer < activePlayers.size() - 1) {
             currentPlayer++;
             activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
         } else {
             currentPlayer = 0;
             activePlayers.get(currentPlayer).caller = players.get(currentPlayer);
         }
-        setContentView(activePlayers.get(currentPlayer));
+        AbstractPlayer nextPlayer = players.get(currentPlayer);
+        if (nextPlayer.getClass().equals(HumanPlayer.class)) {
+            setContentView(activePlayers.get(currentPlayer));
+        }else if (nextPlayer.getClass().equals(ComputerPlayer.class)) {
+            nextPlayer.attack(players);
+            attackAction(nextPlayer);
+            nextPlayer.scout(players);
+        }
     }
 
     /**
@@ -119,6 +127,7 @@ public class PlayActivity extends Activity {
 
     /**
      * Game function
+     *
      * @return won status of the current game
      */
     public void game() {
@@ -127,28 +136,35 @@ public class PlayActivity extends Activity {
         setContentView(activePlayers.get(currentPlayer));
     }
 
-    public void runTurn(AbstractPlayer player) {
+    public void attackAction(AbstractPlayer player) {
         Ship[] shipAndTarget = new Ship[2];
         shipAndTarget = player.attack(players);
+        player.setAttacked(true);
         if (shipAndTarget[1] == null) {
             if (player.getClass().equals(HumanPlayer.class)) {
                 Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
+                activePlayers.get(player.getPlayerID()).isDefeated = true;
             }
             players.remove(player);
         }
         if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
             shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));
-            if(shipAndTarget[1].getStatus()) {
-                Toast.makeText(this,shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() +": Remains afloat", Toast.LENGTH_SHORT).show();
+            if (shipAndTarget[1].getStatus()) {
+                Toast.makeText(this, shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() + ": Remains afloat", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this,shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() + ": Is no more", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() + ": Is no more", Toast.LENGTH_SHORT).show();
             }
-            //player.scout(players);
         } else {
             if (player.getClass().equals(HumanPlayer.class)) {
                 Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public void scoutAction(AbstractPlayer player) {
+        player.getScoutTarget().reveal();
+        player.setAttacked(false);
+        nextTurn();
     }
 
     /**
@@ -199,11 +215,12 @@ public class PlayActivity extends Activity {
     }
 
     public void getNextPlayerView() {
-        if (currentPlayer < activePlayers.size()) {
+        if (currentPlayer < activePlayers.size() - 1) {
             activePlayers.get(currentPlayer + 1).caller = players.get(currentPlayer);
             setContentView(activePlayers.get(currentPlayer + 1));
         } else {
-            activePlayers.get(0).caller = players.get(currentPlayer);
+            AbstractPlayer testvar = players.get(currentPlayer);
+            activePlayers.get(0).caller = testvar;
             setContentView(activePlayers.get(0));
         }
     }

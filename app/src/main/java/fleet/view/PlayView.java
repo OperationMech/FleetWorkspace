@@ -39,6 +39,7 @@ public class PlayView extends View {
     Point myFleetOrigin;
     Bitmap myFleet = BitmapFactory.decodeResource(getResources(), R.drawable.my_fleet);
     Point selectedTextOrigin;
+    public boolean isDefeated = false;
 
     /**
      * PlayView constructor
@@ -82,7 +83,7 @@ public class PlayView extends View {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
         faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
-        faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale/5, shipYScale/5, false);
+        faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
         findTarget = Bitmap.createScaledBitmap(findTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
         myFleet = Bitmap.createScaledBitmap(myFleet, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
@@ -106,7 +107,7 @@ public class PlayView extends View {
                     if (ship.getStatus()) {
                         Bitmap scaledImg = scaledImgs[ship.getShipNum()];
                         canvas.drawBitmap(scaledImg, slotsOrigin[i].x, slotsOrigin[i].y, null);
-                        if(!ship.getFaceUpStatus()){
+                        if (!ship.getFaceUpStatus()) {
                             canvas.drawBitmap(faceDownIcon, slotsOrigin[i].x, slotsOrigin[i].y + scaledImg.getHeight(), null);
                         }
                     }
@@ -172,20 +173,27 @@ public class PlayView extends View {
                     if (caller.getPlayerID() == player.getPlayerID()) {
                         //Depending on who is looking at the board, what we are setting is different
                         caller.setAttacker(selected);
+                        myContext.getNextPlayerView();
                     } else {
-                        caller.setDefender(selected);
-                        caller.setScoutTarget(selected);
-                    }
-                    if ((caller.getPlayerID() != player.getPlayerID())) {
-                        myContext.runTurn(caller);
-                        if (player.getClass().equals(ComputerPlayer.class)) {
-                            this.myContext.runTurn(player);
+                        if (caller.getAttacked()) {
+                            caller.setScoutTarget(selected);
+                            myContext.scoutAction(caller);
+                            myContext.showCurrentPlayerView();
+                            break;
+                        } else {
+                            caller.setDefender(selected);
+                            myContext.attackAction(caller);
+                            break;
                         }
-                        myContext.showCurrentPlayerView();
-                        break;
                     }
-                    myContext.getNextPlayerView();
-                    break;
+                   // if ((caller.getPlayerID() != player.getPlayerID())) {
+                       // myContext.attackAction(caller);
+                    //    if (player.getClass().equals(ComputerPlayer.class)) {
+                   //         this.myContext.attackAction(player);
+                  //      }
+                //        myContext.showCurrentPlayerView();
+                //        break;
+                 //   }
                 }
                 //My Fleet button has been clicked
                 if (x > myFleetOrigin.x

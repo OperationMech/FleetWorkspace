@@ -14,6 +14,7 @@ import fleet.gameLogic.Ship;
 public abstract class AbstractPlayer implements Player {
     protected Ship attackTarget = null;
     protected Ship attackSelected = null;
+    protected Boolean attacked = false;
     protected Ship scoutTarget = null;
     protected Fleet playerFleet;
     protected PlayerGameBoard playerGameBoard;
@@ -33,6 +34,24 @@ public abstract class AbstractPlayer implements Player {
     public Fleet getFleet() {
         return playerFleet;
     }
+
+    /**
+     * Getter for attacked boolean
+     * @return true if the player has attached this turn, false otherwise
+     */
+    public Boolean getAttacked() { return attacked; }
+
+    /**
+     * Getter for which ship the player wants to scout
+     * @return A ship that a player wants revealed
+     */
+    public void setAttacked(Boolean attacked) { this.attacked = attacked; }
+
+    /**
+     * Getter for which ship the player wants to scout
+     * @return A ship that a player wants revealed
+     */
+    public Ship getScoutTarget() { return scoutTarget; }
 
     /**
      * Getter for player PlayerGameBoard
