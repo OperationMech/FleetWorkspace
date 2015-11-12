@@ -136,6 +136,13 @@ public class PlayView extends View {
             }
             canvas.drawBitmap(myFleet, myFleetOrigin.x, myFleetOrigin.y, null);
             if (selectedShip >= 0) {
+                String text;
+                if (board.fleetPositions[selectedShip].getFaceUpStatus()) {
+                    text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
+                }else{
+                    text = "Selected: Unknown Ship" ;
+                }
+                canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
                 if (viewer.getAttacked()){
                     canvas.drawBitmap(scout, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
                 }else {
