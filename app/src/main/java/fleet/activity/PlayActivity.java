@@ -1,11 +1,15 @@
 package fleet.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Selection;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -42,6 +46,7 @@ public class PlayActivity extends Activity {
     private int nextPlayerID = 0;
     private int currentPlayerID = 0;
     private boolean isWon = false;
+    private Context localActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +122,33 @@ public class PlayActivity extends Activity {
                 currentPlayer.scout(players);
                 scoutAction(currentPlayer);
             }
-            nextTurn();
+            if(players.size() < 2 ) {
+                endGame();
+            } else {
+                nextTurn();
+            }
         }
+    }
+
+    public void endGame() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which) {
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        System.exit(0);
+                        break;
+                    case DialogInterface.BUTTON_POSITIVE:
+                        System.exit(0);
+                        break;
+                }
+            }
+        };
+        // The actual dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Game finished. Play again?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No",dialogClickListener).show();
+
     }
 
     public void attackAction(AbstractPlayer player) {

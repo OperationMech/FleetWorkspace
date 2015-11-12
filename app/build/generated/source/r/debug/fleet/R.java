@@ -29,10 +29,11 @@ public final class R {
         public static final int resume_game=0x7f02000b;
         public static final int resume_game_down=0x7f02000c;
         public static final int right_arrow=0x7f02000d;
-        public static final int select_fleet=0x7f02000e;
-        public static final int select_fleet_down=0x7f02000f;
-        public static final int title_background=0x7f020010;
-        public static final int title_graphic=0x7f020011;
+        public static final int scout=0x7f02000e;
+        public static final int select_fleet=0x7f02000f;
+        public static final int select_fleet_down=0x7f020010;
+        public static final int title_background=0x7f020011;
+        public static final int title_graphic=0x7f020012;
     }
     public static final class id {
         public static final int action_settings=0x7f090001;
