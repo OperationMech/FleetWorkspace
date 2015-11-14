@@ -38,8 +38,12 @@ public class PlayView extends View {
     Bitmap scout = BitmapFactory.decodeResource(getResources(),R.drawable.scout);
     Point myFleetOrigin;
     Bitmap myFleet = BitmapFactory.decodeResource(getResources(), R.drawable.my_fleet);
+    Bitmap drydock = BitmapFactory.decodeResource(getResources(),R.drawable.dock);
+    Point drydockOrigin;
+    Bitmap water = BitmapFactory.decodeResource(getResources(),R.drawable.water);
     Point selectedTextOrigin;
     public boolean isDefeated = false;
+    boolean firstDraw = true;
 
     /**
      * PlayView constructor
@@ -82,6 +86,8 @@ public class PlayView extends View {
         for (Ship ship : board.fleetPositions) {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
+        drydock = Bitmap.createScaledBitmap(drydock,screenW,screenH/4,false);
+        water = Bitmap.createScaledBitmap(water,screenW,(int)(screenH * .75),false);
         faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
         faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
@@ -93,6 +99,7 @@ public class PlayView extends View {
         targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.80));
         myFleetOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.90));
         selectedTextOrigin = new Point((int) (screenW * .25), (int) (screenH * 0.95));
+        drydockOrigin = new Point(0,(int)(screenH *0.75));
     }
 
     @Override
@@ -100,6 +107,11 @@ public class PlayView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
+        if (firstDraw) {
+            canvas.drawBitmap(water,0,0,null);
+            canvas.drawBitmap(drydock, drydockOrigin.x, drydockOrigin.y, null);
+        }else
+            firstDraw = false;
         if (player.getPlayerID() == viewer.getPlayerID()) {
             //Checking if the current player is the player that owns this board
             for (int i = 0; i < 9; i++) {
