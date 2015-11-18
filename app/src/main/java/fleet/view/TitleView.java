@@ -24,7 +24,6 @@ public class TitleView extends View {
     private int screenW;
     private int screenH;
     private boolean playButtonPressed;
-    private boolean muteButtonPressed;
     private Context myContext;
     private MediaPlayer mp;
 
@@ -48,6 +47,7 @@ public class TitleView extends View {
         } else {
             mp.pause();
         }
+        invalidate();
     }
 
     /**
@@ -65,18 +65,6 @@ public class TitleView extends View {
             canvas.drawBitmap(playButtonDown, (screenW - playButtonDown.getWidth()) / 2, (int) (screenH * 0.7), null);
         } else {
             canvas.drawBitmap(playButtonUp, (screenW - playButtonUp.getWidth()) / 2, (int) (screenH * 0.7), null);
-        }
-
-        if (muteButtonPressed) {
-            if (MenuData.musicMuted) {
-                canvas.drawBitmap(muteButtonUp, (screenW - muteButtonUp.getWidth()), 0, null);
-                mp.start();
-                MenuData.musicMuted = false;
-            } else {
-                canvas.drawBitmap(muteButtonDown, (screenW - muteButtonDown.getWidth()), 0, null);
-                mp.pause();
-                MenuData.musicMuted = true;
-            }
         }
     }
 
@@ -104,13 +92,6 @@ public class TitleView extends View {
                     playButtonPressed = true;
                     break;
                 }
-                if (x > (screenW - muteButtonUp.getWidth()) &&
-                        x < ((screenW - muteButtonUp.getWidth())) + muteButtonUp.getWidth() &&
-                        y > (int) 0 &&
-                        y < (int) +muteButtonUp.getHeight()) {
-                    muteButtonPressed = true;
-                    break;
-                }
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
@@ -118,7 +99,6 @@ public class TitleView extends View {
                     Intent gameIntent = new Intent(myContext, SelectionActivity.class);
                     myContext.startActivity(gameIntent);
                 }
-                muteButtonPressed = false;
                 playButtonPressed = false;
                 break;
         }
