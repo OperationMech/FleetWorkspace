@@ -8,4 +8,5 @@
     <string name="play_activity">PlayActivity</string>
     <string name="music_mute">Mute Music</string>
     <string name="effects_enabled">Enable Sounds</string>
+    <string name="ai_static_board">Use Static</string>
 </resources>

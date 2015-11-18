@@ -12,4 +12,6 @@ public class MenuData {
     public static boolean soundEffectsEnabled = true;
     // Interactive mode toggle
     public static boolean isAiOnly = false;
+    // Set the ai board as static
+    public static boolean staticAiBoard = false;
 }

@@ -3,7 +3,6 @@ package fleet.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -141,8 +140,8 @@ public class PlayActivity extends Activity {
         nextPlayerID++;
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
-        int fleetPathNum = Math.abs(new Random().nextInt()) % TransferBuffer.unusedFleetPaths.size() - 1;
-        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(fleetPathNum), false);
+        int fleetPathNum = Math.abs(new Random().nextInt()) % TransferBuffer.unusedFleetPaths.size();
+        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(fleetPathNum), MenuData.staticAiBoard);
         ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
         players.add(nextPlayerID, computerPlayer);
         nextPlayerID++;
