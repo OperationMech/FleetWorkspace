@@ -2,14 +2,12 @@ package fleet.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.Selection;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -33,22 +31,18 @@ import fleet.gameLogic.Fleet;
 
 /**
  * Created by Radu on 10/18/2015.
- * <p/>
+ *
  * //                         \\
  * ||   !!UNDER CONSTRUCTION!!  ||
  * \\                         //
  */
 public class PlayActivity extends Activity {
-
     private AssetManager assetManager;
-    private ArrayList<Fleet> Fleets = new ArrayList<Fleet>();
     protected Boolean musicMuted;
     protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
     private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
     private int nextPlayerID = 0;
     private int currentPlayerID = 0;
-    private boolean isWon = false;
-    private Context localActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +57,7 @@ public class PlayActivity extends Activity {
     }
 
     /**
-     *
-     * @param fleetPath File directory for the fleet to be used
+     * @param fleetPath   File directory for the fleet to be used
      * @param staticBoard Boolean, if true makes a statically defined board, else randomly generates a legal board
      * @return a populated game board.
      */
@@ -85,8 +78,8 @@ public class PlayActivity extends Activity {
             e.printStackTrace();
         }
         aiBoard.setFaceDown(aiFleet.getFacedown());
-
         if (staticBoard) {
+            //Static board for testing, or for an easier opponent
             aiBoard.fleetPositions[0] = aiFleet.getCarrier();
             aiBoard.fleetPositions[1] = aiFleet.getBattleships()[0];
             aiBoard.fleetPositions[2] = aiFleet.getBattleships()[1];
@@ -97,22 +90,23 @@ public class PlayActivity extends Activity {
             aiBoard.fleetPositions[7] = aiFleet.getDestroyers()[1];
             aiBoard.fleetPositions[8] = aiFleet.getDestroyers()[2];
         } else {
+            //Makes a random board
+            int battleShips = 0;
+            int destroyers = 0;
+            int cruisers = 0;
+            int localRandom;
+            boolean shipAdded;
             ArrayList<Integer> positions = new ArrayList<Integer>();
             for (int i = 0; i < 9; i++)
                 positions.add(i);
             Collections.shuffle(positions);
             int nextShipPos = positions.remove(0);
             aiBoard.fleetPositions[nextShipPos] = aiFleet.getCarrier();
-            int battleShips = 0;
-            int destroyers = 0;
-            int cruisers = 0;
-            int localRandom;
-            boolean shipAdded;
             while (positions.size() != 0) {
                 shipAdded = false;
                 localRandom = Math.abs(new Random().nextInt());
                 Collections.shuffle(positions);
-                while (shipAdded == false)
+                while (!shipAdded) {
                     if (localRandom % 3 == 1) {
                         if (cruisers < 4) {
                             nextShipPos = positions.remove(0);
@@ -141,11 +135,9 @@ public class PlayActivity extends Activity {
                             localRandom++;
                         }
                     }
+                }
             }
-
-
         }
-
         return aiBoard;
     }
 
@@ -155,7 +147,6 @@ public class PlayActivity extends Activity {
         nextPlayerID++;
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
-        //TODO:make a different board for computer player
         PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0), false);
         ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
         players.add(nextPlayerID, computerPlayer);
@@ -212,7 +203,7 @@ public class PlayActivity extends Activity {
     }
 
     public void attackAction(AbstractPlayer player) {
-        Ship[] shipAndTarget = new Ship[2];
+        Ship[] shipAndTarget;
         shipAndTarget = player.attack(players);
         player.setAttacked(true);
         if (shipAndTarget[1] == null) {
@@ -277,10 +268,6 @@ public class PlayActivity extends Activity {
             }
         }
         return false;
-    }
-
-    public int getCurrentPlayer() {
-        return currentPlayerID;
     }
 
     public void showCurrentPlayerView() {
