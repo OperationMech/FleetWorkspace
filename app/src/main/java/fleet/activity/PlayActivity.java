@@ -200,7 +200,6 @@ public class PlayActivity extends Activity {
     public void attackAction(AbstractPlayer player) {
         Ship[] shipAndTarget;
         shipAndTarget = player.attack(players);
-        player.setAttacked(true);
         if (shipAndTarget[1] == null) {
             if (player.getClass().equals(HumanPlayer.class)) {
                 Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
@@ -215,6 +214,7 @@ public class PlayActivity extends Activity {
             } else {
                 Toast.makeText(this, shipAndTarget[1].getShipNum() + " " + shipAndTarget[1].shipClass.getName() + ": Is no more", Toast.LENGTH_SHORT).show();
             }
+            player.setAttacked(true);
         } else {
             if (player.getClass().equals(HumanPlayer.class)) {
                 Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
