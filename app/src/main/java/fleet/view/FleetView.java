@@ -46,8 +46,6 @@ public class FleetView extends View {
     private Bitmap selectFleet;
     private Bitmap selectFleetDown;
     private boolean selectFleetPressed = false;
-    private Bitmap resumeGame;
-    private Bitmap resumeGameDown;
     private AudioManager audioManager;
     SoundPool selectionSound;
 
@@ -89,8 +87,6 @@ public class FleetView extends View {
         fleetKing = fleets.get(fleetNum).getKing();
         selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet);
         selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down);
-        resumeGame = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game);
-        resumeGameDown = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game_down);
 
         Bitmap king;
         //scaling Images
@@ -102,8 +98,7 @@ public class FleetView extends View {
         fleetKing = kings.get(fleetNum);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
-        resumeGame = Bitmap.createScaledBitmap(resumeGame, fleetKing.getWidth(), resumeGame.getHeight(), false);
-        resumeGameDown = Bitmap.createScaledBitmap(resumeGameDown, fleetKing.getWidth(),resumeGameDown.getHeight(),false);
+
     }
 
     @Override
