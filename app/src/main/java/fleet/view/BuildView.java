@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import fleet.R;
 import fleet.activity.PlayActivity;
 import fleet.activity.SelectionActivity;
 import fleet.gameLogic.Fleet;
@@ -39,10 +41,12 @@ public class BuildView extends View {
     int movingShipSlot = -1;
     boolean mutedMusic;
     Bitmap movingShipImg = null;
-
-
+    Bitmap drydock = BitmapFactory.decodeResource(getResources(),R.drawable.dock);
+    Bitmap water = BitmapFactory.decodeResource(getResources(),R.drawable.water);
+    Point drydockOrigin;
     SelectionActivity myContext;
     Point[] slotsOrigin = new Point[12];
+    boolean firstDraw = true;
 
     /**
      * BuildView constructor
@@ -71,6 +75,7 @@ public class BuildView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         screenW = w;
         screenH = h;
+        firstDraw = true;
         Point origin;
         int x;
         int y;
@@ -85,7 +90,11 @@ public class BuildView extends View {
                 pointNum++;
             }
         }
+        //Background Point
+        drydockOrigin = new Point(0,(int)(screenH *0.75));
         //scaling Images
+        drydock = Bitmap.createScaledBitmap(drydock,screenW,screenH/4,false);
+        water = Bitmap.createScaledBitmap(water,screenW,(int)(screenH * .75),false);
         Ship[] battleships = playerFleet.getBattleships();
         Ship[] cruisers = playerFleet.getCruisers();
         Ship[] destroyers = playerFleet.getDestroyers();
@@ -110,6 +119,11 @@ public class BuildView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+        if (firstDraw) {
+            canvas.drawBitmap(water,0,0,null);
+            canvas.drawBitmap(drydock, drydockOrigin.x, drydockOrigin.y, null);
+        }else
+          firstDraw = false;
         // Drawing stacks
         if (destroyerCount < 4) {
             Point destroyerStack = slotsOrigin[9];
@@ -191,8 +205,8 @@ public class BuildView extends View {
                             && x < slot.x + slotScaleX
                             && y > slot.y
                             && y < slot.y + slotScaleY) {
-                        movingX = x;
-                        movingY = y;
+                        movingX = x - slotScaleX/2;
+                        movingY = y - slotScaleY/2;
                         break;
                     }
                 }
@@ -242,8 +256,8 @@ public class BuildView extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 // Allow for moving of the cards
-                movingX = x;
-                movingY = y;
+                movingX = x - slotScaleX/2;
+                movingY = y - slotScaleY/2;
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:

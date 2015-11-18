@@ -38,8 +38,10 @@ public class PlayView extends View {
     Bitmap scout = BitmapFactory.decodeResource(getResources(),R.drawable.scout);
     Point myFleetOrigin;
     Bitmap myFleet = BitmapFactory.decodeResource(getResources(), R.drawable.my_fleet);
+    Bitmap water = BitmapFactory.decodeResource(getResources(),R.drawable.water);
     Point selectedTextOrigin;
     public boolean isDefeated = false;
+    boolean firstDraw = true;
 
     /**
      * PlayView constructor
@@ -82,6 +84,7 @@ public class PlayView extends View {
         for (Ship ship : board.fleetPositions) {
             scaledImgs[ship.getShipNum()] = Bitmap.createScaledBitmap(ship.faceUp, shipXScale, shipYScale, false);
         }
+        water = Bitmap.createScaledBitmap(water,screenW,screenH,false);
         faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
         faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
@@ -100,6 +103,10 @@ public class PlayView extends View {
      *
      */
     protected void onDraw(Canvas canvas) {
+        if (firstDraw) {
+            canvas.drawBitmap(water,0,0,null);
+        }else
+            firstDraw = false;
         if (player.getPlayerID() == viewer.getPlayerID()) {
             //Checking if the current player is the player that owns this board
             for (int i = 0; i < 9; i++) {
@@ -136,6 +143,13 @@ public class PlayView extends View {
             }
             canvas.drawBitmap(myFleet, myFleetOrigin.x, myFleetOrigin.y, null);
             if (selectedShip >= 0) {
+                String text;
+                if (board.fleetPositions[selectedShip].getFaceUpStatus()) {
+                    text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
+                }else{
+                    text = "Selected: Unknown Ship" ;
+                }
+                canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
                 if (viewer.getAttacked()){
                     canvas.drawBitmap(scout, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
                 }else {

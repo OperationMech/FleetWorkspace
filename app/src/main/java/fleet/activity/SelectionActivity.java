@@ -35,8 +35,8 @@ public class SelectionActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getIntent().getExtras();
-        musicMuted = bundle.getBoolean("musicMuted");
+        //Bundle bundle = getIntent().getExtras();
+        //musicMuted = bundle.getBoolean("musicMuted");
         assetManager = getAssets();
         unusedFleetPaths = new ArrayList<String>();
      //   if(runOnce == 0) {
