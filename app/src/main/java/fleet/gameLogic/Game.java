@@ -54,7 +54,7 @@ public class Game {
                 if (players.size() < 2) {
                     return true;
                 }
-                Ship[] shipAndTarget = new Ship[2];
+                Ship[] shipAndTarget;
                 shipAndTarget = player.attack(players);
                 if (shipAndTarget[1] == null) {
                     players.remove(player);

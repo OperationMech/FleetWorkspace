@@ -37,7 +37,6 @@ import fleet.gameLogic.Fleet;
  * \\                         //
  */
 public class PlayActivity extends Activity {
-    private AssetManager assetManager;
     protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
     private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
     private int nextPlayerID = 0;
@@ -59,7 +58,7 @@ public class PlayActivity extends Activity {
     private PlayerGameBoard createBoard(String fleetPath, boolean staticBoard) {
         Fleet aiFleet = new Fleet(fleetPath);
         PlayerGameBoard aiBoard = new PlayerGameBoard();
-        assetManager = getAssets();
+        AssetManager assetManager = getAssets();
         try {
             String[] fleetFiles = (assetManager.list(fleetPath));
             for (String cardPath : fleetFiles) {
@@ -142,7 +141,8 @@ public class PlayActivity extends Activity {
         nextPlayerID++;
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
-        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0), false);
+        int fleetPathNum = Math.abs(new Random().nextInt()) % TransferBuffer.unusedFleetPaths.size() - 1;
+        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(fleetPathNum), false);
         ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
         players.add(nextPlayerID, computerPlayer);
         nextPlayerID++;

@@ -12,7 +12,6 @@ import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
-import android.util.AttributeSet;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,6 +46,8 @@ public class FleetView extends View {
     private Bitmap selectFleet;
     private Bitmap selectFleetDown;
     private boolean selectFleetPressed = false;
+    private Bitmap resumeGame;
+    private Bitmap resumeGameDown;
     private AudioManager audioManager;
     SoundPool selectionSound;
 
@@ -56,7 +57,6 @@ public class FleetView extends View {
      * @param fleets An array list of fleets that where found in assets/fleets by an assetmanager
      **/
     public FleetView(Context context, ArrayList<Fleet> fleets) {
-        //TODO: Make this less of a mess
         super(context);
         myContext = (SelectionActivity)context;
         audioManager = (AudioManager)
@@ -89,7 +89,8 @@ public class FleetView extends View {
         fleetKing = fleets.get(fleetNum).getKing();
         selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet);
         selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down);
-
+        resumeGame = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game);
+        resumeGameDown = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game_down);
 
         Bitmap king;
         //scaling Images
@@ -101,6 +102,8 @@ public class FleetView extends View {
         fleetKing = kings.get(fleetNum);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
+        resumeGame = Bitmap.createScaledBitmap(resumeGame, fleetKing.getWidth(), resumeGame.getHeight(), false);
+        resumeGameDown = Bitmap.createScaledBitmap(resumeGameDown, fleetKing.getWidth(),resumeGameDown.getHeight(),false);
     }
 
     @Override
@@ -152,7 +155,6 @@ public class FleetView extends View {
      * @param event The user's action
      * @return  True when event has been processed
      */
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 

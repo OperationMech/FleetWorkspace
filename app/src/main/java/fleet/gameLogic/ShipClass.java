@@ -18,7 +18,7 @@ public enum ShipClass {
      * @param name ship class name
      * @param abbr ship class designation
      */
-    private ShipClass(String name, String abbr){
+    ShipClass(String name, String abbr){
         this.name = name;
         this.abbr = abbr;
     }
