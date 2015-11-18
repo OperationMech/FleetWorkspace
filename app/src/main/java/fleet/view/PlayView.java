@@ -30,6 +30,7 @@ public class PlayView extends View {
     Bitmap faceDownIcon;
     int selectedShip = -1;
     private Paint blackPaint;
+    private Paint whitePaint;
     private AbstractPlayer player;
     public AbstractPlayer viewer;
     Point targetingButtonOrigin;
@@ -57,8 +58,14 @@ public class PlayView extends View {
         blackPaint = new Paint();
         blackPaint.setAntiAlias(true);
         blackPaint.setColor(Color.BLACK);
-        blackPaint.setTextSize((float) 24.0);
+        blackPaint.setTextSize((float) 32.0);
         blackPaint.setTextAlign(Paint.Align.CENTER);
+        whitePaint = new Paint();
+        whitePaint.setColor(Color.WHITE);
+        whitePaint.setTextSize((float) 32.0);
+        whitePaint.setTextAlign(Paint.Align.CENTER);
+        whitePaint.setStyle(Paint.Style.STROKE);
+        whitePaint.setStrokeWidth(3);
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -122,7 +129,8 @@ public class PlayView extends View {
                 }
             }
             if (selectedShip >= 0) {
-                String text = "Selected: " + board.fleetPositions[selectedShip].shipClass.toString();
+                String text = "Selected : " + board.fleetPositions[selectedShip].shipClass.toString();
+                canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, whitePaint);
                 canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
                 canvas.drawBitmap(findTarget, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
             }
@@ -149,6 +157,7 @@ public class PlayView extends View {
                 }else{
                     text = "Selected: Unknown Ship" ;
                 }
+                canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, whitePaint);
                 canvas.drawText(text, 0, text.length(), selectedTextOrigin.x, selectedTextOrigin.y, blackPaint);
                 if (viewer.getAttacked()){
                     canvas.drawBitmap(scout, targetingButtonOrigin.x, targetingButtonOrigin.y, null);
