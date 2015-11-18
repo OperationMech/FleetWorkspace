@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import fleet.R;
+import fleet.activity.MenuData;
 import fleet.activity.PlayActivity;
 import fleet.activity.SelectionActivity;
 import fleet.gameLogic.Fleet;
@@ -52,11 +53,10 @@ public class BuildView extends View {
      * BuildView constructor
      * @param myContext the context instance
      * @param playerFleet the player's selected fleet
-     * @param musicMuted music muting option boolean
      */
-    public BuildView(Context myContext, Fleet playerFleet, boolean musicMuted) {
+    public BuildView(Context myContext, Fleet playerFleet) {
         super(myContext);
-        mutedMusic = musicMuted;
+        mutedMusic = MenuData.musicMuted;
         this.playerFleet = playerFleet;
         this.myContext = (SelectionActivity) myContext;
         board.fleetPositions[4] = playerFleet.getCarrier();
@@ -166,7 +166,6 @@ public class BuildView extends View {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent playIntent = new Intent(myContext, PlayActivity.class);
-                        playIntent.putExtra("mutedMusic", mutedMusic);
                         TransferBuffer.board = board;
                         myContext.startActivity(playIntent);
                         break;

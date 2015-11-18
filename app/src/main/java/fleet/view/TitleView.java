@@ -1,6 +1,7 @@
 package fleet.view;
 
 import fleet.R;
+import fleet.activity.MenuData;
 import fleet.activity.SelectionActivity;
 
 import android.content.Context;
@@ -28,11 +29,11 @@ public class TitleView extends View {
     private Context myContext;
     private MediaPlayer mp;
 
-    public TitleView(Context context, MediaPlayer mp, boolean musicState) {
+    public TitleView(Context context, MediaPlayer mp) {
         super(context);
         myContext = context;
         this.mp = mp;
-        isMuted = musicState;
+        isMuted = MenuData.musicMuted;
         titleBackground = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
         titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
         playButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_up);

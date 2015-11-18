@@ -38,7 +38,6 @@ import fleet.gameLogic.Fleet;
  */
 public class PlayActivity extends Activity {
     private AssetManager assetManager;
-    protected Boolean musicMuted;
     protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
     private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
     private int nextPlayerID = 0;
@@ -46,11 +45,7 @@ public class PlayActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        musicMuted = bundle.getBoolean("musicMuted");
 
         populatePlayers();
         nextTurn();
@@ -255,16 +250,19 @@ public class PlayActivity extends Activity {
                     if (defender.shipClass == ShipClass.BATTLESHIP) {
                         return true;
                     }
+                    break;
 
                 case CRUISER:
                     if (defender.shipClass == ShipClass.DESTROYER) {
                         return true;
                     }
+                    break;
 
                 case BATTLESHIP:
                     if (defender.shipClass == ShipClass.CRUISER) {
                         return true;
                     }
+                    break;
             }
         }
         return false;
@@ -288,29 +286,31 @@ public class PlayActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.fleet, menu);
-        menu.findItem(R.id.global_mute).setChecked(musicMuted);
+        menu.findItem(R.id.music_mute).setChecked(MenuData.musicMuted);
+        menu.findItem(R.id.effects_enabled).setChecked(MenuData.soundEffectsEnabled);
+        menu.findItem(R.id.human_mode).setChecked(MenuData.isAiOnly);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch(item.getItemId()) {
             case R.id.action_settings:
                 return true;
-            case R.id.global_mute:
-                setMusic();
+            case R.id.music_mute:
+                MenuData.musicMuted = !MenuData.musicMuted;
+                item.setChecked(!item.isChecked());
+                return true;
+            case R.id.effects_enabled:
+                MenuData.soundEffectsEnabled = !MenuData.soundEffectsEnabled;
+                item.setChecked(!item.isChecked());
+                return true;
+            case R.id.human_mode:
+                MenuData.isAiOnly = !MenuData.isAiOnly;
                 item.setChecked(!item.isChecked());
                 return true;
             default:
                 return false;
-        }
-    }
-
-    public void setMusic() {
-        if (musicMuted) {
-            musicMuted = false;
-        } else {
-            musicMuted = true;
         }
     }
 

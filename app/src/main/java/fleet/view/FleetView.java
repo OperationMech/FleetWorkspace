@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 
 import fleet.R;
+import fleet.activity.MenuData;
 import fleet.activity.SelectionActivity;
 import fleet.gameLogic.Fleet;
 
@@ -59,11 +60,11 @@ public class FleetView extends View {
      * @param context The activity that has built this view
      * @param fleets An array list of fleets that where found in assets/fleets by an assetmanager
      **/
-    public FleetView(Context context, ArrayList<Fleet> fleets, boolean musicMuted) {
+    public FleetView(Context context, ArrayList<Fleet> fleets) {
         //TODO: Make this less of a mess
         super(context);
         myContext = (SelectionActivity)context;
-        isMuted = musicMuted;
+        isMuted = MenuData.musicMuted;
         audioManager = (AudioManager)
                 this.myContext.getSystemService(Context.AUDIO_SERVICE);
         selectionSound = new SoundPool(1,1,1);

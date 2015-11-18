@@ -12,7 +12,6 @@ import android.view.MenuItem;
 
 public class TitleActivity extends Activity {
     protected MediaPlayer mp;
-    protected boolean musicMuted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,7 @@ public class TitleActivity extends Activity {
         mp = MediaPlayer.create(this, fleet.R.raw.title_bgm);
         mp.setLooping(true);
         mp.start();
-        TitleView titleView = new TitleView(this,mp,musicMuted);
+        TitleView titleView = new TitleView(this,mp);
         setContentView(titleView);
     }
 
@@ -29,6 +28,9 @@ public class TitleActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.fleet, menu);
+        menu.findItem(R.id.music_mute).setChecked(MenuData.musicMuted);
+        menu.findItem(R.id.effects_enabled).setChecked(MenuData.soundEffectsEnabled);
+        menu.findItem(R.id.human_mode).setChecked(MenuData.isAiOnly);
         return true;
     }
 
@@ -37,20 +39,20 @@ public class TitleActivity extends Activity {
         switch(item.getItemId()) {
             case R.id.action_settings:
                 return true;
-            case R.id.global_mute:
-                setMusic();
+            case R.id.music_mute:
+                MenuData.musicMuted = !MenuData.musicMuted;
+                item.setChecked(!item.isChecked());
+                return true;
+            case R.id.effects_enabled:
+                MenuData.soundEffectsEnabled = !MenuData.soundEffectsEnabled;
+                item.setChecked(!item.isChecked());
+                return true;
+            case R.id.human_mode:
+                MenuData.isAiOnly = !MenuData.isAiOnly;
                 item.setChecked(!item.isChecked());
                 return true;
             default:
                 return false;
-        }
-    }
-
-    public void setMusic() {
-        if(musicMuted) {
-            musicMuted = false;
-        } else {
-            musicMuted = true;
         }
     }
 
