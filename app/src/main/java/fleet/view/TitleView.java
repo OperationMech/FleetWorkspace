@@ -25,7 +25,6 @@ public class TitleView extends View {
     private int screenH;
     private boolean playButtonPressed;
     private boolean muteButtonPressed;
-    private boolean isMuted;
     private Context myContext;
     private MediaPlayer mp;
 
@@ -33,7 +32,6 @@ public class TitleView extends View {
         super(context);
         myContext = context;
         this.mp = mp;
-        isMuted = MenuData.musicMuted;
         titleBackground = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
         titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
         playButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_up);
@@ -45,7 +43,7 @@ public class TitleView extends View {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus && !isMuted) {
+        if (hasWindowFocus && !MenuData.musicMuted) {
             mp.start();
         } else {
             mp.pause();
@@ -58,7 +56,7 @@ public class TitleView extends View {
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(titleBackground, 0, 0, null);
         canvas.drawBitmap(titleGraphic, 0, 0, null);
-        if (isMuted) {
+        if (MenuData.musicMuted) {
             canvas.drawBitmap(muteButtonDown, (screenW - muteButtonUp.getWidth()), 0, null);
         } else {
             canvas.drawBitmap(muteButtonUp, (screenW - muteButtonUp.getWidth()), 0, null);
@@ -70,14 +68,14 @@ public class TitleView extends View {
         }
 
         if (muteButtonPressed) {
-            if (isMuted) {
+            if (MenuData.musicMuted) {
                 canvas.drawBitmap(muteButtonUp, (screenW - muteButtonUp.getWidth()), 0, null);
                 mp.start();
-                isMuted = false;
+                MenuData.musicMuted = false;
             } else {
                 canvas.drawBitmap(muteButtonDown, (screenW - muteButtonDown.getWidth()), 0, null);
                 mp.pause();
-                isMuted = true;
+                MenuData.musicMuted = true;
             }
         }
     }
@@ -118,7 +116,6 @@ public class TitleView extends View {
             case MotionEvent.ACTION_UP:
                 if (playButtonPressed) {
                     Intent gameIntent = new Intent(myContext, SelectionActivity.class);
-                    gameIntent.putExtra("musicMuted", isMuted);
                     myContext.startActivity(gameIntent);
                 }
                 muteButtonPressed = false;
