@@ -13,13 +13,15 @@ import java.util.ArrayList;
 public class Game {
     protected ArrayList<AbstractPlayer> players;
     private boolean isWon = false;
+    private int runs = 1;
 
     /**
      * Game constructor
      * @param players passed to the game
      */
-    public void game(ArrayList<AbstractPlayer> players) {
+    public void game(ArrayList<AbstractPlayer> players, int runs) {
         this.players = players;
+        this.runs = runs;
     }
 
     /**
@@ -34,8 +36,10 @@ public class Game {
      * Game loop start function
      */
     public void startGame() {
-        while(!isWon) {
-           isWon = gameLoop();
+        for(int games = 0; games < runs; games++) {
+            while (!isWon) {
+                isWon = gameLoop();
+            }
         }
     }
 

@@ -186,6 +186,7 @@ public class BuildView extends View {
      * @param event gesture event
      * @return event handled
      */
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 

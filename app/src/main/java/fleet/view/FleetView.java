@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.AttributeSet;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,10 +47,6 @@ public class FleetView extends View {
     private Bitmap selectFleet;
     private Bitmap selectFleetDown;
     private boolean selectFleetPressed = false;
-    private Bitmap resumeGame;
-    private int resumeGameY;
-    private Bitmap resumeGameDown;
-    protected Intent playIntent;
     private AudioManager audioManager;
     SoundPool selectionSound;
 
@@ -92,8 +89,7 @@ public class FleetView extends View {
         fleetKing = fleets.get(fleetNum).getKing();
         selectFleet = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet);
         selectFleetDown = BitmapFactory.decodeResource(getResources(), R.drawable.select_fleet_down);
-        resumeGame = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game);
-        resumeGameDown = BitmapFactory.decodeResource(getResources(), R.drawable.resume_game_down);
+
 
         Bitmap king;
         //scaling Images
@@ -105,8 +101,6 @@ public class FleetView extends View {
         fleetKing = kings.get(fleetNum);
         selectFleet = Bitmap.createScaledBitmap(selectFleet, fleetKing.getWidth(), selectFleet.getHeight(), false);
         selectFleetDown = Bitmap.createScaledBitmap(selectFleetDown,fleetKing.getWidth(),selectFleetDown.getHeight(),false);
-        resumeGame = Bitmap.createScaledBitmap(resumeGame, fleetKing.getWidth(), resumeGame.getHeight(), false);
-        resumeGameDown = Bitmap.createScaledBitmap(resumeGameDown, fleetKing.getWidth(),resumeGameDown.getHeight(),false);
     }
 
     @Override
@@ -126,7 +120,6 @@ public class FleetView extends View {
         fleetKingX = screenW / 2 - fleetKing.getWidth() / 2;
         fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
         rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
-        resumeGameY = (int) (fleetKingY - screenH * 0.2);
         background = Bitmap.createScaledBitmap(background,screenW,screenH,false);
         super.onSizeChanged(w, h, oldw, oldh);
     }
@@ -159,6 +152,7 @@ public class FleetView extends View {
      * @param event The user's action
      * @return  True when event has been processed
      */
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
