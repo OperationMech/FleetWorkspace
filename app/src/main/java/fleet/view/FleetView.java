@@ -47,9 +47,7 @@ public class FleetView extends View {
     private Bitmap selectFleetDown;
     private boolean selectFleetPressed = false;
     private Bitmap resumeGame;
-    private int resumeGameY;
     private Bitmap resumeGameDown;
-    protected Intent playIntent;
     private AudioManager audioManager;
     SoundPool selectionSound;
 
@@ -59,7 +57,6 @@ public class FleetView extends View {
      * @param fleets An array list of fleets that where found in assets/fleets by an assetmanager
      **/
     public FleetView(Context context, ArrayList<Fleet> fleets) {
-        //TODO: Make this less of a mess
         super(context);
         myContext = (SelectionActivity)context;
         audioManager = (AudioManager)
@@ -126,7 +123,6 @@ public class FleetView extends View {
         fleetKingX = screenW / 2 - fleetKing.getWidth() / 2;
         fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
         rightArrowY = screenH / 2 - rightArrow.getHeight() / 2;
-        resumeGameY = (int) (fleetKingY - screenH * 0.2);
         background = Bitmap.createScaledBitmap(background,screenW,screenH,false);
         super.onSizeChanged(w, h, oldw, oldh);
     }

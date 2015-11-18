@@ -20,9 +20,9 @@ public class Fleet  {
 
     /**
      * Fleet constructor for selection screen
-     * @param kingImg
-     * @param fleetSoundFile
-     * @param fleetPath
+     * @param kingImg The bitmap for this fleet's king
+     * @param fleetSoundFile The mainattack.ogg file found in this fleets directory
+     * @param fleetPath the file path to this fleet
      */
     public Fleet(Bitmap kingImg, AssetFileDescriptor fleetSoundFile, String fleetPath){
         battleships[0] = new Ship(kingImg,13);
@@ -33,7 +33,7 @@ public class Fleet  {
 
     /**
      * Fleet constructor for AI
-     * @param fleetPath
+     * @param fleetPath the file path to this fleet
      */
     public Fleet(String fleetPath){
         fleetName = fleetPath.split("/")[1];

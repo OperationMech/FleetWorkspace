@@ -30,7 +30,6 @@ public class PlayView extends View {
     Bitmap faceDown;
     Bitmap faceDownIcon;
     int selectedShip = -1;
-    private Paint blackPaint;
     private Paint whitePaint;
     private AbstractPlayer player;
     public AbstractPlayer viewer;
@@ -59,7 +58,7 @@ public class PlayView extends View {
         whitePaint = new Paint();
         whitePaint.setColor(Color.WHITE);
         whitePaint.setTextSize((float) 32.0);
-        whitePaint.setTextAlign(Paint.Align.CENTER);;
+        whitePaint.setTextAlign(Paint.Align.CENTER);
         whitePaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
