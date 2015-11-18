@@ -1,11 +1,15 @@
 package fleet.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Selection;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,6 +17,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import fleet.R;
 import fleet.gameLogic.PlayerGameBoard;
@@ -42,6 +48,7 @@ public class PlayActivity extends Activity {
     private int nextPlayerID = 0;
     private int currentPlayerID = 0;
     private boolean isWon = false;
+    private Context localActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,13 @@ public class PlayActivity extends Activity {
         nextTurn();
     }
 
-    private PlayerGameBoard createBoard(String fleetPath) {
+    /**
+     *
+     * @param fleetPath File directory for the fleet to be used
+     * @param staticBoard Boolean, if true makes a statically defined board, else randomly generates a legal board
+     * @return a populated game board.
+     */
+    private PlayerGameBoard createBoard(String fleetPath, boolean staticBoard) {
         Fleet aiFleet = new Fleet(fleetPath);
         PlayerGameBoard aiBoard = new PlayerGameBoard();
         assetManager = getAssets();
@@ -71,16 +84,68 @@ public class PlayActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        aiBoard.fleetPositions[0] = aiFleet.getCarrier();
-        aiBoard.fleetPositions[1] = aiFleet.getBattleships()[0];
-        aiBoard.fleetPositions[2] = aiFleet.getBattleships()[1];
-        aiBoard.fleetPositions[3] = aiFleet.getBattleships()[2];
-        aiBoard.fleetPositions[4] = aiFleet.getCruisers()[0];
-        aiBoard.fleetPositions[5] = aiFleet.getCruisers()[1];
-        aiBoard.fleetPositions[6] = aiFleet.getDestroyers()[0];
-        aiBoard.fleetPositions[7] = aiFleet.getDestroyers()[1];
-        aiBoard.fleetPositions[8] = aiFleet.getDestroyers()[2];
         aiBoard.setFaceDown(aiFleet.getFacedown());
+
+        if (staticBoard) {
+            aiBoard.fleetPositions[0] = aiFleet.getCarrier();
+            aiBoard.fleetPositions[1] = aiFleet.getBattleships()[0];
+            aiBoard.fleetPositions[2] = aiFleet.getBattleships()[1];
+            aiBoard.fleetPositions[3] = aiFleet.getBattleships()[2];
+            aiBoard.fleetPositions[4] = aiFleet.getCruisers()[0];
+            aiBoard.fleetPositions[5] = aiFleet.getCruisers()[1];
+            aiBoard.fleetPositions[6] = aiFleet.getDestroyers()[0];
+            aiBoard.fleetPositions[7] = aiFleet.getDestroyers()[1];
+            aiBoard.fleetPositions[8] = aiFleet.getDestroyers()[2];
+        } else {
+            ArrayList<Integer> positions = new ArrayList<Integer>();
+            for (int i = 0; i < 9; i++)
+                positions.add(i);
+            Collections.shuffle(positions);
+            int nextShipPos = positions.remove(0);
+            aiBoard.fleetPositions[nextShipPos] = aiFleet.getCarrier();
+            int battleShips = 0;
+            int destroyers = 0;
+            int cruisers = 0;
+            int localRandom;
+            boolean shipAdded;
+            while (positions.size() != 0) {
+                shipAdded = false;
+                localRandom = Math.abs(new Random().nextInt());
+                Collections.shuffle(positions);
+                while (shipAdded == false)
+                    if (localRandom % 3 == 1) {
+                        if (cruisers < 4) {
+                            nextShipPos = positions.remove(0);
+                            aiBoard.fleetPositions[nextShipPos] = aiFleet.getCruisers()[cruisers];
+                            cruisers++;
+                            shipAdded = true;
+                        } else {
+                            localRandom++;
+                        }
+                    } else if (localRandom % 3 == 2) {
+                        if (battleShips < 4) {
+                            nextShipPos = positions.remove(0);
+                            aiBoard.fleetPositions[nextShipPos] = aiFleet.getBattleships()[battleShips];
+                            battleShips++;
+                            shipAdded = true;
+                        } else {
+                            localRandom++;
+                        }
+                    } else {
+                        if (destroyers < 4) {
+                            nextShipPos = positions.remove(0);
+                            aiBoard.fleetPositions[nextShipPos] = aiFleet.getDestroyers()[destroyers];
+                            destroyers++;
+                            shipAdded = true;
+                        } else {
+                            localRandom++;
+                        }
+                    }
+            }
+
+
+        }
+
         return aiBoard;
     }
 
@@ -91,7 +156,7 @@ public class PlayActivity extends Activity {
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
         //TODO:make a different board for computer player
-        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0));
+        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0), false);
         ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
         players.add(nextPlayerID, computerPlayer);
         nextPlayerID++;
@@ -117,8 +182,33 @@ public class PlayActivity extends Activity {
                 currentPlayer.scout(players);
                 scoutAction(currentPlayer);
             }
-            nextTurn();
+            if (players.size() < 2) {
+                endGame();
+            } else {
+                nextTurn();
+            }
         }
+    }
+
+    public void endGame() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        System.exit(0);
+                        break;
+                    case DialogInterface.BUTTON_POSITIVE:
+                        System.exit(0);
+                        break;
+                }
+            }
+        };
+        // The actual dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Game finished. Play again?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
     }
 
     public void attackAction(AbstractPlayer player) {
