@@ -49,7 +49,6 @@ public class FleetView extends View {
     private Bitmap resumeGame;
     private int resumeGameY;
     private Bitmap resumeGameDown;
-    private boolean resumeGamePressed =false;
     protected Intent playIntent;
     private AudioManager audioManager;
     SoundPool selectionSound;
@@ -153,14 +152,6 @@ public class FleetView extends View {
         String text = fleets.get(fleetNum).getFleetName();
         canvas.drawText(text, 0, text.length(), screenW / 2, fleetKingY - (int)(screenH * 0.05) , blackPaint);
         invalidate();
-        //Check if there is a game currently going on, drawing a button to get back to it if there is one.
-        if( playIntent != null){
-            if(resumeGamePressed){
-                canvas.drawBitmap(resumeGameDown, fleetKingX, resumeGameY, null);
-            }else {
-                canvas.drawBitmap(resumeGame, fleetKingX, resumeGameY, null);
-            }
-        }
     }
 
     /**
@@ -208,21 +199,10 @@ public class FleetView extends View {
                     selectFleetPressed = true;
                     break;
                 }
-                //Detection on Resume Game button
-                if (x > fleetKingX &&
-                        x < fleetKingX + resumeGame.getWidth() &&
-                        y > resumeGameY &&
-                        y < resumeGameY + resumeGame.getHeight()) {
-                    resumeGamePressed = true;
-                    break;
-                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
-                if(resumeGamePressed){
-                    myContext.startActivity(playIntent);
-                }
                 if(selectFleetPressed){
                     // Moving to the buildFleet view
                     Fleet playerFleet = fleets.get(fleetNum);
@@ -230,7 +210,6 @@ public class FleetView extends View {
                     myContext.buildFleet(playerFleet);
                 }
                 selectFleetPressed = false;
-                resumeGamePressed = false;
                 break;
         }
 
