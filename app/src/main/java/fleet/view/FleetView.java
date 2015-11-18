@@ -52,7 +52,6 @@ public class FleetView extends View {
     private boolean resumeGamePressed =false;
     protected Intent playIntent;
     private AudioManager audioManager;
-    private boolean isMuted;
     SoundPool selectionSound;
 
     /**
@@ -64,7 +63,6 @@ public class FleetView extends View {
         //TODO: Make this less of a mess
         super(context);
         myContext = (SelectionActivity)context;
-        isMuted = MenuData.musicMuted;
         audioManager = (AudioManager)
                 this.myContext.getSystemService(Context.AUDIO_SERVICE);
         selectionSound = new SoundPool(1,1,1);

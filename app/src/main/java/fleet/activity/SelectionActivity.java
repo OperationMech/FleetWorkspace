@@ -56,7 +56,11 @@ public class SelectionActivity extends Activity {
       //  }
         mp = MediaPlayer.create(this, R.raw.fleet_bgm);
         mp.setLooping(true);
-        mp.start();
+        if(MenuData.musicMuted) {
+            mp.pause();
+        } else {
+            mp.start();
+        }
         FleetView myView = new FleetView(this, fleets);
 
         setContentView(myView);
@@ -105,6 +109,11 @@ public class SelectionActivity extends Activity {
             case R.id.action_settings:
                 return true;
             case R.id.music_mute:
+                if(!MenuData.musicMuted) {
+                    mp.pause();
+                } else if(MenuData.musicMuted) {
+                    mp.start();
+                }
                 MenuData.musicMuted = !MenuData.musicMuted;
                 item.setChecked(!item.isChecked());
                 return true;
