@@ -141,7 +141,8 @@ public class PlayActivity extends Activity {
         nextPlayerID++;
         PlayView humanPlayView = new PlayView(this, humanPlayer);
         activePlayers.add(humanPlayView);
-        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(0), false);
+        int fleetPathNum = Math.abs(new Random().nextInt()) % TransferBuffer.unusedFleetPaths.size() - 1;
+        PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(fleetPathNum), false);
         ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
         players.add(nextPlayerID, computerPlayer);
         nextPlayerID++;
