@@ -71,7 +71,9 @@ public class FleetView extends View {
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 float volume = (float)
                         audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                soundPool.play(sampleId, volume, volume, 1, 0, 1);
+                if(MenuData.soundEffectsEnabled) {
+                    soundPool.play(sampleId, volume, volume, 1, 0, 1);
+                }
             }
         });
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
