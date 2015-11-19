@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+
+    <item
+        android:id="@+id/music_mute"
+        android:orderInCategory="100"
+        android:checkable="true"
+        android:title="@string/music_mute"/>
+
+    <item
+        android:id="@+id/effects_enabled"
+        android:orderInCategory="100"
+        android:checkable="true"
+        android:title="@string/effects_enabled"/>
+
+    <item
+        android:id="@+id/static_ai_board"
+        android:orderInCategory="100"
+        android:checkable="true"
+        android:title="@string/ai_static_board"/>
+
+</menu>
