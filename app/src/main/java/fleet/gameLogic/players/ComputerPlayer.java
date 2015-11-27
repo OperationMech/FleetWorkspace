@@ -69,16 +69,15 @@ public class ComputerPlayer extends AbstractPlayer {
         PlayerGameBoard targetBoard = selectPlayer(players);
         Ship[] combatants = new Ship[2];
         ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
-        ArrayList<Ship> targetShipsFiltered = new ArrayList<Ship>();
         for(Ship ship : targetShips) {
-            if(ship.getStatus()) {
-                targetShipsFiltered.add(ship);
+            if(!ship.getStatus()) {
+                targetShips.remove(ship);
             }
         }
         ArrayList<Ship> myShips = playerGameBoard.getShips();
-        if (!targetShipsFiltered.isEmpty()) {
+        if (!targetShips.isEmpty()) {
             //Looking for first situation where we can beat a face up ship
-            for (Ship defendingShip : targetShipsFiltered) {
+            for (Ship defendingShip : targetShips) {
                 switch (defendingShip.shipClass) {
                     case DESTROYER:
                         for (Ship attackingShip : myShips) {
@@ -138,7 +137,7 @@ public class ComputerPlayer extends AbstractPlayer {
      * Selects a player to target
      * @param players in the game.
      */
-    private PlayerGameBoard selectPlayer(ArrayList<AbstractPlayer> players) {
+    protected PlayerGameBoard selectPlayer(ArrayList<AbstractPlayer> players) {
         int localRandom = Math.abs(new Random().nextInt());
         ArrayList<AbstractPlayer> localPlayers = (ArrayList<AbstractPlayer>)players.clone();
         localPlayers.remove(this);
