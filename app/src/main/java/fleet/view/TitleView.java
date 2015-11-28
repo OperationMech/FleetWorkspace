@@ -74,7 +74,7 @@ public class TitleView extends View {
         screenW = w;
         screenH = h;
         titleBackground = Bitmap.createScaledBitmap(titleBackground, screenW, screenH, false);
-        titleGraphic = Bitmap.createScaledBitmap(titleGraphic,(int)(screenW * 0.25), (int)( screenH * 0.25),false);
+        titleGraphic = Bitmap.createScaledBitmap(titleGraphic,(int)(screenW * 0.25), (int)( screenW * 0.25),false);
     }
 
     @Override

@@ -115,8 +115,8 @@ public class FleetView extends View {
         fleetKingX = screenW / 2 - fleetKing.getWidth() / 2;
         fleetKingY = screenH / 2 - fleetKing.getHeight() / 2;
         background = Bitmap.createScaledBitmap(background,screenW,screenH,false);
-        leftArrow = Bitmap.createScaledBitmap(leftArrow,(int)(screenW * 0.25),(int)(screenH * 0.2),false);
-        rightArrow = Bitmap.createScaledBitmap(rightArrow,(int)(screenW * 0.25),(int)(screenH * 0.2),false);
+        leftArrow = Bitmap.createScaledBitmap(leftArrow,(int)(screenW * 0.25),(int)(screenW * 0.25),false);
+        rightArrow = Bitmap.createScaledBitmap(rightArrow,(int)(screenW * 0.25),(int)(screenW * 0.25),false);
         leftArrowX = (int) (screenW * 0.15) - leftArrow.getWidth() / 2;
         leftArrowY = (int) (screenH * 0.50) - leftArrow.getHeight() / 2;
         rightArrowX = (int) (screenW * 0.85) - rightArrow.getWidth() / 2;
