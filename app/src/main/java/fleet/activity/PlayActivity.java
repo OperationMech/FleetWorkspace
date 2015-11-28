@@ -231,7 +231,7 @@ public class PlayActivity extends Activity {
     public void attackAction(AbstractPlayer player) {
         Ship[] shipAndTarget;
         shipAndTarget = player.attack(players);
-        if (shipAndTarget[1] == null) {
+        if (shipAndTarget[0] == null) {
             if (player.getClass().equals(HumanPlayer.class)) {
                 Toast.makeText(this, "You Lose", Toast.LENGTH_LONG).show();
                 activePlayers.get(player.getPlayerID()).isDefeated = true;

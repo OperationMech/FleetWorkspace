@@ -197,6 +197,7 @@ public class PlayView extends View {
                         && y < targetingButtonOrigin.y + findTarget.getHeight() &&
                         selectedShip != -1) {
                     Ship selected = board.fleetPositions[selectedShip];
+                    selectedShip = -1;
                     if (viewer.getPlayerID() == player.getPlayerID()) {
                         //Depending on who is looking at the board, what we are setting is different
                         viewer.setAttacker(selected);
@@ -217,14 +218,6 @@ public class PlayView extends View {
                             break;
                         }
                     }
-                   // if ((viewer.getPlayerID() != player.getPlayerID())) {
-                       // myContext.attackAction(viewer);
-                    //    if (player.getClass().equals(ComputerPlayer.class)) {
-                   //         this.myContext.attackAction(player);
-                  //      }
-                //        myContext.showCurrentPlayerView();
-                //        break;
-                 //   }
                 }
                 //My Fleet button has been clicked
                 if (x > myFleetOrigin.x
