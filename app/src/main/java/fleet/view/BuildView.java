@@ -82,9 +82,9 @@ public class BuildView extends View {
         int pointNum = 0;
         //Creating a 3x4 grid for card placement
         for (int row = 0; row < 4; row++) {
-            y = (int) ((screenH * .025) + (row * (screenH * .25)));
+            y = (int) ((screenH * .045) + (row * (screenH * .25)));
             for (int column = 0; column < 3; column++) {
-                x = (int) ((screenW * .025) + (column * (screenW * .33)));
+                x = (int) ((screenW * .045) + (column * (screenW * .33)));
                 origin = new Point(x, y);
                 slotsOrigin[pointNum] = origin;
                 pointNum++;

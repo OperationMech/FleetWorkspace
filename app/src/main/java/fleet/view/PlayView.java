@@ -73,9 +73,9 @@ public class PlayView extends View {
         int pointNum = 0;
         //Creating a 3x3 grid for card placement
         for (int row = 0; row < 3; row++) {
-            y = (int) ((screenH * .025) + (row * (screenH * .25)));
+            y = (int) ((screenH * .045) + (row * (screenH * .25)));
             for (int column = 0; column < 3; column++) {
-                x = (int) ((screenW * .025) + (column * (screenW * .33)));
+                x = (int) ((screenW * .045) + (column * (screenW * .33)));
                 origin = new Point(x, y);
                 slotsOrigin[pointNum] = origin;
                 pointNum++;
@@ -97,7 +97,8 @@ public class PlayView extends View {
         scout = Bitmap.createScaledBitmap(scout, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
 
         //Finding other UI origin points
-        targetingButtonOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.80));
+        int targetingButtonX = slotsOrigin[2].x + shipXScale - findTarget.getWidth();
+        targetingButtonOrigin = new Point(targetingButtonX, (int) (screenH * 0.80));
         int surrenderButtonX  = screenW - (targetingButtonOrigin.x + confirmTarget.getWidth());
         surrenderButtonOrigin = new Point(surrenderButtonX, (int) (screenH * 0.80));
         myFleetOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.90));
