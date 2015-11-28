@@ -90,15 +90,16 @@ public class PlayView extends View {
         water = Bitmap.createScaledBitmap(water,screenW,screenH,false);
         faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
         faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);
-        surrender = Bitmap.createScaledBitmap(surrender, (int) (shipXScale *1.5), confirmTarget.getHeight(), false);
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
         findTarget = Bitmap.createScaledBitmap(findTarget, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
+        surrender = Bitmap.createScaledBitmap(surrender, (int) (shipXScale *1.5), confirmTarget.getHeight(), false);
         myFleet = Bitmap.createScaledBitmap(myFleet, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
         scout = Bitmap.createScaledBitmap(scout, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
 
         //Finding other UI origin points
         targetingButtonOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.80));
-        surrenderButtonOrigin = new Point((int) (screenW * 0.10), (int) (screenH * 0.80));
+        int surrenderButtonX  = screenW - (targetingButtonOrigin.x + confirmTarget.getWidth());
+        surrenderButtonOrigin = new Point(surrenderButtonX, (int) (screenH * 0.80));
         myFleetOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.90));
         selectedTextOrigin = new Point((int) (screenW * 0.25), (int) (screenH * 0.95));
     }
@@ -113,8 +114,8 @@ public class PlayView extends View {
         }else
             firstDraw = false;
         if (player.getPlayerID() == viewer.getPlayerID()) {
-            canvas.drawBitmap(surrender, surrenderButtonOrigin.x, surrenderButtonOrigin.y, null);
             //Checking if the current player is the player that owns this board
+            canvas.drawBitmap(surrender, surrenderButtonOrigin.x, surrenderButtonOrigin.y, null);
             for (int i = 0; i < 9; i++) {
                 if (board.fleetPositions[i] != null) {
                     Ship ship = board.fleetPositions[i];
