@@ -101,7 +101,7 @@ public class PlayView extends View {
         targetingButtonOrigin = new Point(targetingButtonX, (int) (screenH * 0.80));
         int surrenderButtonX  = screenW - (targetingButtonOrigin.x + confirmTarget.getWidth());
         surrenderButtonOrigin = new Point(surrenderButtonX, (int) (screenH * 0.80));
-        myFleetOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.90));
+        myFleetOrigin = new Point(targetingButtonX, (int) (screenH * 0.90));
         selectedTextOrigin = new Point((int) (screenW * 0.25), (int) (screenH * 0.95));
     }
 
