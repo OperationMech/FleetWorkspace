@@ -23,6 +23,7 @@ import fleet.gameLogic.Ship;
 import fleet.gameLogic.ShipClass;
 import fleet.gameLogic.TransferBuffer;
 import fleet.gameLogic.players.AbstractPlayer;
+import fleet.gameLogic.players.AdvancedCPU;
 import fleet.gameLogic.players.ComputerPlayer;
 import fleet.gameLogic.players.HumanPlayer;
 import fleet.view.PlayView;
@@ -84,9 +85,9 @@ public class PlayActivity extends Activity {
             aiBoard.fleetPositions[8] = aiFleet.getDestroyers()[2];
         } else {
             //Makes a random board
-            int battleShips = 0;
-            int destroyers = 0;
-            int cruisers = 0;
+            int battleShips = 1;
+            int destroyers = 1;
+            int cruisers = 1;
             int localRandom;
             boolean shipAdded;
             ArrayList<Integer> positions = new ArrayList<Integer>();
@@ -94,7 +95,11 @@ public class PlayActivity extends Activity {
                 positions.add(i);
             Collections.shuffle(positions);
             int nextShipPos = positions.remove(0);
+            //Forcing the board to have at least one of each class
             aiBoard.fleetPositions[nextShipPos] = aiFleet.getCarrier();
+            aiBoard.fleetPositions[nextShipPos] = aiFleet.getCruisers()[0];
+            aiBoard.fleetPositions[nextShipPos] = aiFleet.getDestroyers()[0];
+            aiBoard.fleetPositions[nextShipPos] = aiFleet.getBattleships()[0];
             while (positions.size() != 0) {
                 shipAdded = false;
                 localRandom = Math.abs(new Random().nextInt());
@@ -142,7 +147,7 @@ public class PlayActivity extends Activity {
         activePlayers.add(humanPlayView);
         int fleetPathNum = Math.abs(new Random().nextInt()) % TransferBuffer.unusedFleetPaths.size();
         PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(fleetPathNum), MenuData.staticAiBoard);
-        ComputerPlayer computerPlayer = new ComputerPlayer(computerBoard, nextPlayerID);
+        AdvancedCPU computerPlayer = new AdvancedCPU(computerBoard, nextPlayerID);
         players.add(nextPlayerID, computerPlayer);
         nextPlayerID++;
         PlayView computerPlayView = new PlayView(this, computerPlayer);
@@ -161,7 +166,7 @@ public class PlayActivity extends Activity {
         if (currentPlayer.getClass() == HumanPlayer.class) {
             activePlayers.get(currentPlayerID).viewer = currentPlayer;
             setContentView(activePlayers.get(currentPlayerID));
-        } else if (currentPlayer.getClass() == ComputerPlayer.class) {
+        } else if (currentPlayer.getClass() != HumanPlayer.class) {
             attackAction(currentPlayer);
             if (currentPlayer.getGameBoard().hasCarrier()) {
                 currentPlayer.scout(players);
