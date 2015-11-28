@@ -69,11 +69,6 @@ public class ComputerPlayer extends AbstractPlayer {
         PlayerGameBoard targetBoard = selectPlayer(players);
         Ship[] combatants = new Ship[2];
         ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
-        for(Ship ship : targetShips) {
-            if(!ship.getStatus()) {
-                targetShips.remove(ship);
-            }
-        }
         ArrayList<Ship> myShips = playerGameBoard.getShips();
         if (!targetShips.isEmpty()) {
             //Looking for first situation where we can beat a face up ship

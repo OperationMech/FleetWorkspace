@@ -64,11 +64,6 @@ public class AdvancedCPU extends ComputerPlayer {
         } else {
             int minCount;
             ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
-            for (Ship ship : targetShips) {
-                if (!ship.getStatus()) {
-                    targetShips.remove(ship);
-                }
-            }
             if (destroyerCount < cruiserCount) {
                 //Min count is our most vulnerable class, so we will use this to focus its counters
                 minCount = destroyerCount;

@@ -87,11 +87,11 @@ public class PlayView extends View {
         }
         water = Bitmap.createScaledBitmap(water,screenW,screenH,false);
         faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
-        faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);
-        confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
-        findTarget = Bitmap.createScaledBitmap(findTarget, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
-        myFleet = Bitmap.createScaledBitmap(myFleet, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
-        scout = Bitmap.createScaledBitmap(scout, (int) (scaledImgs[1].getWidth() * 1.5), confirmTarget.getHeight(), false);
+        faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);;
+        confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
+        findTarget = Bitmap.createScaledBitmap(findTarget, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
+        myFleet = Bitmap.createScaledBitmap(myFleet, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
+        scout = Bitmap.createScaledBitmap(scout, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
 
         //Finding other UI origin points
         targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.80));

@@ -51,7 +51,7 @@ public class PlayerGameBoard {
 
     public ArrayList<Ship> getFaceUpShips() {
         ArrayList<Ship> faceUpShips = new ArrayList<Ship>();
-        for (Ship ship : fleetPositions) {
+        for (Ship ship : getShips()) {
             if (ship.isFaceUp) {
                 faceUpShips.add(ship);
             }
