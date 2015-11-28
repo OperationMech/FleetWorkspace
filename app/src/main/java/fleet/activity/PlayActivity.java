@@ -217,6 +217,7 @@ public class PlayActivity extends Activity {
                     case DialogInterface.BUTTON_POSITIVE:
                         players.get(currentPlayerID).setAttacker(null);
                         self.attackAction(players.get(currentPlayerID));
+                        self.nextTurn();
                         break;
                 }
             }
