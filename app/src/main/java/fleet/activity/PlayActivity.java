@@ -155,10 +155,14 @@ public class PlayActivity extends Activity {
     }
 
     public void nextTurn() {
-        if (currentPlayerID < activePlayers.size() - 1) {
+        if (currentPlayerID < players.size() - 1) {
             currentPlayerID++;
         } else {
             currentPlayerID = 0;
+        }
+        if (players.size() < 2) {
+            endGame();
+            return;
         }
         activePlayers.get(currentPlayerID).viewer = players.get(currentPlayerID);
         AbstractPlayer currentPlayer = players.get(currentPlayerID);
@@ -210,6 +214,7 @@ public class PlayActivity extends Activity {
                 activePlayers.get(player.getPlayerID()).isDefeated = true;
             }
             players.remove(player);
+            nextTurn();
         }
         if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
             shipAndTarget[1].sinkShip(battle(shipAndTarget[0], shipAndTarget[1]));

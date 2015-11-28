@@ -36,10 +36,12 @@ public class PlayView extends View {
     Point targetingButtonOrigin;
     Bitmap findTarget = BitmapFactory.decodeResource(getResources(), R.drawable.find_target);
     Bitmap confirmTarget = BitmapFactory.decodeResource(getResources(), R.drawable.confirm_target);
-    Bitmap scout = BitmapFactory.decodeResource(getResources(),R.drawable.scout);
+    Bitmap scout = BitmapFactory.decodeResource(getResources(), R.drawable.scout);
     Point myFleetOrigin;
     Bitmap myFleet = BitmapFactory.decodeResource(getResources(), R.drawable.my_fleet);
-    Bitmap water = BitmapFactory.decodeResource(getResources(),R.drawable.water);
+    Bitmap water = BitmapFactory.decodeResource(getResources(), R.drawable.water);
+    Bitmap surrender = BitmapFactory.decodeResource(getResources(), R.drawable.surrender);
+    Point surrenderButtonOrigin;
     Point selectedTextOrigin;
     public boolean isDefeated = false;
     boolean firstDraw = true;
@@ -94,9 +96,10 @@ public class PlayView extends View {
         scout = Bitmap.createScaledBitmap(scout, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
 
         //Finding other UI origin points
-        targetingButtonOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.80));
-        myFleetOrigin = new Point((int) (screenW * .60), (int) (screenH * 0.90));
-        selectedTextOrigin = new Point((int) (screenW * .25), (int) (screenH * 0.95));
+        targetingButtonOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.80));
+        surrenderButtonOrigin = new Point((int) (screenW * 0.30), (int) (screenH * 0.80));
+        myFleetOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.90));
+        selectedTextOrigin = new Point((int) (screenW * 0.25), (int) (screenH * 0.95));
     }
 
     @Override
@@ -109,6 +112,7 @@ public class PlayView extends View {
         }else
             firstDraw = false;
         if (player.getPlayerID() == viewer.getPlayerID()) {
+            canvas.drawBitmap(surrender, surrenderButtonOrigin.x, surrenderButtonOrigin.y, null);
             //Checking if the current player is the player that owns this board
             for (int i = 0; i < 9; i++) {
                 if (board.fleetPositions[i] != null) {
@@ -226,6 +230,13 @@ public class PlayView extends View {
                         && y < myFleetOrigin.y + myFleet.getHeight()
                         && viewer.getPlayerID() != player.getPlayerID()) {
                     myContext.showCurrentPlayerView();
+                }
+                if (x > surrenderButtonOrigin.x
+                        && x < surrenderButtonOrigin.x + surrender.getWidth()
+                        && y > surrenderButtonOrigin.y
+                        && y < surrenderButtonOrigin.y + surrender.getWidth()) {
+                    viewer.setAttacker(null);
+                    myContext.attackAction(viewer);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
