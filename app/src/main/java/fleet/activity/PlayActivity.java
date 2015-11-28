@@ -2,6 +2,7 @@ package fleet.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -41,11 +42,12 @@ public class PlayActivity extends Activity {
     private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
     private int nextPlayerID = 0;
     private int currentPlayerID = 0;
+    private PlayActivity self;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        self = this;
         populatePlayers();
         nextTurn();
     }
@@ -201,6 +203,27 @@ public class PlayActivity extends Activity {
         // The actual dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Game finished. Play again?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
+    }
+
+    public void surrender() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                    case DialogInterface.BUTTON_POSITIVE:
+                        players.get(currentPlayerID).setAttacker(null);
+                        self.attackAction(players.get(currentPlayerID));
+                        break;
+                }
+            }
+        };
+        // The actual dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you wish to surrender?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
 
     }

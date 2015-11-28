@@ -89,7 +89,8 @@ public class PlayView extends View {
         }
         water = Bitmap.createScaledBitmap(water,screenW,screenH,false);
         faceDown = Bitmap.createScaledBitmap(board.faceDown, shipXScale, shipYScale, false);
-        faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);;
+        faceDownIcon = Bitmap.createScaledBitmap(board.faceDown, shipXScale / 5, shipYScale / 5, false);
+        surrender = Bitmap.createScaledBitmap(surrender, (int) (shipXScale *1.5), confirmTarget.getHeight(), false);
         confirmTarget = Bitmap.createScaledBitmap(confirmTarget, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
         findTarget = Bitmap.createScaledBitmap(findTarget, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
         myFleet = Bitmap.createScaledBitmap(myFleet, (int) (shipXScale * 1.5), confirmTarget.getHeight(), false);
@@ -97,7 +98,7 @@ public class PlayView extends View {
 
         //Finding other UI origin points
         targetingButtonOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.80));
-        surrenderButtonOrigin = new Point((int) (screenW * 0.30), (int) (screenH * 0.80));
+        surrenderButtonOrigin = new Point((int) (screenW * 0.10), (int) (screenH * 0.80));
         myFleetOrigin = new Point((int) (screenW * 0.60), (int) (screenH * 0.90));
         selectedTextOrigin = new Point((int) (screenW * 0.25), (int) (screenH * 0.95));
     }
@@ -234,9 +235,8 @@ public class PlayView extends View {
                 if (x > surrenderButtonOrigin.x
                         && x < surrenderButtonOrigin.x + surrender.getWidth()
                         && y > surrenderButtonOrigin.y
-                        && y < surrenderButtonOrigin.y + surrender.getWidth()) {
-                    viewer.setAttacker(null);
-                    myContext.attackAction(viewer);
+                        && y < surrenderButtonOrigin.y + surrender.getHeight()) {
+                    myContext.surrender();
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
