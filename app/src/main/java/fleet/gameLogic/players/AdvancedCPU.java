@@ -60,7 +60,7 @@ public class AdvancedCPU extends ComputerPlayer {
                 && battleshipCount == cruiserCount
                 && battleshipCount == destroyerCount
                 && destroyerCount == cruiserCount) {
-            combatants = super.attack(players);
+            return super.attack(players);
         } else {
             int minCount;
             ArrayList<Ship> targetShips = targetBoard.getFaceUpShips();
@@ -70,7 +70,7 @@ public class AdvancedCPU extends ComputerPlayer {
                 }
             }
             if (destroyerCount < cruiserCount) {
-                //Min count is our most venerable class, so we will use this to focus its counters
+                //Min count is our most vulnerable class, so we will use this to focus its counters
                 minCount = destroyerCount;
             } else {
                 minCount = cruiserCount;
@@ -78,7 +78,7 @@ public class AdvancedCPU extends ComputerPlayer {
             if (battleshipCount < minCount) {
                 minCount = battleshipCount;
             }
-            //Shuffling all ship lists so that actions cant be predicted based on grid positions
+            //Shuffling all ship lists so that actions can't be predicted based on grid positions
             Collections.shuffle(targetShips);
             Collections.shuffle(myShips);
             Collections.shuffle(myPreferredShips);
@@ -117,6 +117,8 @@ public class AdvancedCPU extends ComputerPlayer {
                                         combatants[0] = attackingShip;
                                         combatants[1] = defendingShip;
                                         return combatants;
+                                    default :
+                                        break;
                                 }
                             }
                         }
@@ -132,6 +134,8 @@ public class AdvancedCPU extends ComputerPlayer {
                                         combatants[0] = attackingShip;
                                         combatants[1] = defendingShip;
                                         return combatants;
+                                    default :
+                                        break;
                                 }
                             }
                         }
@@ -147,6 +151,8 @@ public class AdvancedCPU extends ComputerPlayer {
                                         combatants[0] = attackingShip;
                                         combatants[1] = defendingShip;
                                         return combatants;
+                                    default :
+                                        break;
                                 }
                             }
                         }
