@@ -98,11 +98,14 @@ public class PlayActivity extends Activity {
             for (int i = 0; i < 9; i++)
                 positions.add(i);
             Collections.shuffle(positions);
-            int nextShipPos = positions.remove(0);
             //Forcing the board to have at least one of each class
+            int nextShipPos = positions.remove(0);
             aiBoard.fleetPositions[nextShipPos] = aiFleet.getCarrier();
+            nextShipPos = positions.remove(0);
             aiBoard.fleetPositions[nextShipPos] = aiFleet.getCruisers()[0];
+            nextShipPos = positions.remove(0);
             aiBoard.fleetPositions[nextShipPos] = aiFleet.getDestroyers()[0];
+            nextShipPos = positions.remove(0);
             aiBoard.fleetPositions[nextShipPos] = aiFleet.getBattleships()[0];
             while (positions.size() != 0) {
                 shipAdded = false;
