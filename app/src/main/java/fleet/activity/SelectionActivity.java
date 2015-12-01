@@ -6,6 +6,7 @@ import fleet.gameLogic.TransferBuffer;
 import fleet.view.BuildView;
 import fleet.view.FleetView;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -26,7 +27,6 @@ public class SelectionActivity extends Activity {
     private static ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
     private ArrayList<String> unusedFleetPaths;
-  //  private static int runOnce = 0;
     protected String playerFleetPath;
     protected MediaPlayer mp;
 
@@ -34,9 +34,9 @@ public class SelectionActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         assetManager = getAssets();
         unusedFleetPaths = new ArrayList<String>();
-     //   if(runOnce == 0) {
             try {
                 //Scans the /assets/fleet/ directory for fleets
                 fleetList = (assetManager.list(FLEET_DIR));
@@ -52,8 +52,6 @@ public class SelectionActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-      //      runOnce = 1;
-      //  }
         mp = MediaPlayer.create(this, R.raw.fleet_bgm);
         mp.setLooping(true);
         if(MenuData.musicMuted) {
