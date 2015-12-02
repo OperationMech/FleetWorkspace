@@ -4,6 +4,7 @@ import fleet.view.TitleView;
 
 import fleet.R;
 
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,8 +16,8 @@ public class TitleActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mp = MediaPlayer.create(this, fleet.R.raw.title_bgm);
         mp.setLooping(true);
         mp.start();
