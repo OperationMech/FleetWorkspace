@@ -14,14 +14,12 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -44,7 +42,9 @@ public class SimulationActivity extends Activity {
     }
 
     public void runSimulations(View parent) {
-        loadFleets();
+        if(fleets.size() == 0) {
+            loadFleets();
+        }
 
         ArrayList<PlayerGameBoard> aiBoards = new ArrayList<PlayerGameBoard>();
 

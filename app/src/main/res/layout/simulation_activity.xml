@@ -108,7 +108,7 @@
             android:id="@+id/console"
             android:background="#000000"
             android:textColor="#009900"
-            android:textSize="14pt"
+            android:textSize="10pt"
             android:text="@string/console"/>
 
     </ScrollView>

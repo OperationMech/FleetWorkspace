@@ -1,7 +1,6 @@
 package fleet.gameLogic;
 
 
-
 import fleet.gameLogic.players.AbstractPlayer;
 
 import java.util.ArrayList;
@@ -14,28 +13,28 @@ import java.util.HashMap;
  */
 public class Game {
     protected ArrayList<AbstractPlayer> players;
-    private HashMap <AbstractPlayer, Integer> loss;
+    private HashMap<AbstractPlayer, Integer> loss;
     private boolean isWon = false;
     private int runs = 1;
 
     /**
      * Game constructor
+     *
      * @param players passed to the game
      */
     public Game(ArrayList<AbstractPlayer> players, int runs) {
         this.players = players;
         loss = new HashMap<AbstractPlayer, Integer>();
-        for(AbstractPlayer player : players){
+        for (AbstractPlayer player : players) {
             loss.put(player, 0);
         }
         this.runs = runs;
     }
 
     /**
-     *
      * @return Players currently in the game
      */
-    public ArrayList<AbstractPlayer> getPlayers(){
+    public ArrayList<AbstractPlayer> getPlayers() {
         return this.players;
     }
 
@@ -44,9 +43,9 @@ public class Game {
      */
     public String startGame() {
         String output = "";
-        for(int games = 0; games < runs; games++) {
+        for (int games = 0; games < runs; games++) {
             Collections.shuffle(players);
-            for(AbstractPlayer player : players) {
+            for (AbstractPlayer player : players) {
                 player.getGameBoard().reset();
             }
             isWon = false;
@@ -55,17 +54,20 @@ public class Game {
             }
         }
 
-        for(AbstractPlayer player : players ) {
-            output = output + " " +  player.getClass().getName() + " won: " + (runs - loss.get(player)) + " times.\n:>";
+        for (AbstractPlayer player : players) {
+            output = output + " " + player.getClass().getName() + " won: " + (runs - loss.get(player)) + " times.\n:>";
         }
 
+        double zScore = ((runs - loss.get(players.get(0))) - (runs * 0.5)) / Math.sqrt(runs * 0.25);
 
-        double zScore =   ((runs - loss.get(players.get(0)))-(runs * 0.5))/Math.sqrt( runs * 0.25 );
-
-        if(zScore <= 1.95 && zScore >= -1.95) {
+        if (zScore <= 1.95 && zScore >= -1.95) {
             output = output + " The Z score is statistically insignificant.\n:>";
         } else {
             output = output + " The Z score is statistically significant.\n:>";
+        }
+
+        for (AbstractPlayer player : players) {
+            player.getGameBoard().reset();
         }
 
         return output + " Z score: " + zScore + "\n:>";
@@ -73,6 +75,7 @@ public class Game {
 
     /**
      * Game loop function
+     *
      * @return won status of the current game
      */
     public boolean gameLoop() {
@@ -97,6 +100,7 @@ public class Game {
 
     /**
      * Battle resolve function
+     *
      * @param attacker ship selected by the attacker
      * @param defender target ship
      * @return boolean value for target

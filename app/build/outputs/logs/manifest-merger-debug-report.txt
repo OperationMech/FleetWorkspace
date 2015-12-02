@@ -23,18 +23,10 @@ ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidMa
 		ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:8:9-35
 		INJECTED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml
-android:uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:11:5-89
+android:uses-permissions
+ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:11:5-90
 	android:name
-		ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:11:30-86
-android:uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:12:5-83
-	android:name
-		ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:12:30-80
-android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:13:5-88
-	android:name
-		ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:13:30-85
+		ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:11:31-87
 application
 ADDED from C:\Users\A_Win7x64\AndroidStudioProjects\Fleet\app\src\main\AndroidManifest.xml:15:5-42:19
 	android:label
