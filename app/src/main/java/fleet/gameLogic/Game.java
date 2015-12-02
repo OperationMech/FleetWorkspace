@@ -5,6 +5,8 @@ package fleet.gameLogic;
 import fleet.gameLogic.players.AbstractPlayer;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Simple game class
@@ -12,6 +14,7 @@ import java.util.ArrayList;
  */
 public class Game {
     protected ArrayList<AbstractPlayer> players;
+    private HashMap <AbstractPlayer, Integer> wins;
     private boolean isWon = false;
     private int runs = 1;
 
@@ -19,8 +22,12 @@ public class Game {
      * Game constructor
      * @param players passed to the game
      */
-    public void game(ArrayList<AbstractPlayer> players, int runs) {
+    public Game(ArrayList<AbstractPlayer> players, int runs) {
         this.players = players;
+        wins = new HashMap<AbstractPlayer, Integer>();
+        for(AbstractPlayer player : players){
+            wins.put(player, 0);
+        }
         this.runs = runs;
     }
 
@@ -35,12 +42,33 @@ public class Game {
     /**
      * Game loop start function
      */
-    public void startGame() {
+    public String startGame() {
+        String output = "";
         for(int games = 0; games < runs; games++) {
+            Collections.shuffle(players);
+            for(AbstractPlayer player : players) {
+                player.getGameBoard().reset();
+            }
+            isWon = false;
             while (!isWon) {
                 isWon = gameLoop();
             }
         }
+
+        for(AbstractPlayer player : players ) {
+            output = output + " " +  player.getClass().getName() + " won: " + wins.get(player) + " times.\n:>";
+        }
+
+
+        double zScore =   (wins.get(players.get(0))-(runs * 0.5))/Math.sqrt( runs * 0.25 );
+
+        if(zScore <= 1.95 && zScore >= -1.95) {
+            output = output + " The Z score is statistically insignificant.\n:>";
+        } else {
+            output = output + " The Z score is statistically significant.\n:>";
+        }
+
+        return output + " Z score: " + zScore + "\n:>";
     }
 
     /**
@@ -51,14 +79,11 @@ public class Game {
         for (AbstractPlayer player : players) {
             boolean isTurn = true;
             while (isTurn) {
-                if (players.size() < 2) {
-                    return true;
-                }
                 Ship[] shipAndTarget;
                 shipAndTarget = player.attack(players);
                 if (shipAndTarget[1] == null) {
-                    players.remove(player);
-                    isTurn = false;
+                    wins.put(player, wins.get(player) + 1);
+                    return true;
                 }
                 if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
                     battle(shipAndTarget[0], shipAndTarget[1]);

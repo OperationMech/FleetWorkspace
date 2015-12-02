@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- From: file:/C:/Users/A_Win7x64/AndroidStudioProjects/Fleet/app/src/main/res/values/arrays.xml -->
+    <eat-comment/>
+    <string-array name="ai_types">
+        <item>Basic</item>
+        <item>Advanced</item>
+    </string-array>
+    <string-array name="num_runs">
+        <item>100</item>
+        <item>1000</item>
+        <item>10000</item>
+        <item>100000</item>
+    </string-array>
     <!-- From: file:/C:/Users/A_Win7x64/AndroidStudioProjects/Fleet/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -8,10 +20,17 @@
     <eat-comment/>
     <string name="Human_Mode">Interactive</string>
     <string name="action_settings">Settings</string>
+    <string name="ai_1">First Player: </string>
+    <string name="ai_2">Second Player: </string>
+    <string name="ai_static_board">Use Static</string>
     <string name="app_name">Fleet</string>
+    <string name="console">:></string>
     <string name="effects_enabled">Enable Sounds</string>
+    <string name="execute">Run Simulations</string>
     <string name="music_mute">Mute Music</string>
     <string name="play_activity">PlayActivity</string>
+    <string name="runs">Number of Runs: </string>
+    <string name="simulation_activity">Simulation</string>
     <string name="title_activity_game">GameActivity</string>
     <!-- From: file:/C:/Users/A_Win7x64/AndroidStudioProjects/Fleet/app/src/main/res/values/styles.xml -->
     <eat-comment/>

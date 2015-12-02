@@ -8,6 +8,10 @@
 package fleet;
 
 public final class R {
+    public static final class array {
+        public static final int ai_types=0x7f070000;
+        public static final int num_runs=0x7f070001;
+    }
     public static final class attr {
     }
     public static final class dimen {
@@ -27,28 +31,41 @@ public final class R {
         public static final int options_button_up=0x7f020009;
         public static final int play_button_down=0x7f02000a;
         public static final int play_button_up=0x7f02000b;
-        public static final int resume_game=0x7f02000c;
-        public static final int resume_game_down=0x7f02000d;
-        public static final int right_arrow=0x7f02000e;
-        public static final int scout=0x7f02000f;
-        public static final int select_fleet=0x7f020010;
-        public static final int select_fleet_down=0x7f020011;
-        public static final int title_background=0x7f020012;
-        public static final int title_graphic=0x7f020013;
-        public static final int water=0x7f020014;
+        public static final int play_down=0x7f02000c;
+        public static final int play_up=0x7f02000d;
+        public static final int resume_game=0x7f02000e;
+        public static final int resume_game_down=0x7f02000f;
+        public static final int right_arrow=0x7f020010;
+        public static final int scout=0x7f020011;
+        public static final int select_fleet=0x7f020012;
+        public static final int select_fleet_down=0x7f020013;
+        public static final int simmode_down=0x7f020014;
+        public static final int simmode_up=0x7f020015;
+        public static final int surrender=0x7f020016;
+        public static final int title_background=0x7f020017;
+        public static final int title_graphic=0x7f020018;
+        public static final int water=0x7f020019;
     }
     public static final class id {
-        public static final int action_settings=0x7f090001;
-        public static final int effects_enabled=0x7f090003;
-        public static final int fleetView=0x7f090000;
-        public static final int human_mode=0x7f090004;
-        public static final int music_mute=0x7f090002;
+        public static final int action_settings=0x7f0a0006;
+        public static final int button_execute=0x7f0a0004;
+        public static final int console=0x7f0a0005;
+        public static final int effects_enabled=0x7f0a0008;
+        public static final int fleetView=0x7f0a0000;
+        public static final int human_mode=0x7f0a0009;
+        public static final int music_mute=0x7f0a0007;
+        public static final int select_ai_1=0x7f0a0002;
+        public static final int select_ai_2=0x7f0a0003;
+        public static final int select_runs=0x7f0a0001;
+        public static final int static_ai_board=0x7f0a000a;
     }
     public static final class layout {
         public static final int activity_fleet=0x7f030000;
+        public static final int simulation_activity=0x7f030001;
     }
     public static final class menu {
-        public static final int fleet=0x7f080000;
+        public static final int fleet=0x7f090000;
+        public static final int fleetplay=0x7f090001;
     }
     public static final class raw {
         public static final int blip2=0x7f040000;
@@ -56,13 +73,20 @@ public final class R {
         public static final int title_bgm=0x7f040002;
     }
     public static final class string {
-        public static final int Human_Mode=0x7f070000;
-        public static final int action_settings=0x7f070001;
-        public static final int app_name=0x7f070002;
-        public static final int effects_enabled=0x7f070003;
-        public static final int music_mute=0x7f070004;
-        public static final int play_activity=0x7f070005;
-        public static final int title_activity_game=0x7f070006;
+        public static final int Human_Mode=0x7f080000;
+        public static final int action_settings=0x7f080001;
+        public static final int ai_1=0x7f080002;
+        public static final int ai_2=0x7f080003;
+        public static final int ai_static_board=0x7f080004;
+        public static final int app_name=0x7f080005;
+        public static final int console=0x7f080006;
+        public static final int effects_enabled=0x7f080007;
+        public static final int execute=0x7f080008;
+        public static final int music_mute=0x7f080009;
+        public static final int play_activity=0x7f08000a;
+        public static final int runs=0x7f08000b;
+        public static final int simulation_activity=0x7f08000c;
+        public static final int title_activity_game=0x7f08000d;
     }
     public static final class style {
         /**  API 11 theme customizations can go here. 
