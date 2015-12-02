@@ -83,10 +83,13 @@ public class PlayerGameBoard {
      * @return boolean status of all ships
      */
     public boolean allShipsSunk() {
-        if (getShips().isEmpty()) {
-            return true;
-        } else {
-            return false;
+        return getShips().isEmpty();
+    }
+
+    public void reset() {
+        for(Ship ship : fleetPositions) {
+            ship.isFaceUp = false;
+            ship.isSunk = false;
         }
     }
 

@@ -24,6 +24,7 @@ public abstract class AbstractPlayer implements Player {
     public AbstractPlayer (PlayerGameBoard board,int playerID){
         this.playerGameBoard = board;
         this.playerID = playerID;
+        playerGameBoard.reset();
     }
 
     /**

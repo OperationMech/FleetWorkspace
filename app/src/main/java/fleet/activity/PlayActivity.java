@@ -2,7 +2,6 @@ package fleet.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
@@ -39,17 +38,23 @@ import fleet.gameLogic.Fleet;
  * \\                         //
  */
 public class PlayActivity extends Activity {
-    protected ArrayList<PlayView> activePlayers = new ArrayList<PlayView>();
-    private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
-    private int nextPlayerID = 0;
-    private int currentPlayerID = 0;
+    protected ArrayList<PlayView> activePlayers;
+    private ArrayList<AbstractPlayer> players;
+    private Bundle selfBundle = new Bundle();
+    private int nextPlayerID;
+    private int currentPlayerID;
     private PlayActivity self;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        selfBundle = savedInstanceState;
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         self = this;
+        activePlayers = new ArrayList<PlayView>();
+        players = new ArrayList<AbstractPlayer>();
+        nextPlayerID = 0;
+        currentPlayerID = 0;
         populatePlayers();
         nextTurn();
     }
@@ -200,7 +205,7 @@ public class PlayActivity extends Activity {
                         System.exit(0);
                         break;
                     case DialogInterface.BUTTON_POSITIVE:
-                        System.exit(0);
+                        self.onCreate(selfBundle);
                         break;
                 }
             }
@@ -253,7 +258,7 @@ public class PlayActivity extends Activity {
             }
             player.setAttacked(true);
         } else {
-            if (player.getClass().equals(HumanPlayer.class)) {
+            if (player.getClass().equals(HumanPlayer.class) && player.getGameBoard().hasCarrier()) {
                 Toast.makeText(this, "Carrier can't attack", Toast.LENGTH_LONG).show();
             }
         }
