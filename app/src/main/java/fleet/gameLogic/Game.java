@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Game {
     protected ArrayList<AbstractPlayer> players;
-    private HashMap <AbstractPlayer, Integer> wins;
+    private HashMap <AbstractPlayer, Integer> loss;
     private boolean isWon = false;
     private int runs = 1;
 
@@ -24,9 +24,9 @@ public class Game {
      */
     public Game(ArrayList<AbstractPlayer> players, int runs) {
         this.players = players;
-        wins = new HashMap<AbstractPlayer, Integer>();
+        loss = new HashMap<AbstractPlayer, Integer>();
         for(AbstractPlayer player : players){
-            wins.put(player, 0);
+            loss.put(player, 0);
         }
         this.runs = runs;
     }
@@ -56,11 +56,11 @@ public class Game {
         }
 
         for(AbstractPlayer player : players ) {
-            output = output + " " +  player.getClass().getName() + " won: " + wins.get(player) + " times.\n:>";
+            output = output + " " +  player.getClass().getName() + " won: " + (runs - loss.get(player)) + " times.\n:>";
         }
 
 
-        double zScore =   (wins.get(players.get(0))-(runs * 0.5))/Math.sqrt( runs * 0.25 );
+        double zScore =   ((runs - loss.get(players.get(0)))-(runs * 0.5))/Math.sqrt( runs * 0.25 );
 
         if(zScore <= 1.95 && zScore >= -1.95) {
             output = output + " The Z score is statistically insignificant.\n:>";
@@ -82,7 +82,7 @@ public class Game {
                 Ship[] shipAndTarget;
                 shipAndTarget = player.attack(players);
                 if (shipAndTarget[1] == null) {
-                    wins.put(player, wins.get(player) + 1);
+                    loss.put(player, loss.get(player) + 1);
                     return true;
                 }
                 if (shipAndTarget[0] != null && !shipAndTarget[0].shipClass.equals(ShipClass.CARRIER)) {
