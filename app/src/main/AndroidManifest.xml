@@ -28,6 +28,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.SimulationActivity"
+            android:label="@string/simulation_activity">
+        </activity>
+        <activity
             android:name=".activity.SelectionActivity"
             android:label="@string/title_activity_game" >
         </activity>

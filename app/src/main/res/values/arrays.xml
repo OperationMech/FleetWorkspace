@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="num_runs">
+        <item>100</item>
+        <item>1000</item>
+        <item>10000</item>
+        <item>100000</item>
+    </string-array>
+
+    <string-array name="ai_types">
+        <item>Basic</item>
+        <item>Advanced</item>
+    </string-array>
+</resources>

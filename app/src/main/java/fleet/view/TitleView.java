@@ -3,6 +3,7 @@ package fleet.view;
 import fleet.R;
 import fleet.activity.MenuData;
 import fleet.activity.SelectionActivity;
+import fleet.activity.SimulationActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -117,7 +118,8 @@ public class TitleView extends View {
                     myContext.startActivity(gameIntent);
                 }
                 if (simButtonPressed) {
-                    //add Sim View
+                    Intent nonInteractive = new Intent (myContext, SimulationActivity.class);
+                    myContext.startActivity(nonInteractive);
                 }
                 playButtonPressed = false;
                 simButtonPressed = false;

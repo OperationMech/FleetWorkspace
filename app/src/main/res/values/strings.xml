@@ -6,7 +6,13 @@
     <string name="Human_Mode">Interactive</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="play_activity">PlayActivity</string>
+    <string name="simulation_activity">Simulation</string>
     <string name="music_mute">Mute Music</string>
     <string name="effects_enabled">Enable Sounds</string>
     <string name="ai_static_board">Use Static</string>
+    <string name="runs">Number of Runs: </string>
+    <string name="ai_1">First Player: </string>
+    <string name="ai_2">Second Player: </string>
+    <string name="execute">Run Simulations</string>
+    <string name="console">:></string>
 </resources>
