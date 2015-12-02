@@ -9,21 +9,27 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.View;
 
 
 public class TitleView extends View {
-    private Bitmap titleGraphic;
-    private Bitmap playButtonUp;
-    private Bitmap playButtonDown;
-    private Bitmap muteButtonUp;
-    private Bitmap muteButtonDown;
-    private Bitmap titleBackground;
+    private Bitmap titleGraphic =BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
+    private Bitmap playButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.play_up);
+    private Bitmap playButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.play_down);
+    private Point playButtonOrigin;
+    private Bitmap muteButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_up);
+    private Bitmap muteButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_down);
+    private Bitmap titleBackground  = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
+    private Bitmap simButtonUp = BitmapFactory.decodeResource(getResources(),R.drawable.simmode_up);
+    private Bitmap simButtonDown  = BitmapFactory.decodeResource(getResources(),R.drawable.simmode_down);
+    private Point simButtonOrigin;
     private int screenW;
     private int screenH;
     private boolean playButtonPressed;
+    private boolean simButtonPressed;
     private Context myContext;
     private MediaPlayer mp;
 
@@ -31,12 +37,6 @@ public class TitleView extends View {
         super(context);
         myContext = context;
         this.mp = mp;
-        titleBackground = BitmapFactory.decodeResource(getResources(), R.drawable.title_background);
-        titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
-        playButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_up);
-        playButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.play_button_down);
-        muteButtonUp = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_up);
-        muteButtonDown = BitmapFactory.decodeResource(getResources(), R.drawable.mute_button_down);
     }
 
     @Override
@@ -48,6 +48,18 @@ public class TitleView extends View {
             mp.pause();
         }
         invalidate();
+    }
+
+    @Override
+    public void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        screenW = w;
+        screenH = h;
+        playButtonOrigin = new Point (screenW/2 - playButtonDown.getWidth()/2 ,(int)(screenH*.7));
+        simButtonOrigin = new Point(screenW/2 - simButtonDown.getWidth()/2 ,(int)(playButtonOrigin.y + playButtonDown.getHeight() * 1.5));
+        titleBackground = Bitmap.createScaledBitmap(titleBackground, screenW, screenH, false);
+        titleGraphic = Bitmap.createScaledBitmap(titleGraphic,(int)(screenW * 0.25), (int)( screenW * 0.25),false);
+
     }
 
     /**
@@ -62,19 +74,15 @@ public class TitleView extends View {
             canvas.drawBitmap(muteButtonUp, (screenW - muteButtonUp.getWidth()), 0, null);
         }
         if (playButtonPressed) {
-            canvas.drawBitmap(playButtonDown, (screenW - playButtonDown.getWidth()) / 2, (int) (screenH * 0.7), null);
+            canvas.drawBitmap(playButtonDown, playButtonOrigin.x,playButtonOrigin.y, null);
         } else {
             canvas.drawBitmap(playButtonUp, (screenW - playButtonUp.getWidth()) / 2, (int) (screenH * 0.7), null);
         }
-    }
-
-    @Override
-    public void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        screenW = w;
-        screenH = h;
-        titleBackground = Bitmap.createScaledBitmap(titleBackground, screenW, screenH, false);
-        titleGraphic = Bitmap.createScaledBitmap(titleGraphic,(int)(screenW * 0.25), (int)( screenW * 0.25),false);
+        if (simButtonPressed) {
+            canvas.drawBitmap(simButtonDown, simButtonOrigin.x,simButtonOrigin.y,null);
+        } else {
+            canvas.drawBitmap(simButtonUp, simButtonOrigin.x,simButtonOrigin.y,null);
+        }
     }
 
     @Override
@@ -86,13 +94,21 @@ public class TitleView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                if (x > (screenW - playButtonUp.getWidth()) / 2 &&
-                        x < ((screenW - playButtonUp.getWidth()) / 2) + playButtonUp.getWidth() &&
-                        y > (int) (screenH * 0.7) &&
-                        y < (int) (screenH * 0.7) + playButtonUp.getHeight()) {
+                if (x > playButtonOrigin.x
+                        && x < playButtonOrigin.x + playButtonDown.getWidth()
+                        && y > playButtonOrigin.y
+                        && y < playButtonOrigin.y + playButtonDown.getHeight()) {
                     playButtonPressed = true;
                     break;
                 }
+                if (x > simButtonOrigin.x
+                        && x < simButtonOrigin.x + simButtonDown.getWidth()
+                        && y > simButtonOrigin.y
+                        && y < simButtonOrigin.y + simButtonDown.getHeight()) {
+                    simButtonPressed = true;
+                    break;
+                }
+                break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
@@ -100,7 +116,11 @@ public class TitleView extends View {
                     Intent gameIntent = new Intent(myContext, SelectionActivity.class);
                     myContext.startActivity(gameIntent);
                 }
+                if (simButtonPressed) {
+                    //add Sim View
+                }
                 playButtonPressed = false;
+                simButtonPressed = false;
                 break;
         }
         invalidate();
