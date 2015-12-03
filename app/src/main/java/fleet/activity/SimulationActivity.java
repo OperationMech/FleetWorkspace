@@ -33,7 +33,7 @@ public class SimulationActivity extends Activity {
     private AssetManager assetManager;
     private ArrayList<Fleet> fleets = new ArrayList<Fleet>();
     private String[] fleetList;
-    private ArrayList<AbstractPlayer> players = new ArrayList<AbstractPlayer>();
+    private ArrayList<AbstractPlayer> players;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class SimulationActivity extends Activity {
     }
 
     public void runSimulations(View parent) {
+        players = new ArrayList<AbstractPlayer>();
         if(fleets.size() == 0) {
             loadFleets();
         }
@@ -89,10 +90,6 @@ public class SimulationActivity extends Activity {
 
         TextView console = (TextView) findViewById(R.id.console);
         console.append(aiGame.startGame());
-
-        for(AbstractPlayer player : players) {
-            players.remove(player);
-        }
     }
 
     public void loadFleets() {
