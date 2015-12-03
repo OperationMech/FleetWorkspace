@@ -55,22 +55,22 @@ public class Game {
         }
 
         for (AbstractPlayer player : players) {
-            output = output + " " + player.getClass().getName() + " won: " + (runs - loss.get(player)) + " times.\n:>";
+            output = output + " " + player.getClass().getName() + " won: " + (runs - loss.get(player)) + " times.\n$>";
         }
 
         double zScore = ((runs - loss.get(players.get(0))) - (runs * 0.5)) / Math.sqrt(runs * 0.25);
 
         if (zScore <= 1.95 && zScore >= -1.95) {
-            output = output + " The Z score is statistically insignificant.\n:>";
+            output = output + " The Z score is statistically insignificant.\n$>";
         } else {
-            output = output + " The Z score is statistically significant.\n:>";
+            output = output + " The Z score is statistically significant.\n$>";
         }
 
         for (AbstractPlayer player : players) {
             player.getGameBoard().reset();
         }
 
-        return output + " Z score: " + zScore + "\n\n:>";
+        return output + " Z score: " + zScore + "\n\n$>";
     }
 
     /**
