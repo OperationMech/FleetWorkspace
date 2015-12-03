@@ -89,6 +89,10 @@ public class SimulationActivity extends Activity {
 
         TextView console = (TextView) findViewById(R.id.console);
         console.append(aiGame.startGame());
+
+        for(AbstractPlayer player : players) {
+            players.remove(player);
+        }
     }
 
     public void loadFleets() {
