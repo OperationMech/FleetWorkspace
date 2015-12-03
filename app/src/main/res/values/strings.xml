@@ -14,5 +14,5 @@
     <string name="ai_1">First Player: </string>
     <string name="ai_2">Second Player: </string>
     <string name="execute">Run Simulations</string>
-    <string name="console">:></string>
+    <string name="console">$></string>
 </resources>
