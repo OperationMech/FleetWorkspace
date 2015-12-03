@@ -70,7 +70,7 @@ public class Game {
             player.getGameBoard().reset();
         }
 
-        return output + " Z score: " + zScore + "\n:>";
+        return output + " Z score: " + zScore + "\n\n:>";
     }
 
     /**

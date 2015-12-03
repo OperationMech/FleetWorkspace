@@ -49,19 +49,17 @@ public class SimulationActivity extends Activity {
 
         ArrayList<PlayerGameBoard> aiBoards = new ArrayList<PlayerGameBoard>();
 
-        for(int i = 2; i < 4; i++) {
+        for(Fleet fleet : fleets) {
             PlayerGameBoard aiBoard = new PlayerGameBoard();
-
-            aiBoard.fleetPositions[0] = fleets.get(i).getCarrier();
-            aiBoard.fleetPositions[1] = fleets.get(i).getBattleships()[0];
-            aiBoard.fleetPositions[2] = fleets.get(i).getBattleships()[1];
-            aiBoard.fleetPositions[3] = fleets.get(i).getBattleships()[2];
-            aiBoard.fleetPositions[4] = fleets.get(i).getCruisers()[0];
-            aiBoard.fleetPositions[5] = fleets.get(i).getCruisers()[1];
-            aiBoard.fleetPositions[6] = fleets.get(i).getDestroyers()[0];
-            aiBoard.fleetPositions[7] = fleets.get(i).getDestroyers()[1];
-            aiBoard.fleetPositions[8] = fleets.get(i).getDestroyers()[2];
-
+            aiBoard.fleetPositions[0] = fleet.getCarrier();
+            aiBoard.fleetPositions[1] = fleet.getBattleships()[0];
+            aiBoard.fleetPositions[2] = fleet.getBattleships()[1];
+            aiBoard.fleetPositions[3] = fleet.getBattleships()[2];
+            aiBoard.fleetPositions[4] = fleet.getCruisers()[0];
+            aiBoard.fleetPositions[5] = fleet.getCruisers()[1];
+            aiBoard.fleetPositions[6] = fleet.getDestroyers()[0];
+            aiBoard.fleetPositions[7] = fleet.getDestroyers()[1];
+            aiBoard.fleetPositions[8] = fleet.getDestroyers()[2];
             aiBoards.add(aiBoard);
         }
 
@@ -74,13 +72,13 @@ public class SimulationActivity extends Activity {
         Spinner ai2 = (Spinner) findViewById(R.id.select_ai_2);
         String ai2Name = (String) ai2.getSelectedItem();
 
-        if(ai1Name.equals("Basic")){
+        if(ai1Name.equals("Basic")) {
             players.add(new ComputerPlayer(aiBoards.get(0),0));
         } else {
             players.add(new AdvancedCPU(aiBoards.get(0),0));
         }
 
-        if(ai2Name.equals("Basic")){
+        if(ai2Name.equals("Basic")) {
             players.add(new ComputerPlayer(aiBoards.get(1),1));
         } else {
             players.add(new AdvancedCPU(aiBoards.get(1),1));
@@ -98,19 +96,21 @@ public class SimulationActivity extends Activity {
         try {
             fleetList = (assetManager.list(FLEET_DIR));
             for(String fleet : fleetList) {
-                String fleetPath = (FLEET_DIR + "/" + fleet);
-                InputStream kingImgStream = assetManager.open(fleetPath + "/King.png");
-                AssetFileDescriptor fleetSoundFile = assetManager.openFd(fleetPath + "/MainAttack.ogg");
-                Bitmap kingImg = BitmapFactory.decodeStream(kingImgStream);
-                Fleet newFleet = new Fleet(kingImg, fleetSoundFile, fleetPath);
-                for(String ship : assetManager.list(fleetPath)) {
-                    if(!(ship.equals("King.png") || ship.equals("MainAttack.ogg"))){
-                        InputStream shipImgStream = assetManager.open(fleetPath+"/"+ship);
-                        Bitmap shipImg = BitmapFactory.decodeStream(shipImgStream);
-                        newFleet.populateFleet(ship, shipImg );
+                if(fleets.size() <= 1) {
+                    String fleetPath = (FLEET_DIR + "/" + fleet);
+                    InputStream kingImgStream = assetManager.open(fleetPath + "/King.png");
+                    AssetFileDescriptor fleetSoundFile = assetManager.openFd(fleetPath + "/MainAttack.ogg");
+                    Bitmap kingImg = BitmapFactory.decodeStream(kingImgStream);
+                    Fleet newFleet = new Fleet(kingImg, fleetSoundFile, fleetPath);
+                    for (String ship : assetManager.list(fleetPath)) {
+                        if (!(ship.equals("King.png") || ship.equals("MainAttack.ogg"))) {
+                            InputStream shipImgStream = assetManager.open(fleetPath + "/" + ship);
+                            Bitmap shipImg = BitmapFactory.decodeStream(shipImgStream);
+                            newFleet.populateFleet(ship, shipImg);
+                        }
                     }
+                    fleets.add(newFleet);
                 }
-                fleets.add(newFleet);
             }
         } catch (IOException e) {
             e.printStackTrace();
