@@ -84,12 +84,10 @@
 
     <Button
         android:layout_margin="10dp"
-        android:background="#0000cf"
-        android:textColor="#ffffff"
+        android:background="@drawable/run_sims"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_execute"
-        android:text="@string/execute"
         android:clickable="true"
         android:layout_marginStart="20dp"
         android:onClick="runSimulations" />
