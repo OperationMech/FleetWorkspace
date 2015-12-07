@@ -34,6 +34,11 @@ public class TitleView extends View {
     private Context myContext;
     private MediaPlayer mp;
 
+    /**
+     * Constructor for title view
+     * @param context The calling activity
+     * @param mp The media player in charge of running the background music
+     */
     public TitleView(Context context, MediaPlayer mp) {
         super(context);
         myContext = context;
@@ -41,6 +46,10 @@ public class TitleView extends View {
     }
 
     @Override
+    /**
+     * Runs when the window changes focus. Stops or starts the media player.
+     * @param hasWindowFocus Wether or not this view in focus
+     */
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         if (hasWindowFocus && !MenuData.musicMuted) {
