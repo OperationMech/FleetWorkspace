@@ -34,14 +34,25 @@ public class Ship {
 
     }
 
+    /**
+     * Getting for ship number
+     * @Return shipNum
+     */
     public int getShipNum(){
         return shipNum;
     }
 
+    /**
+     * Checks if a ship is sunk.
+     * @Return true is a ship is sunk.
+     */
     public boolean getStatus() {
         return !isSunk;
     }
 
+    /**
+     * Sets a ships status to sunk.
+     */
     public void sinkShip(boolean status) {
         isSunk = status;
     }

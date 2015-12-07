@@ -17,17 +17,11 @@ public class ComputerPlayer extends AbstractPlayer {
 
     /**
      * Computer player constructor
+     * @param  board The board the the player will be using
+     * @param playerID The ID of this player
      */
     public ComputerPlayer(PlayerGameBoard board, int playerID) {
         super(board, playerID);
-    }
-
-    /**
-     * Fleet selection
-     */
-    @Override
-    public void selectFleet() {
-
     }
 
     /**

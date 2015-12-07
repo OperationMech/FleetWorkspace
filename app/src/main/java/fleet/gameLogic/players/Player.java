@@ -10,10 +10,6 @@ import fleet.gameLogic.Ship;
  * Created by Radu on 9/27/2015.
  */
 public interface Player {
-    /**
-     * Fleet selection
-     */
-    public void selectFleet();
 
     /**
      * Scout selection

@@ -20,29 +20,6 @@ public class HumanPlayer extends AbstractPlayer{
     }
 
     /**
-     * Fleet selection
-     */
-    @Override
-    public void selectFleet() {
-
-    }
-
-    @Override
-    public void setDefender(Ship ship ) {
-        attackTarget = ship;
-    }
-
-    @Override
-    public void setAttacker(Ship ship) {
-        attackSelected = ship;
-    }
-
-    @Override
-    public void setScoutTarget(Ship ship) {
-        scoutTarget = ship;
-    }
-
-    /**
      * Scout selection
      * @param players arrayList of game players
      */

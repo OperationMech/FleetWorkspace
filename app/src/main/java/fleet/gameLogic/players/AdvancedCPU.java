@@ -13,6 +13,11 @@ import fleet.gameLogic.ShipClass;
  */
 public class AdvancedCPU extends ComputerPlayer {
 
+    /**
+     * Advanced CPU Constructor
+     * @param  board The board the the player will be using
+     * @param playerID The ID of this player
+     */
     public AdvancedCPU(PlayerGameBoard board, int playerID) {
         super(board, playerID);
     }

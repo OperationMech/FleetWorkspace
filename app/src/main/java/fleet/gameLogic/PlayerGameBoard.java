@@ -37,7 +37,10 @@ public class PlayerGameBoard {
         }
         return aliveShips;
     }
-
+    /**
+     * Checks if a board has a carrier
+     * @return True if the board has a carrier, false otherwise.
+     */
     public boolean hasCarrier(){
         boolean carrierStatus = true;
         for (Ship ship : fleetPositions) {
@@ -49,6 +52,9 @@ public class PlayerGameBoard {
         return  carrierStatus;
     }
 
+    /**
+     * @return  ArrayList of ships that still face up on the board
+     */
     public ArrayList<Ship> getFaceUpShips() {
         ArrayList<Ship> faceUpShips = new ArrayList<Ship>();
         for (Ship ship : getShips()) {
@@ -69,23 +75,8 @@ public class PlayerGameBoard {
     }
 
     /**
-     * Setter for revealing the ship at an index
-     *
-     * @param index the index to reveal at
+     * Resets the board to its initial state.
      */
-    public void revealShipAt(int index) {
-        fleetPositions[index].reveal();
-    }
-
-    /**
-     * Status check on if all ships are sunk
-     *
-     * @return boolean status of all ships
-     */
-    public boolean allShipsSunk() {
-        return getShips().isEmpty();
-    }
-
     public void reset() {
         for(Ship ship : fleetPositions) {
             ship.isFaceUp = false;
@@ -93,6 +84,9 @@ public class PlayerGameBoard {
         }
     }
 
+    /**
+     * Checks if a board is fully populated with ships.
+     */
     public boolean isFull() {
         for (Ship ship: fleetPositions){
             if (ship == null) {

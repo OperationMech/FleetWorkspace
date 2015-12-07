@@ -21,6 +21,11 @@ public abstract class AbstractPlayer implements Player {
     protected Game game;
     private int playerID;
 
+    /**
+     * Basic  player Constructor
+     * @param  board The board the the player will be using
+     * @param playerID The ID of this player
+     */
     public AbstractPlayer (PlayerGameBoard board,int playerID){
         this.playerGameBoard = board;
         this.playerID = playerID;
@@ -79,14 +84,23 @@ public abstract class AbstractPlayer implements Player {
         return true;
     }
 
+    /**
+     * Sets what ship will be receiving the player's attack.
+     */
     public void setDefender(Ship ship ) {
         attackTarget = ship;
     }
 
+    /**
+     * Sets what ship is attacking.
+     */
     public void setAttacker(Ship ship) {
         attackSelected = ship;
     }
 
+    /**
+     * Sets what ship will be scouted by the player.
+     */
     public void setScoutTarget(Ship ship) {
         scoutTarget = ship;
     }

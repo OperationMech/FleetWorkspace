@@ -64,6 +64,14 @@ public class PlayView extends View {
         whitePaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
+    @Override
+    /**
+     * Called when the screen orientation is changed
+     * @param w Width of the screen
+     * @param h Hight of the screen
+     * @param oldw Previous width of the screen
+     * @param oldh Previous height of the screen
+     **/
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         screenW = w;
         screenH = h;
@@ -107,7 +115,6 @@ public class PlayView extends View {
 
     @Override
     /** @param canvas the canvas we will be drawing on
-     *
      */
     protected void onDraw(Canvas canvas) {
         if (firstDraw) {
@@ -167,6 +174,11 @@ public class PlayView extends View {
         }
     }
 
+    /**
+     * onTouchEvent callback routine
+     * @param event The user's action
+     * @return  True when event has been processed
+     */
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 

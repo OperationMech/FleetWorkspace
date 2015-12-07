@@ -30,12 +30,4 @@ public enum ShipClass {
     public String getName() {
         return name;
     }
-
-    /**
-     * Getter for the simplified designation
-     * @return the simplified designation
-     */
-    public String getAbbr() {
-        return abbr;
-    }
 }

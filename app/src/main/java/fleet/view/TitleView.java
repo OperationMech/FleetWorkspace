@@ -52,6 +52,13 @@ public class TitleView extends View {
     }
 
     @Override
+    /**
+     * Called when the screen orientation is changed
+     * @param w Width of the screen
+     * @param h Hight of the screen
+     * @param oldw Previous width of the screen
+     * @param oldh Previous height of the screen
+     **/
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         screenW = w;
@@ -87,6 +94,11 @@ public class TitleView extends View {
     }
 
     @Override
+    /**
+     * onTouchEvent callback routine
+     * @param event The user's action
+     * @return  True when event has been processed
+     */
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
 
