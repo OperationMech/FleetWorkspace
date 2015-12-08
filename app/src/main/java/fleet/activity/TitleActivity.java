@@ -46,7 +46,7 @@ public class TitleActivity extends Activity {
                 MenuData.soundEffectsEnabled = !MenuData.soundEffectsEnabled;
                 item.setChecked(!item.isChecked());
                 return true;
-            case R.id.human_mode:
+            case R.id.hard_mode:
                 MenuData.isHardMode = !MenuData.isHardMode;
                 item.setChecked(!item.isChecked());
                 return true;
