@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * SimulationActivity class
  *
- * Authors: Conner and Anthony Cali
+ * @Authors: Conner Ferguson and Anthony Cali
  */
 public class SimulationActivity extends Activity {
     private final String FLEET_DIR = "fleets";

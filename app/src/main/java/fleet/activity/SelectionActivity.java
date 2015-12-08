@@ -94,18 +94,17 @@ public class SelectionActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.fleetplay, menu);
+        getMenuInflater().inflate(R.menu.fleetselect, menu);
         menu.findItem(R.id.music_mute).setChecked(MenuData.musicMuted);
         menu.findItem(R.id.effects_enabled).setChecked(MenuData.soundEffectsEnabled);
         menu.findItem(R.id.static_ai_board).setChecked(MenuData.staticAiBoard);
+        menu.findItem(R.id.hard_mode).setChecked(MenuData.isHardMode);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.action_settings:
-                return true;
             case R.id.music_mute:
                 if(!MenuData.musicMuted) {
                     mp.pause();
@@ -121,6 +120,10 @@ public class SelectionActivity extends Activity {
                 return true;
             case R.id.static_ai_board:
                 MenuData.staticAiBoard = !MenuData.staticAiBoard;
+                item.setChecked(!item.isChecked());
+                return true;
+            case R.id.hard_mode:
+                MenuData.isHardMode = !MenuData.isHardMode;
                 item.setChecked(!item.isChecked());
                 return true;
             default:

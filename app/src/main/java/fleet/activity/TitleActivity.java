@@ -31,15 +31,13 @@ public class TitleActivity extends Activity {
         getMenuInflater().inflate(R.menu.fleet, menu);
         menu.findItem(R.id.music_mute).setChecked(MenuData.musicMuted);
         menu.findItem(R.id.effects_enabled).setChecked(MenuData.soundEffectsEnabled);
-        menu.findItem(R.id.human_mode).setChecked(MenuData.isAiOnly);
+        menu.findItem(R.id.hard_mode).setChecked(MenuData.isHardMode);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.action_settings:
-                return true;
             case R.id.music_mute:
                 MenuData.musicMuted = !MenuData.musicMuted;
                 item.setChecked(!item.isChecked());
@@ -49,7 +47,7 @@ public class TitleActivity extends Activity {
                 item.setChecked(!item.isChecked());
                 return true;
             case R.id.human_mode:
-                MenuData.isAiOnly = !MenuData.isAiOnly;
+                MenuData.isHardMode = !MenuData.isHardMode;
                 item.setChecked(!item.isChecked());
                 return true;
             default:

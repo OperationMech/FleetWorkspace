@@ -31,11 +31,9 @@ import fleet.view.PlayView;
 import fleet.gameLogic.Fleet;
 
 /**
- * Created by Radu on 10/18/2015.
+ * PlayActivity class
  *
- * //                         \\
- * ||   !!UNDER CONSTRUCTION!!  ||
- * \\                         //
+ * Authors: Anthony Cali and Conner Ferguson
  */
 public class PlayActivity extends Activity {
     protected ArrayList<PlayView> activePlayers;
@@ -159,7 +157,12 @@ public class PlayActivity extends Activity {
         activePlayers.add(humanPlayView);
         int fleetPathNum = Math.abs(new Random().nextInt()) % TransferBuffer.unusedFleetPaths.size();
         PlayerGameBoard computerBoard = createBoard(TransferBuffer.unusedFleetPaths.get(fleetPathNum), MenuData.staticAiBoard);
-        AdvancedCPU computerPlayer = new AdvancedCPU(computerBoard, nextPlayerID);
+        AbstractPlayer computerPlayer;
+        if(MenuData.isHardMode) {
+            computerPlayer = new AdvancedCPU(computerBoard, nextPlayerID);
+        } else {
+            computerPlayer = new ComputerPlayer(computerBoard,nextPlayerID);
+        }
         players.add(nextPlayerID, computerPlayer);
         nextPlayerID++;
         PlayView computerPlayView = new PlayView(this, computerPlayer);
@@ -327,28 +330,21 @@ public class PlayActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.fleet, menu);
+        getMenuInflater().inflate(R.menu.fleetplay, menu);
         menu.findItem(R.id.music_mute).setChecked(MenuData.musicMuted);
         menu.findItem(R.id.effects_enabled).setChecked(MenuData.soundEffectsEnabled);
-        menu.findItem(R.id.human_mode).setChecked(MenuData.isAiOnly);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.action_settings:
-                return true;
             case R.id.music_mute:
                 MenuData.musicMuted = !MenuData.musicMuted;
                 item.setChecked(!item.isChecked());
                 return true;
             case R.id.effects_enabled:
                 MenuData.soundEffectsEnabled = !MenuData.soundEffectsEnabled;
-                item.setChecked(!item.isChecked());
-                return true;
-            case R.id.human_mode:
-                MenuData.isAiOnly = !MenuData.isAiOnly;
                 item.setChecked(!item.isChecked());
                 return true;
             default:
