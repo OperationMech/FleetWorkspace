@@ -37,7 +37,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:weightSum="1">
 
         <TextView
             android:textColor="#ffffff"
@@ -49,7 +50,7 @@
         <Spinner
             android:layout_margin="5dp"
             android:background="#f0f0f0"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/select_ai_1"
             android:spinnerMode="dropdown"
