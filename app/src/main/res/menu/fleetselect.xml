@@ -1,27 +1,27 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/music_mute"
-        android:orderInCategory="100"
         android:checkable="true"
-        android:title="@string/music_mute"/>
+        android:orderInCategory="100"
+        android:title="@string/music_mute" />
 
     <item
         android:id="@+id/effects_enabled"
-        android:orderInCategory="100"
         android:checkable="true"
-        android:title="@string/effects_enabled"/>
+        android:orderInCategory="100"
+        android:title="@string/effects_enabled" />
 
     <item
         android:id="@+id/static_ai_board"
-        android:orderInCategory="100"
         android:checkable="true"
-        android:title="@string/ai_static_board"/>
+        android:orderInCategory="100"
+        android:title="@string/ai_static_board" />
 
     <item
         android:id="@+id/hard_mode"
-        android:orderInCategory="100"
         android:checkable="true"
-        android:title="@string/Hard_Mode"/>
+        android:orderInCategory="100"
+        android:title="@string/Hard_Mode" />
 
 </menu>
